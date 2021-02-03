@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "-": "^0.0.1",
+    "discord.io": "^2.5.3",
+    "discord.js": "^12.5.1",
+    "save": "^2.4.0",
+    "winston": "^3.3.3"
+  }
+}
