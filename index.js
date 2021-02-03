@@ -57,10 +57,11 @@ client.on("message", message =>
 
 }); //End of Message Sent loop
 
-// client.on('guildMemberAdd', (guildMember) => 
-//     {
-//         guildMember.roles.add(`CompSciAutoRole`);
-//     });
+
+client.on('guildMemberAdd', (guildMember) => 
+    {
+        guildMember.roles.add(`CompSciAutoRole`);
+    });
 
 
 client.on('ready', () => 
