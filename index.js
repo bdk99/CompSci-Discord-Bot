@@ -254,6 +254,10 @@ client.on('message', message => {
 
   function spamProtect(input) {
 
+    if (/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/.test(input)) {
+      return true;
+    }
+
     var symTolerance = .1; //How lenient the protection is for symbols
     var symbolCount = 0;
     //String(input).length - String(input).match(regex).length;
