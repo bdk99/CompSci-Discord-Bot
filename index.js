@@ -13,19 +13,35 @@ client.once("ready", () =>
 
 client.channels.cache.get('806391647294324766').send('CompSci Bot Online and Ready!'); 
     //Shoots a Ready command into the corresponding channel
+    
+
 });
+
+
 client.on('ready', () => 
     {
         // Set bot status to: "Playing with JavaScript"
-        client.user.setActivity("with JavaScript and learning new features!")
+        client.user.setActivity("with JavaScript and learning new features!");
+
+        client.users.cache.get("707293854507991172")
     });
 
 ///////Everything above is basic bot config information.  Do not touch unless you know what you are doing!/////
 
 
 let softkill = false; 
+
+
 client.on("message", message => 
 { // runs whenever a message is sent
+
+  let spambool = spamProtect(message.content);
+  if ((spambool===false)&& (!message.content.startsWith('Gave +1')))
+  {
+    message.delete({ timeout: 2000 })
+    console.log("Deleting message: "+message.content);
+  }
+
     if ((message.content === `${prefix}random`) && (softkill === false)) 
     {
         const number = Math.random(); // generates a random number
@@ -63,10 +79,10 @@ client.on("message", message =>
         message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
     }
 
-//Adds Custom emojis 
-    if ((message.content === `${prefix}ce`) && (softkill === false))
-    {
-        const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'billtiger');
+    //Send Custom emojis message when doing {prefix}ce comamnd
+   if ((message.content === `${prefix}ce`) && (softkill === false))
+   {
+       const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'billtiger');
         const reactionEmoji2 = message.guild.emojis.cache.find(emoji => emoji.name === 'hackerevett');
         const reactionEmoji3 = message.guild.emojis.cache.find(emoji => emoji.name === '420');
         const reactionEmoji4 = message.guild.emojis.cache.find(emoji => emoji.name === '69');
@@ -83,7 +99,7 @@ client.on("message", message =>
         const reactionEmoji15 = message.guild.emojis.cache.find(emoji => emoji.name === 'billmoji');
         const reactionEmoji16 = message.guild.emojis.cache.find(emoji => emoji.name === 'tim');
 
-        message.react(reactionEmoji);
+        message.reply(`${reactionEmoji}`);
         message.react(reactionEmoji2);
         message.react(reactionEmoji3);
         message.react(reactionEmoji4);
@@ -99,17 +115,8 @@ client.on("message", message =>
         message.react(reactionEmoji14);
         message.react(reactionEmoji15);
         message.react(reactionEmoji16);
-    }
+   }
 }); //End of Message Sent loop
-
-
-
-
-
-
-
-
-
 
 
 //SERVER KICK MEMBER CODE
@@ -118,7 +125,7 @@ client.on('message', message => {
     if (!message.guild) return;
   
     // If the message content starts with "!kick"
-    if (message.content.startsWith('!kick')) 
+    if (message.content.startsWith(`${prefix}kick`) && (softkill === false)) 
     {
         if ((message.author.id !== '404717378715385856')&&(message.author.id !== '743957184924352542')) 
         {
@@ -167,19 +174,13 @@ client.on('message', message => {
 
 
 
-
-
-
-
-
-
   //SERVER BAN MEMBER CODE
   client.on('message', message => {
     // Ignore messages that aren't from a guild
     if (!message.guild) return;
   
     // if the message content starts with "!ban"
-    if (message.content.startsWith('!ban')) 
+    if (message.content.startsWith(`${prefix}ban`) && (softkill === false)) 
     {
       // Assuming we mention someone in the message, this will return the user
       // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
@@ -232,5 +233,37 @@ client.on('message', message => {
   });
 
 
+
+
+  function spamProtect(input) {
+
+    var symTolerance = .1; //How lenient the protection is for symbols
+    var symbolCount = 0;
+    //String(input).length - String(input).match(regex).length;
+
+    for (i = 0; i < input.length; i++) {
+        if (!/[\w-=\(\)\<\>\{\}\[\]\s\+]/.test(input[i])) {
+            symbolCount += 1;
+        }
+    }
+
+    if (symbolCount > symTolerance * input.length && symbolCount > 3) {
+        return false;
+    }
+
+    var capTolerance = .1; //How lenient the protection is for caps
+    var capCount = 0;
+    for (var i = 0 ; i < input.length; i++) {
+        if (/[A-Z]/.test(input[i])) {
+            capCount++;
+        }
+    }
+
+    if (capCount > capTolerance * input.length && capCount > 8) {
+        return false;
+    }
+
+    return true;
+}
 
 client.login(token); // starts the bot up
