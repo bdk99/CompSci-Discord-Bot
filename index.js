@@ -116,6 +116,23 @@ client.on("message", message =>
         message.react(reactionEmoji15);
         message.react(reactionEmoji16);
    }
+
+   if ((message.content === `${prefix}motivateme`) && (softkill === false))
+    {
+      var quotes = [
+        "https://tenor.com/view/do-it-star-wars-gif-4928619",
+        "Push yourself, because no one else is going to do it for you.",
+        "If you see a chance to be kind to someone tomorrow, take it. I think we need it. -Brad Pitt",
+        "If you don't design your own life plan, chances are you'll fall into someone else's plan. And guess what they have planned for you? Not much.",
+        "Life is 10% what happens to you and 90% how you react to it.",
+        "Problems are not stop signs, they are guidelines.",
+        "Problems are not stop signs, they are guidelines. -Elon Musk",
+        "If you fell down yesterday, stand up today. -H.G. Wells",
+        "If you fell down yesterday, stand up today.",
+      ]
+      var index = getRandomInt(quotes.length - 1);
+      message.channel.send(quotes[index]);
+    }
 }); //End of Message Sent loop
 
 
@@ -264,6 +281,10 @@ client.on('message', message => {
     }
 
     return true;
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 client.login(token); // starts the bot up
