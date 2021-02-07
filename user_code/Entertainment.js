@@ -43,10 +43,20 @@ function motivateme(message) {
         "If you see a chance to be kind to someone tomorrow, take it. I think we need it. -Brad Pitt",
         "If you don't design your own life plan, chances are you'll fall into someone else's plan. And guess what they have planned for you? Not much.",
         "Life is 10% what happens to you and 90% how you react to it.",
-        "Problems are not stop signs, they are guidelines.",
         "Problems are not stop signs, they are guidelines. -Elon Musk",
         "If you fell down yesterday, stand up today. -H.G. Wells",
-        "If you fell down yesterday, stand up today.",
+        "Education is the passport to the future, for tomorrow belongs to those who prepare for it today. — Malcolm X",
+        "Education is the most powerful weapon you can use to change the world.",
+        "A person who never made a mistake never tried anything new. — Albert Einstein",
+        "Learning is never done without errors and defeat. – Vladimir Lenin",
+        "Procrastination makes easy things hard and hard things harder.",
+        "You don’t have to be great to start, but you have to start to be great.",
+        "The way to get started is to quit talking and begin doing. – Walt Disney",
+        "The best way to predict your future is to create it. —Abraham Lincoln",
+        "The future belongs to those who believe in the beauty of their dreams. ― Eleanor Roosevelt",
+        "You are braver than you believe, stronger than you seem and smarter than you think.",
+        "Learn from yesterday. Live for today. Hope for tomorrow. – Albert Einstein",
+        "He who asks a question is a fool for five minutes; he who does not ask a question remains a fool forever. — Chinese Proverb",
     ]
     var index = getRandomInt(quotes.length - 1);
     message.channel.send(quotes[index]);
