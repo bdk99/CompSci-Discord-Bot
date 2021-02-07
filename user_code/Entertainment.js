@@ -1,5 +1,6 @@
 //Function that reacts with all unique server emojis
-function ce(message) {
+function ce(message) 
+{
     const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'billtiger');
     const reactionEmoji2 = message.guild.emojis.cache.find(emoji => emoji.name === 'hackerevett');
     const reactionEmoji3 = message.guild.emojis.cache.find(emoji => emoji.name === '420');
@@ -36,8 +37,10 @@ function ce(message) {
 }
   
 //Function that sends a motivation quote or meme
-function motivateme(message) {
-    var quotes = [
+function motivateme(message) 
+{
+    var quotes = 
+    [
         "https://tenor.com/view/do-it-star-wars-gif-4928619",
         "Push yourself, because no one else is going to do it for you.",
         "If you see a chance to be kind to someone tomorrow, take it. I think we need it. -Brad Pitt",
@@ -60,9 +63,10 @@ function motivateme(message) {
     ]
     var index = getRandomInt(quotes.length - 1);
     message.channel.send(quotes[index]);
-    }
+}
 
-    function getRandomInt(max) {
+function getRandomInt(max) 
+{
     return Math.floor(Math.random() * Math.floor(max));
 }
 

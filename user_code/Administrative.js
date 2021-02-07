@@ -1,5 +1,6 @@
 //Function called with prefix !ban, used to attempt user ban
-function ban(message) {
+function ban(message) 
+{
     // Assuming we mention someone in the message, this will return the user
         // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
   
@@ -47,10 +48,11 @@ function ban(message) {
           // Otherwise, if no user was mentioned
           message.reply("You didn't mention the user to ban!");
         }
-  }
+}
 
 //function called on prefix !kick, used to attempt to kick member
-function kick(message) {
+function kick(message) 
+{
     if ((message.author.id !== '404717378715385856')&&(message.author.id !== '743957184924352542')) 
         {
             message.reply('I was unable to kick the member!  Permission denied!');
@@ -95,7 +97,8 @@ function kick(message) {
     }
 }
 
-function help(message) {
+function help(message) 
+{
     message.channel.send('Available Commands!\n' +
                   'kick [required: user]: will attempt to kick the specified user\n' +
                   'ban [required: user]: will attempt to ban the specified user\n' +
