@@ -31,49 +31,65 @@ client.on('ready', () =>
 
 let softkill = false; 
 
-
 client.on("message", message => 
 { // runs whenever a message is sent
 
-  let spambool = Server.spamProtect(message.content);
-  if ((spambool===false) && (!message.content.startsWith('Gave +1 Rep to')))
-  {
-    message.delete({ timeout: 2000 })
-    console.log("Deleting message: "+message.content);
-  }
+  // let spambool = spamProtect(message.content);                                                //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
+  // if ((spambool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != '801657065676079144')&& (message.channel.id != '801657164266471424'))
+  // {
+  //   message.delete({ timeout: 2000 })
+  //   console.log("Deleting message: "+message.content);
+  // }
 
   if (!softkill) 
   {
     if (message.content === `${prefix}random`) 
     {
-        const number = Math.random(); // generates a random number
-        message.channel.send(number.toString()); // sends a message to the channel with the number
+      const number = Math.random(); // generates a random number
+      message.channel.send(number.toString()); // sends a message to the channel with the number
     } 
+
+    //Responds with a random quote from the list compiled on 2.7.2021 from cs-quotes channel
+    if (message.content === `${prefix}quote`) 
+    {
+      Entertainment.quote(message);
+    } 
+
+    if (message.content === `${prefix}makemelaugh`) 
+    {
+      Entertainment.makemelaugh(message);
+    } 
+
     //Responds with Pong after send the ping command with prefix
     else if (message.content === `${prefix}ping`) 
     {  
-        message.channel.send(`🏓 Latency is ${Date.now() - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
+      message.channel.send(`🏓 Latency is ${Date.now() - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
     } 
+
     //Kills and stops server with response when a specific user (In this case Brendan#9412) runs the kill command with prefix
     else if (message.content === `${prefix}kill`)  
     {
       Server.kill(message);
     }
+
     //Displays the user info of the person who sends
     else if (message.content === `${prefix}user-info`)
     {
       message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
     }
+
     //Send Custom emojis message when doing {prefix}ce comamnd
     else if (message.content === `${prefix}ce`)
     {
       Entertainment.ce(message);  
     }
+
     //Sends a motivational quote (or meme)
     else if (message.content === `${prefix}motivateme`)
     {
       Entertainment.motivateme(message);
     }
+
     //Attempts to kick user
     else if (message.content.startsWith(`${prefix}kick`)) 
     {
@@ -81,6 +97,7 @@ client.on("message", message =>
 
       Administrative.kick(message);
     }
+
     //Attempts to ban user
     else if (message.content.startsWith(`${prefix}ban`)) 
     {
@@ -88,16 +105,62 @@ client.on("message", message =>
 
       Administrative.ban(message);
     }
+
     //Prints help message
     else if (message.content.startsWith(`${prefix}help`)) 
     {
       Administrative.help(message);
     }
 
-  } else if (message.content === `${prefix}softkill`) 
+  } 
+  else if (message.content === `${prefix}softkill`) 
   { //softkill functionality
     softkill = Server.soft_kill(message);
   }
 }); //End of Message Sent loop
+
+
+
+//Function to protect our chats :D.  Full credit to Ryan Kim on this one!
+function spamProtect(input) 
+{
+    if (/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/.test(input)) {
+      return true;
+    }
+
+    if (/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/.test(input)) {
+      return true;
+    }
+
+    var symTolerance = .1; //How lenient the protection is for symbols
+    var symbolCount = 0;
+    //String(input).length - String(input).match(regex).length;
+
+    for (i = 0; i < input.length; i++) {
+        if (!/[\w-=\(\)\<\>\{\}\[\]\s\+]/.test(input[i])) {
+            symbolCount += 1;
+        }
+    }
+
+    if (symbolCount > symTolerance * input.length && symbolCount > 3) {
+        return false;
+    }
+
+    var capTolerance = .1; //How lenient the protection is for caps
+    var capCount = 0;
+    for (var i = 0 ; i < input.length; i++) {
+        if (/[A-Z]/.test(input[i])) {
+            capCount++;
+        }
+    }
+
+    if (capCount > capTolerance * input.length && capCount > 8) {
+        return false;
+    }
+
+    return true;
+}
+
+
 
 client.login(token); // starts the bot up

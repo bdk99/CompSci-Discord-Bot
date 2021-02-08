@@ -100,11 +100,15 @@ function kick(message)
 function help(message) 
 {
     message.channel.send('Available Commands!\n' +
-                  'kick [required: user]: will attempt to kick the specified user\n' +
-                  'ban [required: user]: will attempt to ban the specified user\n' +
-                  'kill : will shut down the bot\n' +
-                  'softkill : will make the bot unresponsive to commands until the softkill command is used again\n' +
+                  // 'kick [required: user]: will attempt to kick the specified user\n' +
+                  //'ban [required: user]: will attempt to ban the specified user\n' +
+                  //'kill : will shut down the bot\n' +
+                  //'softkill : will make the bot unresponsive to commands until the softkill command is used again\n' +
+                  'help : Displays this help command with a list of bot commands!\n' +
+                  'ping : Displays the bots ping!\n' +
                   'motivateme : Sends a motivational quote or meme\n' +
+                  'quote : Generate a random cs-quote(MOST OF THESE ARE FUNNY ASF)\n' +
+                  'makemelaugh : Generates a random asf quote\n' +
                   'ce : Sends a message with every unique server emoji responded to it');
 }
 
