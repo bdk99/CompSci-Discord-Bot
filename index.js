@@ -15,7 +15,8 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
 
-client.channels.cache.get('806391647294324766').send('CompSci Bot Online and Ready!'); 
+  client.channels.cache.get('806391647294324766').send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on CompSci server
+  client.channels.cache.get('807719819084431371').send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on Bot test server
     //Shoots a Ready command into the corresponding channel
 });
 
@@ -29,7 +30,7 @@ client.on('ready', () =>
 ///////Everything above is basic bot config information.  Do not touch unless you know what you are doing!/////
 
 
-let softkill = false; 
+var softkill = false; 
 
 client.on("message", message => 
 { // runs whenever a message is sent
@@ -113,9 +114,9 @@ client.on("message", message =>
     }
 
   } 
-  else if (message.content === `${prefix}softkill`) 
+  if (message.content === `${prefix}softkill`) 
   { //softkill functionality
-    softkill = Server.soft_kill(message);
+    softkill = Server.soft_kill(message,softkill);
   }
 }); //End of Message Sent loop
 
