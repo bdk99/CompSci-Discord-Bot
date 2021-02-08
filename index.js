@@ -35,12 +35,12 @@ var softkill = false;
 client.on("message", message => 
 { // runs whenever a message is sent
 
-  // let spambool = spamProtect(message.content);                                                //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
-  // if ((spambool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != '801657065676079144')&& (message.channel.id != '801657164266471424'))
-  // {
-  //   message.delete({ timeout: 2000 })
-  //   console.log("Deleting message: "+message.content);
-  // }
+  let spambool = spamProtect(message.content);                                                //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
+  if ((spambool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != '801657065676079144')&& (message.channel.id != '801657164266471424'))
+  {
+    message.delete({ timeout: 2000 })
+    console.log("Deleting message: "+message.content);
+  }
 
   if (!softkill) 
   {
@@ -125,28 +125,6 @@ client.on("message", message =>
 //Function to protect our chats :D.  Full credit to Ryan Kim on this one!
 function spamProtect(input) 
 {
-    if (/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/.test(input)) {
-      return true;
-    }
-
-    if (/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/.test(input)) {
-      return true;
-    }
-
-    var symTolerance = .1; //How lenient the protection is for symbols
-    var symbolCount = 0;
-    //String(input).length - String(input).match(regex).length;
-
-    for (i = 0; i < input.length; i++) {
-        if (!/[\w-=\(\)\<\>\{\}\[\]\s\+]/.test(input[i])) {
-            symbolCount += 1;
-        }
-    }
-
-    if (symbolCount > symTolerance * input.length && symbolCount > 3) {
-        return false;
-    }
-
     var capTolerance = .1; //How lenient the protection is for caps
     var capCount = 0;
     for (var i = 0 ; i < input.length; i++) {
