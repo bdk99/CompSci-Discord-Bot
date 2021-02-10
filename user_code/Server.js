@@ -22,6 +22,7 @@ function bypass(message, bypass)
 {                               //Brendan User ID                             //Andreaka Jump user ID
     if ((message.author.id !== '404717378715385856')&&(message.author.id !== '693192159909642273')) return bypass;
     
+    message.channel.send('Caps Bypass: '+!bypass)
     return !bypass;
 }
 
