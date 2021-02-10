@@ -31,6 +31,7 @@ client.on('ready', () =>
 
 
 var softkill = false; 
+var bypass = false;
 
 client.on("message", message => 
 { // runs whenever a message is sent
@@ -41,14 +42,42 @@ client.on("message", message =>
     message.delete({ timeout: 2000 })
     console.log("Deleting message: "+message.content);
   }
+  
+  //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
+  if (message.author.bot) return;
+  
+  if (message.content.indexOf(prefix) !== 0) return;
+ 
+  const args = message.content.slice(prefix.length).trim().split(/ +/g);
+
+  if (!bypass)
+    {
+      let spambool = spamProtect(message.content);                                                //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
+      if ((spambool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != '801657065676079144')&& (message.channel.id != '801657164266471424'))
+      {
+        message.delete({ timeout: 2000 })
+        console.log("Deleting message: "+message.content);
+      }    
+    } 
 
   if (!softkill) 
   {
+    if (message.content === `${prefix}bypass`) 
+    {
+      bypass = Server.bypass(message,bypass);
+    } 
+
     if (message.content === `${prefix}random`) 
     {
       const number = Math.random(); // generates a random number
       message.channel.send(number.toString()); // sends a message to the channel with the number
     } 
+
+    if (message.content.startsWith(`${prefix}tb`)) 
+    {
+      message.channel.send(args);
+      bypass=true;
+    }
 
     //Responds with a random quote from the list compiled on 2.7.2021 from cs-quotes channel
     if (message.content === `${prefix}quote`) 
