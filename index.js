@@ -35,7 +35,9 @@ var bypass = false;
 
 client.on("message", message => 
 { // runs whenever a message is sent
-
+  //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
+  if (message.author.bot) return;
+  
   let spambool = spamProtect(message.content);                                                //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
   if ((spambool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != '801657065676079144')&& (message.channel.id != '801657164266471424'))
   {
@@ -43,13 +45,11 @@ client.on("message", message =>
     console.log("Deleting message: "+message.content);
   }
   
-  //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
-  if (message.author.bot) return;
+  
   
   if (message.content.indexOf(prefix) !== 0) return;
  
-  const args = message.content.slice(prefix.length).trim().split(/ +/g);
-
+  
   if (!bypass)
     {
       let spambool = spamProtect(message.content);                                                //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
@@ -75,6 +75,8 @@ client.on("message", message =>
 
     if (message.content.startsWith(`${prefix}tb`)) 
     {
+      const args = message.content.slice(3).trim()
+
       message.channel.send(args);
       bypass=true;
     }
