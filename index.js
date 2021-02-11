@@ -1,7 +1,7 @@
 const Discord = require("discord.js"); // imports the discord library
 const fs = require("fs"); // Imports the file io library  IGNORE ERRORS ON THIS LINE!  DO NOT REMOVE!
 const { prefix, token } = require('./config.json');
-const { mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
+const { FOURSEVENTYTWOchannel, mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
 const Administrative = require("./user_code/Administrative");
@@ -54,8 +54,8 @@ client.on("message", message =>
  
   if (!bypass)
     {
-      let capsbool = capsProtect(message.content);                                                        //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
-      if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`))
+      let capsbool = capsProtect(message.content);
+      if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
       {
         message.delete({ timeout: 2000 })
         console.log("Deleting message: "+message.content);
