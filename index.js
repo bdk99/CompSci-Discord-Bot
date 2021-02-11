@@ -1,7 +1,7 @@
 const Discord = require("discord.js"); // imports the discord library
 const fs = require("fs"); // Imports the file io library  IGNORE ERRORS ON THIS LINE!  DO NOT REMOVE!
 const { prefix, token } = require('./config.json');
-const { brendanid, andreakaid, ryanid}= require('./userids.json');
+const { mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
 const Administrative = require("./user_code/Administrative");
@@ -14,8 +14,8 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
 
-  client.channels.cache.get('806391647294324766').send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on CompSci server
-  client.channels.cache.get('807719819084431371').send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on Bot test server
+  client.channels.cache.get(`${compscibotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on CompSci server
+  client.channels.cache.get(`${botdevstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on Bot test server
     //Shoots a Ready command into the corresponding channel
 });
 
@@ -38,21 +38,24 @@ client.on("message", message =>
   if (message.author.bot) return;
 
   if (message.content.startsWith(`${prefix}tb`))
-  { 
-    if((message.author.id !=`${brendanid}`)&&(message.author.id !=`${ryanid}`)&&(message.author.id !=`${andreakaid}`))
-    {  //Only allows the users with the ids specified allowed access to bypass the Caps filter
-      message.delete({ timeout: 2000 });
-      return;
-    }
-      var args = message.content.slice(3).trim();
-      message.channel.send(`${args} by: ${message.author.username}`);
-      bypassdelete=true;
+  {
+      if(message.member.roles.cache.find(r => r.name === "tempbotbypass")) 
+      {
+        var args = message.content.slice(3).trim();
+        message.channel.send(`${args} by: ${message.author.username}`);
+      }
+      else 
+      {
+        message.delete({ timeout: 2000 });
+        console.log("Deleting message: "+message.content);
+        return;
+      }
   }
  
   if (!bypass)
     {
-      let spambool = spamProtect(message.content);                                                        //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
-      if ((spambool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != '801657065676079144')&& (message.channel.id != '801657164266471424'))
+      let capsbool = capsProtect(message.content);                                                        //MC-CHAT CHANNEL ID                           //MC-CONSOLE CHANNEL ID
+      if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`))
       {
         message.delete({ timeout: 2000 })
         console.log("Deleting message: "+message.content);
@@ -63,7 +66,7 @@ client.on("message", message =>
       } 
     } 
 
-  if (!softkill) 
+  if (!softkill)
   {
     //Adds the bypass command to toggle bypassing the Caps Filter
     if (message.content === `${prefix}bypass`) 
@@ -144,21 +147,24 @@ client.on("message", message =>
 
 
 //Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
-function spamProtect(input) 
+function capsProtect(input) 
 {
-    var capTolerance = .25; //How lenient the protection is for caps
-    var capCount = 0;
-    for (var i = 0 ; i < input.length; i++) {
-        if (/[A-Z]/.test(input[i])) {
-            capCount++;
-        }
-    }
+  var capTolerance = .25; //How lenient the protection is for caps
+  var capCount = 0;
+  for (var i = 0 ; i < input.length; i++) 
+  {
+      if (/[A-Z]/.test(input[i])) 
+      {
+          capCount++;
+      }
+  }
 
-    if (capCount > capTolerance * input.length && capCount > 8) {
-        return false;
-    }
+  if (capCount > capTolerance * input.length && capCount > 8) 
+  {
+      return false;
+  }
 
-    return true;
+  return true;
 }
 
 

@@ -29,9 +29,8 @@ function ce(message)
     const reactionEmoji14 = message.guild.emojis.cache.find(emoji => emoji.name === 'manny');
     const reactionEmoji15 = message.guild.emojis.cache.find(emoji => emoji.name === 'billmoji');
     const reactionEmoji16 = message.guild.emojis.cache.find(emoji => emoji.name === 'tim');
-    const reactionEmoji17 = message.guild.emojis.cache.find(emoji => emoji.name === 'billtiger');
   
-    message.reply(`${reactionEmoji}`);
+    message.react(reactionEmoji);
     message.react(reactionEmoji2);
     message.react(reactionEmoji3);
     message.react(reactionEmoji4);
@@ -46,9 +45,7 @@ function ce(message)
     message.react(reactionEmoji13);
     message.react(reactionEmoji14);
     message.react(reactionEmoji15);
-    message.react(reactionEmoji16);
-    message.react(reactionEmoji17);
-}
+    message.react(reactionEmoji16);}
   
 //Function that sends a motivation quote or meme
 function motivateme(message) 

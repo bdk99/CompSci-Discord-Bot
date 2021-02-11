@@ -21,7 +21,7 @@ function soft_kill(message, softkill)
 //Adds function to bypass filter with a bypass toggle command!
 function bypass(message, bypass) 
 {                               //Brendan User ID                             //Andreaka Jump user ID
-    if ((message.author.id !== '404717378715385856')&&(message.author.id !== '693192159909642273')) return bypass;
+    if ((message.author.id !== '404717378715385856')&&(message.author.id !== '743957184924352542')) return bypass;
     
     message.channel.send('Caps Bypass: '+!bypass)
     return !bypass;
