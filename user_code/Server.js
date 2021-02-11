@@ -1,4 +1,4 @@
-//Function that shuts down bot
+//Function that shuts down bot on kill command by specific user!
 function kill(message) 
 {                               //Brendan User ID                             //Ryan Kim user ID
     if ((message.author.id !== '404717378715385856')&&(message.author.id !== '743957184924352542')) return;
@@ -8,16 +8,17 @@ function kill(message)
         })
 }
 
-//Function that makes bot unresponsive to commands
+//Function that makes bot unresponsive to commands until repeat of softkill command!
 function soft_kill(message, softkill) 
-{                               //Brendan User ID                             //Ryan Kim user ID
-    if ((message.author.id !== '404717378715385856')&&(message.author.id !== '743957184924352542')) return softkill;
-    
-    message.channel.send('SoftKill '+!softkill)
-    return !softkill;
+{
+    if(message.member.roles.cache.find(r => r.name === "Mod")) 
+    {
+        message.channel.send('SoftKill '+!softkill)
+        return !softkill;
+    }
 }
 
-//Adds function to bypass filter
+//Adds function to bypass filter with a bypass toggle command!
 function bypass(message, bypass) 
 {                               //Brendan User ID                             //Andreaka Jump user ID
     if ((message.author.id !== '404717378715385856')&&(message.author.id !== '693192159909642273')) return bypass;

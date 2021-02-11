@@ -10,7 +10,7 @@ fs.readFile('./user_code/quotes.json', 'utf8', (err, data) => {
     }
 })
 
-//Function that reacts with all unique server emojis
+//Function that reacts with all unique server emojis 
 function ce(message) 
 {
     const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'billtiger');
@@ -29,6 +29,7 @@ function ce(message)
     const reactionEmoji14 = message.guild.emojis.cache.find(emoji => emoji.name === 'manny');
     const reactionEmoji15 = message.guild.emojis.cache.find(emoji => emoji.name === 'billmoji');
     const reactionEmoji16 = message.guild.emojis.cache.find(emoji => emoji.name === 'tim');
+    const reactionEmoji17 = message.guild.emojis.cache.find(emoji => emoji.name === 'billtiger');
   
     message.reply(`${reactionEmoji}`);
     message.react(reactionEmoji2);
@@ -46,6 +47,7 @@ function ce(message)
     message.react(reactionEmoji14);
     message.react(reactionEmoji15);
     message.react(reactionEmoji16);
+    message.react(reactionEmoji17);
 }
   
 //Function that sends a motivation quote or meme
