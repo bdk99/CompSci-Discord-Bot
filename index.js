@@ -137,6 +137,25 @@ client.on("message", message =>
     {
       Administrative.help(message);
     }
+
+    if (message.content.startsWith(`${prefix}clean`))
+    {
+        if(message.member.roles.cache.find(r => r.name === "clean")) 
+          {
+            return;
+          }
+          message.channel.bulkDelete(`${num}`).then(() => {
+            message.channel.send(`MASS DELETED ${num} MESSAGES!`);
+        {
+          message.channel.send(`Access Denied!`).then(msg => {
+            msg.delete(100)
+          });
+          message.delete({ timeout: 2000 });
+          return;
+        }
+    }
+
+
   }
   if(message.content === `${prefix}softkill`) 
   { //softkill functionality
