@@ -52,7 +52,7 @@ client.on("message", message =>
       }
   }
  
-  if (!bypass)
+  if (!bypass && (message.author.id !== '404717378715385856'))
     {
       let capsbool = capsProtect(message.content);
       if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
@@ -152,7 +152,7 @@ client.on("message", message =>
             message.channel.send(`MASS DELETED ${num} MESSAGES!`);
           });
 
-          client.channels.cache.get("784093143389700137").send(`${message.author.username} deleted ${num} messages in ${message.channel}`); //Shoots message into #bot-status channel on Bot test server
+          client.channels.cache.get("784093143389700137").send(`${message.author.username} deleted ${num} messages in ${message.channel}`);
           return;
         }
         else 
