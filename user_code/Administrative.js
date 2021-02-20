@@ -112,5 +112,34 @@ function help(message)
                   'ce : Sends a message with every unique server emoji responded to it');
 }
 
+function clean(message, num, client)
+{
+  if(message.member.roles.cache.find(r => r.name === "clean")) 
+  { 
+    if(num>100 || num<2)
+    {
+      message.channel.send("Unable to delete!  Args must be between 2 and 100!");
+      return;
+    }
+    message.channel.bulkDelete(`${num}`).then(() => {
+      message.channel.send(`MASS DELETED ${num} MESSAGES!`).then(msg => {
+        msg.delete({timeout: 3000});
+      })
+    });
 
-module.exports = {kick, ban, help};
+    client.channels.cache.get("784093143389700137").send(`${message.author.username} deleted ${num} messages in ${message.channel}`);
+    return;
+  }
+  
+  else 
+  {
+    message.channel.send(`Access Denied!`).then(msg => {
+      msg.delete({timeout: 3000});
+    });
+    message.delete({ timeout: 2000 });
+    return;
+  }
+}
+
+
+module.exports = {kick, ban, help, clean};

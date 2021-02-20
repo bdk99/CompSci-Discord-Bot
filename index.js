@@ -140,29 +140,8 @@ client.on("message", message =>
 
     if (message.content.startsWith(`${prefix}clean`))
     {
-        if(message.member.roles.cache.find(r => r.name === "clean")) 
-        {
-          var num = message.content.slice(6).trim();
-          if(num>100 || num<2)
-          {
-            message.channel.send("Unable to delete!  Args must be between 2 and 100!");
-            return;
-          }
-          message.channel.bulkDelete(`${num}`).then(() => {
-            message.channel.send(`MASS DELETED ${num} MESSAGES!`);
-          });
-
-          client.channels.cache.get("784093143389700137").send(`${message.author.username} deleted ${num} messages in ${message.channel}`);
-          return;
-        }
-        else 
-        {
-          message.channel.send(`Access Denied!`).then(msg => {
-            msg.delete(100)
-          });
-          message.delete({ timeout: 2000 });
-          return;
-        }
+      var num = message.content.slice(6).trim();
+      Administrative.clean(message, num, client);
     }
 
 
