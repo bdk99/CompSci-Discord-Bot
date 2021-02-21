@@ -1,7 +1,5 @@
 const Discord = require("discord.js"); // imports the discord library
-//const fs = require("fs"); // Imports the file io library  IGNORE ERRORS ON THIS LINE!  DO NOT REMOVE!
 const { prefix, token, devstate } = require('./config.json');
-//const file = require("cs-quotes.txt");
 const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
@@ -17,8 +15,8 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
     console.info("Starting in Development Mode");
-  client.channels.cache.get(`${compscibotstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on CompSci server
-  client.channels.cache.get(`${botdevstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on Bot test server
+    client.channels.cache.get(`${compscibotstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on CompSci server
+    client.channels.cache.get(`${botdevstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on Bot test server
     //Shoots a Ready command into the corresponding channel
   }
   else
@@ -34,11 +32,11 @@ client.once("ready", () =>
 });
 
 client.on('ready', () => 
-    {
-        // Set bot status to: "Playing with JavaScript"
-        client.user.setActivity("with JavaScript and learning new features!");
-        //client.users.cache.get("707293854507991172") Any idea where this line of code came from?  Or what the ID is for?
-    });
+{
+  // Set bot status to: "Playing with JavaScript"
+  client.user.setActivity("with JavaScript and learning new features!");
+  //client.users.cache.get("707293854507991172") Any idea where this line of code came from?  Or what the ID is for?
+});
 ///////Everything above is basic bot config information.  Do not touch unless you know what you are doing!/////
 
 var softkill = false; 
@@ -65,7 +63,7 @@ client.on("message", message =>
         return;
       }
   }
- 
+
   if (!bypass && (message.author.id !== '404717378715385856'))
     {
       let capsbool = Server.capsProtect(message.content);
@@ -157,6 +155,17 @@ client.on("message", message =>
       var num = message.content.slice(6).trim();
       Administrative.clean(message, num, client);
     }
+
+    if(message.content.startsWith(`${prefix}rateprof`))
+    {
+      Entertainment.RateProfessor(message.content);
+    }
+
+    if(message.content.startsWith(`${prefix}profreviews`))
+    {
+      Entertainment.ListProfessors(message.content);
+    }
+
   }
   if(message.content === `${prefix}softkill`) 
   { //softkill functionality
@@ -166,11 +175,6 @@ client.on("message", message =>
   if(message.channel.id === `${csquoteschannel}`)
   {
     Server.quotecatcher(message.content);
-  }
-
-  if(message.channel.id === `${prefix}rateprof`)
-  {
-    Entertainment.RateProfessor(message.content);
   }
 
 }); //End of Message Sent loop
