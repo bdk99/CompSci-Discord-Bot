@@ -1,10 +1,12 @@
+const { brendanid, ryanid, cleanrole }= require('../ids.json');
+
 //Function called with prefix !ban, used to attempt user ban
 function ban(message) 
 {
     // Assuming we mention someone in the message, this will return the user
         // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
   
-        if ((message.author.id !== '404717378715385856')&&(message.author.id !== '743957184924352542')) 
+        if ((message.author.id !== `${brendanid}`)&&(message.author.id !== `${ryanid}`)) 
         {
             message.reply('I was unable to ban the member!  Permission denied!');
             return;
@@ -53,7 +55,7 @@ function ban(message)
 //function called on prefix !kick, used to attempt to kick member
 function kick(message) 
 {
-    if ((message.author.id !== '404717378715385856')&&(message.author.id !== '743957184924352542')) 
+      if ((message.author.id !== `${brendanid}`)&&(message.author.id !== `${ryanid}`)) 
         {
             message.reply('I was unable to kick the member!  Permission denied!');
             return;
@@ -114,7 +116,7 @@ function help(message)
 
 function clean(message, num, client)
 {
-  if(message.member.roles.cache.find(r => r.name === "clean")) 
+  if(message.member.roles.cache.find(r => r.name === `${cleanrole}`)) 
   { 
     if(num>100 || num<2)
     {

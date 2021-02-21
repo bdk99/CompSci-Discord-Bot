@@ -1,9 +1,19 @@
 {
+  "name": "Almighty CompSci",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "CompSci Moderation Team!",
   "dependencies": {
     "-": "^0.0.1",
     "discord.io": "^2.5.3",
     "discord.js": "^12.5.1",
     "eslint": "^7.19.0",
+    "nodemon": "^2.0.7",
     "save": "^2.4.0",
     "winston": "^3.3.3"
   }

@@ -1,7 +1,8 @@
 const Discord = require("discord.js"); // imports the discord library
-const fs = require("fs"); // Imports the file io library  IGNORE ERRORS ON THIS LINE!  DO NOT REMOVE!
+//const fs = require("fs"); // Imports the file io library  IGNORE ERRORS ON THIS LINE!  DO NOT REMOVE!
 const { prefix, token } = require('./config.json');
-const { FOURSEVENTYTWOchannel, mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
+//const file = require("cs-quotes.txt");
+const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
 const Administrative = require("./user_code/Administrative");
@@ -143,12 +144,15 @@ client.on("message", message =>
       var num = message.content.slice(6).trim();
       Administrative.clean(message, num, client);
     }
-
-
   }
   if(message.content === `${prefix}softkill`) 
   { //softkill functionality
     softkill = Server.soft_kill(message,softkill);
+  }
+
+  if(message.channel.id === `${csquoteschannel}`)
+  {
+    Server.quotecatcher(message.content);
   }
 }); //End of Message Sent loop
 

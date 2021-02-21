@@ -45,7 +45,8 @@ function ce(message)
     message.react(reactionEmoji13);
     message.react(reactionEmoji14);
     message.react(reactionEmoji15);
-    message.react(reactionEmoji16);}
+    message.react(reactionEmoji16);
+}
   
 //Function that sends a motivation quote or meme
 function motivateme(message) 

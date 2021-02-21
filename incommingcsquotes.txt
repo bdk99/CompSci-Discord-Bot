@@ -1,0 +1,7 @@
+
+"testing newline char take 2"
+"testing newline char take 3"
+"Sorry Sara... This is for testing purposes <@!223937816483069952>"
+"*github bdk99"
+"*github bdk99/CompSci-Discord-Bot\\"
+"*github bdk99/CompSci-Discord-Bot"
