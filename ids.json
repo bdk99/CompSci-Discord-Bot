@@ -7,7 +7,8 @@
     "compscibotstatuschannel":"806391647294324766",
     "botdevstatuschannel":"807719819084431371",
     "FOURSEVENTYTWOchannel":"778637215551062057",
-    "csquoteschannel":"809486254864465942",
+    "csquoteschannel":"808161527373758464",
     "modrole":"Mod",
-    "cleanrole":"clean"
+    "cleanrole":"clean",
+    "approveQuotesChannel": "812908299442847774"
 }
