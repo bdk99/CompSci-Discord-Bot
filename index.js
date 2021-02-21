@@ -1,6 +1,6 @@
 const Discord = require("discord.js"); // imports the discord library
 const { prefix, token, devstate } = require('./config.json');
-const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
+const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, approveQuotesChannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
 const Administrative = require("./user_code/Administrative");
@@ -15,8 +15,6 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
     console.info("Starting in Development Mode");
-    client.channels.cache.get(`${compscibotstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on CompSci server
-    client.channels.cache.get(`${botdevstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on Bot test server
     //Shoots a Ready command into the corresponding channel
   }
   else
@@ -25,8 +23,6 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
 
-  client.channels.cache.get(`${compscibotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on CompSci server
-  client.channels.cache.get(`${botdevstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on Bot test server
     //Shoots a Ready command into the corresponding channel
   }
 });
@@ -174,7 +170,7 @@ client.on("message", message =>
 
   if(message.channel.id === `${csquoteschannel}`)
   {
-    Server.quotecatcher(message.content);
+    Server.quotecatcher(message, client);
   }
 
 }); //End of Message Sent loop

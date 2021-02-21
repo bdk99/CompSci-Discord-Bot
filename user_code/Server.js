@@ -1,7 +1,6 @@
 //Function that shuts down bot on kill command by specific user!
-const { brendanid, ryanid, modrole }= require('../ids.json');
+const { brendanid, ryanid, modrole, approveQuotesChannel}= require('../ids.json');
 const fs = require('fs');
-
 
 function kill(message) 
 {
@@ -31,18 +30,59 @@ function bypass(message, bypass)
     return !bypass;
 }
 
-async function quotecatcher(text)
+async function quotecatcher(message, client)
 {
     
     fs.appendFile('incommingcsquotes.txt', "\n", (err) => {
         if (err) throw err;
-        console.log(`Applying NewLine`);
     });
 
-    fs.appendFile('incommingcsquotes.txt', JSON.stringify(text), 'utf8', (err) => {
+    fs.appendFile('incommingcsquotes.txt', JSON.stringify(message.content), 'utf8', (err) => {
         if (err) throw err;
-        console.log(`${text} ...... saved!`);
     });
+
+    const regex = new RegExp('([\"\'].+[\'\"])+( *)(-+)( *)(.+)');
+
+
+    if (regex.test(message.content)) {
+        approveQuote(message.content, client);
+    }
+}
+
+async function approveQuote(quote, client) 
+{
+    client.channels.cache.get(`${approveQuotesChannel}`).send(quote)
+        .then(function (message) {
+            message.react('👍').then(() => message.react('👎'));
+
+            modUsers = {}
+            message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
+
+            modIds = [];
+            modUsers[modrole].forEach(user => modIds.push(user['id']));
+            const filter = (reaction, user) => {
+                return ['👍', '👎'].includes(reaction.emoji.name) && modIds.includes(user.id);
+            };
+
+            message.awaitReactions(filter, { max: 1 })
+                .then(collected => {
+                    const reaction = collected.first();
+
+                    if (reaction.emoji.name === '👍') {
+                        message.channel.send('You have approved the quote!');
+
+                        var name = './user_code/quotes.json';
+                        var json = JSON.parse(fs.readFileSync(name).toString());
+                        json['teacherQuotes'].push(message.content)
+
+                        fs.writeFileSync(name, JSON.stringify(json));
+
+                    } else {
+                        message.channel.send('You have disapproved the quote.');
+                    }
+                })
+        });
+    
 }
 
 //Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
@@ -64,7 +104,7 @@ function capsProtect(input)
   return true;
 }
 
-module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect};
+module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote};
 
 
 
