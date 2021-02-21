@@ -1,8 +1,8 @@
 {
-  "scripts": {	
-    "start": "node index.js",	
-    "devStart": "nodemon index.js"	
-  },	
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
+  },
   "dependencies": {
     "-": "^0.0.1",
     "discord.io": "^2.5.3",
