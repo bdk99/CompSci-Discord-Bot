@@ -18,7 +18,7 @@ client.once("ready", () =>
     //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
     console.info("Starting in Development Mode");
   client.channels.cache.get(`${compscibotstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on CompSci server
-  client.channels.cache.get(`${botdevstatuschannel}`).send('Im woBot Ready and running on localhost!'); //Shoots message into #bot-status channel on Bot test server
+  client.channels.cache.get(`${botdevstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on Bot test server
     //Shoots a Ready command into the corresponding channel
   }
   else
