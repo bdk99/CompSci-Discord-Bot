@@ -157,9 +157,9 @@ client.on("message", message =>
       Entertainment.RateProfessor(message.content);
     }
 
-    if(message.content.startsWith(`${prefix}profreviews`))
+    if(message.content.startsWith(`${prefix}viewratings`))
     {
-      Entertainment.ListProfessors(message.content);
+      Entertainment.viewRatings(message.content.slice(12).trim(), message);
     }
 
   }
