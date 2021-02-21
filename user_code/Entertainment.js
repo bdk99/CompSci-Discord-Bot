@@ -87,4 +87,10 @@ function RateProfessor()
 
 }
 
-module.exports = {motivateme, ce, quote, makemelaugh, RateProfessor};
+async function viewRatings(profName, message) {
+    var fs = require('fs');
+    var textByLine = fs.readFileSync('../CompSci-Discord-Bot/user_code/professors/' + profName + '.txt').toString().split("\n");
+    message.channel.send(textByLine);
+}
+
+module.exports = {motivateme, ce, quote, makemelaugh, RateProfessor, viewRatings};
