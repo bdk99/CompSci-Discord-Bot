@@ -170,7 +170,7 @@ client.on("message", message =>
 
   if(message.channel.id === `${prefix}rateprof`)
   {
-    Server.quotecatcher(message.content);
+    Entertainment.RateProfessor(message.content);
   }
 
 }); //End of Message Sent loop
