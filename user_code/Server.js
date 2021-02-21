@@ -45,7 +45,26 @@ async function quotecatcher(text)
     });
 }
 
-module.exports = {kill, soft_kill, bypass, quotecatcher};
+//Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
+function capsProtect(input) 
+{
+  var capTolerance = .25; //How lenient the protection is for caps
+  var capCount = 0;
+  for (var i = 0 ; i < input.length; i++) 
+  {
+      if (/[A-Z]/.test(input[i])) 
+      {
+          capCount++;
+      }
+  }
+  if (capCount > capTolerance * input.length && capCount > 8) 
+  {
+      return false;
+  }
+  return true;
+}
+
+module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect};
 
 
 

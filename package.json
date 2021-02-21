@@ -7,7 +7,7 @@
     "devStart": "nodemon index.js"
   },
   "keywords": [],
-  "author": "CompSci Moderation Team!",
+  "author": "CompSci Moderation Team! and Brendan :D",
   "dependencies": {
     "-": "^0.0.1",
     "discord.io": "^2.5.3",

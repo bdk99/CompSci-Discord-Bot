@@ -1,6 +1,6 @@
 const Discord = require("discord.js"); // imports the discord library
 //const fs = require("fs"); // Imports the file io library  IGNORE ERRORS ON THIS LINE!  DO NOT REMOVE!
-const { prefix, token } = require('./config.json');
+const { prefix, token, devstate } = require('./config.json');
 //const file = require("cs-quotes.txt");
 const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, compscibotstatuschannel, botdevstatuschannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
@@ -11,6 +11,18 @@ const Server = require("./user_code/Server");
 
 client.once("ready", () => 
 {
+  if(`${devstate}`=='true')
+  {
+    console.info(`Logged in as ${client.user.tag}!`);
+    console.info("Ready and stable!");
+    //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
+    console.info("Starting in Development Mode");
+  client.channels.cache.get(`${compscibotstatuschannel}`).send('Bot Ready and running on localhost!'); //Shoots message into #bot-status channel on CompSci server
+  client.channels.cache.get(`${botdevstatuschannel}`).send('Im woBot Ready and running on localhost!'); //Shoots message into #bot-status channel on Bot test server
+    //Shoots a Ready command into the corresponding channel
+  }
+  else
+  {
     console.info(`Logged in as ${client.user.tag}!`);
     console.info("Ready and stable!");
     //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
@@ -18,6 +30,7 @@ client.once("ready", () =>
   client.channels.cache.get(`${compscibotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on CompSci server
   client.channels.cache.get(`${botdevstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots message into #bot-status channel on Bot test server
     //Shoots a Ready command into the corresponding channel
+  }
 });
 
 client.on('ready', () => 
@@ -55,7 +68,7 @@ client.on("message", message =>
  
   if (!bypass && (message.author.id !== '404717378715385856'))
     {
-      let capsbool = capsProtect(message.content);
+      let capsbool = Server.capsProtect(message.content);
       if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
       {
         message.delete({ timeout: 2000 })
@@ -155,29 +168,5 @@ client.on("message", message =>
     Server.quotecatcher(message.content);
   }
 }); //End of Message Sent loop
-
-
-
-//Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
-function capsProtect(input) 
-{
-  var capTolerance = .25; //How lenient the protection is for caps
-  var capCount = 0;
-  for (var i = 0 ; i < input.length; i++) 
-  {
-      if (/[A-Z]/.test(input[i])) 
-      {
-          capCount++;
-      }
-  }
-
-  if (capCount > capTolerance * input.length && capCount > 8) 
-  {
-      return false;
-  }
-
-  return true;
-}
-
 
 client.login(token); // starts the bot up
