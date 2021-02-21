@@ -167,6 +167,12 @@ client.on("message", message =>
   {
     Server.quotecatcher(message.content);
   }
+
+  if(message.channel.id === `${prefix}rateprof`)
+  {
+    Server.quotecatcher(message.content);
+  }
+
 }); //End of Message Sent loop
 
 client.login(token); // starts the bot up
