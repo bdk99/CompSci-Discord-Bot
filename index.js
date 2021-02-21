@@ -1,6 +1,6 @@
 const Discord = require("discord.js"); // imports the discord library
 const { prefix, token, devstate } = require('./config.json');
-const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, approveQuotesChannel }= require('./ids.json');
+const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
 const Administrative = require("./user_code/Administrative");
@@ -21,9 +21,6 @@ client.once("ready", () =>
   {
     console.info(`Logged in as ${client.user.tag}!`);
     console.info("Ready and stable!");
-    //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
-
-    //Shoots a Ready command into the corresponding channel
   }
 });
 
