@@ -1,13 +1,4 @@
 {
-  "name": "Almighty CompSci",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "devStart": "nodemon index.js"
-  },
-  "keywords": [],
-  "author": "CompSci Moderation Team! and Brendan :D",
   "dependencies": {
     "-": "^0.0.1",
     "discord.io": "^2.5.3",
