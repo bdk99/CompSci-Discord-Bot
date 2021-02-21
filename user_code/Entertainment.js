@@ -10,6 +10,7 @@ fs.readFile('./user_code/quotes.json', 'utf8', (err, data) => {
     }
 })
 
+
 //Function that reacts with all unique server emojis 
 function ce(message) 
 {
@@ -75,20 +76,36 @@ function makemelaugh(message)
     message.channel.send(quotes[index]);
 }
 
-
 function getRandomInt(max) 
 {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-function RateProfessor()
+function RateProfessor(message)
 {
+    var arg = message.content.slice(6).trim();
+    var profname = arg.substr(0,arg.indexOf(' ')); // "72"
+    var review = arg.substr(arg.indexOf(' ')+1); // "tocirah sneab"
 
+    console.log('profname '+ profname);
+    console.log('Review '+ arg);
+
+    var file = ('./user_code/professors/' + profname.toLowerCase() + '.txt').toString().split("\n");
+
+    var profnamelength = profname.length;
+    console.log('Professor name length '+profnamelength);
+
+    console.log('Final professor review is... '+review);
+
+    fs.appendFile(`${file}`,"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
+        if (err) throw err;
+    });
 }
 
-async function viewRatings(profName, message) {
-    var fs = require('fs');
-    var textByLine = fs.readFileSync('./user_code/professors/' + profName.toLowerCase() + '.txt').toString().split("\n");
+async function viewRatings(message) 
+{   
+    var viewprofName = message.content.slice(12).trim();
+    var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
     message.channel.send(textByLine);
 }
 

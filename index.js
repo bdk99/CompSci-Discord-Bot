@@ -149,14 +149,14 @@ client.on("message", message =>
       Administrative.clean(message, num, client);
     }
 
-    if(message.content.startsWith(`${prefix}rateprof`))
+    if(message.content.startsWith(`${prefix}ratep`))
     {
-      Entertainment.RateProfessor(message.content);
+      Entertainment.RateProfessor(message);
     }
 
     if(message.content.startsWith(`${prefix}viewratings`))
     {
-      Entertainment.viewRatings(message.content.slice(12).trim(), message);
+      Entertainment.viewRatings(message);
     }
 
   }
