@@ -85,28 +85,46 @@ function RateProfessor(message)
 {
     var arg = message.content.slice(6).trim();
     var profname = arg.substr(0,arg.indexOf(' ')); // "72"
-    var review = arg.substr(arg.indexOf(' ')+1); // "tocirah sneab"
 
-    console.log('profname '+ profname);
-    console.log('Review '+ arg);
-
-    var file = ('./user_code/professors/' + profname.toLowerCase() + '.txt').toString().split("\n");
-
-    var profnamelength = profname.length;
-    console.log('Professor name length '+profnamelength);
-
-    console.log('Final professor review is... '+review);
-
-    fs.appendFile(`${file}`,"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
+    fs.readFile('./user_code/professors/professors.txt', function (err, data) {
         if (err) throw err;
+        if (data.includes(profname)){
+            var review = arg.substr(arg.indexOf(' ')+1); // "tocirah sneab"
+
+            console.log('profname '+ profname);
+            console.log('Review '+ arg);
+
+            var file = ('./user_code/professors/' + profname.toLowerCase() + '.txt').toString().split("\n");
+
+            var profnamelength = profname.length;
+            console.log('Professor name length '+profnamelength);
+
+            console.log('Final professor review is... '+review);
+
+            fs.appendFile(`${file}`,"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
+                if (err) throw err;
+            });
+        }
+        else {
+            message.channel.send("Sorry, that professor does not exist!");
+        }
     });
 }
 
 async function viewRatings(message) 
 {   
     var viewprofName = message.content.slice(12).trim();
-    var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
-    message.channel.send(textByLine);
+    fs.readFile('./user_code/professors/professors.txt', function (err, data) {
+        if (err) throw err;
+        if(data.includes(viewprofName)){
+            var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
+            message.channel.send(textByLine);
+        }
+        else {
+            message.channel.send("Sorry, that professor does not exist!")
+        }
+    });
+    
 }
 
 module.exports = {motivateme, ce, quote, makemelaugh, RateProfessor, viewRatings};
