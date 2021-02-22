@@ -1,7 +1,7 @@
 const { brendanid, ryanid, cleanrole }= require('../ids.json');
 
 //Function called with prefix !ban, used to attempt user ban
-function ban(message) 
+async function ban(message) 
 {
     // Assuming we mention someone in the message, this will return the user
         // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
@@ -53,7 +53,7 @@ function ban(message)
 }
 
 //function called on prefix !kick, used to attempt to kick member
-function kick(message) 
+async function kick(message) 
 {
       if ((message.author.id !== `${brendanid}`)&&(message.author.id !== `${ryanid}`)) 
         {
@@ -99,7 +99,7 @@ function kick(message)
     }
 }
 
-function help(message) 
+async function help(message) 
 {
     message.channel.send('Available Commands!\n' +
                   // 'kick [required: user]: will attempt to kick the specified user\n' +
@@ -114,7 +114,7 @@ function help(message)
                   'ce : Sends a message with every unique server emoji responded to it');
 }
 
-function clean(message, num, client)
+async function clean(message, num, client)
 {
   if(message.member.roles.cache.find(r => r.name === `${cleanrole}`)) 
   { 

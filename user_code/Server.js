@@ -2,7 +2,7 @@
 const { brendanid, ryanid, modrole, approveQuotesChannel}= require('../ids.json');
 const fs = require('fs');
 
-function kill(message) 
+async function kill(message) 
 {
     if ((message.author.id !== `${brendanid}`)&&(message.author.id !== `${ryanid}`)) return;
         message.channel.send('Stopping the bot as per exclusive admin command!').then(() => 
@@ -12,7 +12,7 @@ function kill(message)
 }
 
 //Function that makes bot unresponsive to commands until repeat of softkill command!
-function soft_kill(message, softkill) 
+async function soft_kill(message, softkill) 
 {
     if(message.member.roles.cache.find(r => r.name === `${modrole}`)) 
     {
@@ -22,7 +22,7 @@ function soft_kill(message, softkill)
 }
 
 //Adds function to bypass filter with a bypass toggle command!
-function bypass(message, bypass) 
+async function bypass(message, bypass) 
 {
     if (message.author.id !== `${brendanid}`) return bypass;
     
@@ -86,7 +86,7 @@ async function approveQuote(quote, client)
 }
 
 //Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
-function capsProtect(input) 
+async function capsProtect(input) 
 {
   var capTolerance = .25; //How lenient the protection is for caps
   var capCount = 0;
