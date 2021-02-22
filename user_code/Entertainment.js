@@ -12,7 +12,7 @@ fs.readFile('./user_code/quotes.json', 'utf8', (err, data) => {
 
 
 //Function that reacts with all unique server emojis 
-function ce(message) 
+async function ce(message) 
 {
     const reactionEmoji = message.guild.emojis.cache.find(emoji => emoji.name === 'billtiger');
     const reactionEmoji2 = message.guild.emojis.cache.find(emoji => emoji.name === 'hackerevett');
@@ -50,7 +50,7 @@ function ce(message)
 }
   
 //Function that sends a motivation quote or meme
-function motivateme(message) 
+async function motivateme(message) 
 {
     var quotes = jsonData.motivationalQuotes;
     
@@ -59,7 +59,7 @@ function motivateme(message)
 }
 
 //Function for Teacher quotes!  DO NOT REMOVE
-function quote(message) 
+async function quote(message) 
 {
     var quotes2 = jsonData.teacherQuotes;
     
@@ -68,7 +68,7 @@ function quote(message)
 }
 
 //Function that makes people laugh
-function makemelaugh(message) 
+async function makemelaugh(message) 
 {
     var quotes = jsonData.makeMeLaugh;
     
@@ -76,36 +76,32 @@ function makemelaugh(message)
     message.channel.send(quotes[index]);
 }
 
-function getRandomInt(max) 
+async function getRandomInt(max) 
 {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-function RateProfessor(message)
+async function RateProfessor(message)
 {
     var arg = message.content.slice(6).trim();
-    var profname = arg.substr(0,arg.indexOf(' ')); // "72"
+    var profname = arg.substr(0,arg.indexOf(' '));
 
-    fs.readFile('./user_code/professors/professors.txt', function (err, data) {
+    fs.readFile('./user_code/professors/professors.txt', function (err, data) 
+    {
         if (err) throw err;
-        if (data.includes(profname)){
-            var review = arg.substr(arg.indexOf(' ')+1); // "tocirah sneab"
-
-            console.log('profname '+ profname);
-            console.log('Review '+ arg);
+        if (data.includes(profname))
+        {
+            var review = arg.substr(arg.indexOf(' ')+1);
 
             var file = ('./user_code/professors/' + profname.toLowerCase() + '.txt').toString().split("\n");
 
-            var profnamelength = profname.length;
-            console.log('Professor name length '+profnamelength);
-
-            console.log('Final professor review is... '+review);
-
+            message.channel.send('Adding' +review+' review to '+profname)
             fs.appendFile(`${file}`,"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
                 if (err) throw err;
             });
         }
-        else {
+        else 
+        {
             message.channel.send("Sorry, that professor does not exist!");
         }
     });
@@ -114,13 +110,15 @@ function RateProfessor(message)
 async function viewRatings(message) 
 {   
     var viewprofName = message.content.slice(12).trim();
-    fs.readFile('./user_code/professors/professors.txt', function (err, data) {
+    fs.readFile('./user_code/professors/professors.txt', function (err, data) 
+    {
         if (err) throw err;
         if(data.includes(viewprofName)){
             var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
             message.channel.send(textByLine);
         }
-        else {
+        else 
+        {
             message.channel.send("Sorry, that professor does not exist!")
         }
     });
