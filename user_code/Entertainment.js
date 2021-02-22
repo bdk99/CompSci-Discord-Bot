@@ -68,7 +68,7 @@ async function quote(message)
         var search = message.content.replace("!quote ", "");
 
         quotes2.forEach(function(quote) {
-            if (quote.toLowerCase().includes(search.toLowerCase()) {
+            if (quote.toLowerCase().includes(search.toLowerCase() )) {
                 filteredQuotes.push(quote);
             }
         });  
