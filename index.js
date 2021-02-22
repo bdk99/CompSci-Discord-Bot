@@ -80,7 +80,7 @@ client.on("message", message =>
     } 
 
     //Responds with a random quote from the list compiled on 2.7.2021 from cs-quotes channel
-    if (message.content === `${prefix}quote`) 
+    if (message.content.startsWith(`${prefix}quote`)) 
     {
       Entertainment.quote(message);
     } 
