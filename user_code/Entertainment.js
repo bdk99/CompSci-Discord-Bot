@@ -3,7 +3,7 @@ const fs = require('fs');
 const { userInfo } = require('os');
 let jsonData = "";
 
-fs.readFile('./user_code/quotes.json', 'utf8', (err, data) => {
+fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
         console.log("Unable to read quotes json file");

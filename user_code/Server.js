@@ -55,10 +55,10 @@ async function approveQuote(quote, client)
         .then(function (message) {
             message.react('👍').then(() => message.react('👎'));
 
-            modUsers = {}
+            var modUsers = {}
             message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
 
-            modIds = [];
+            var modIds = [];
             modUsers[modrole].forEach(user => modIds.push(user['id']));
             const filter = (reaction, user) => {
                 return ['👍', '👎'].includes(reaction.emoji.name) && modIds.includes(user.id);
@@ -71,7 +71,7 @@ async function approveQuote(quote, client)
                     if (reaction.emoji.name === '👍') {
                         message.channel.send('You have approved the quote!');
 
-                        var name = './user_code/quotes.json';
+                        var name = './logs/quotes.json';
                         var json = JSON.parse(fs.readFileSync(name).toString());
                         json['teacherQuotes'].push(message.content)
 
@@ -82,7 +82,6 @@ async function approveQuote(quote, client)
                     }
                 })
         });
-    
 }
 
 //Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
