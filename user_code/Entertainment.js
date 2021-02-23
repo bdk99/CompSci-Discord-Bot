@@ -1,4 +1,6 @@
+const { Member } = require('discord.io');
 const fs = require('fs');
+const { userInfo } = require('os');
 let jsonData = "";
 
 fs.readFile('./user_code/quotes.json', 'utf8', (err, data) => {
@@ -156,4 +158,44 @@ async function viewRatings(message)
     
 }
 
-module.exports = {motivateme, ce, quote, makemelaugh, RateProfessor, viewRatings};
+async function focus(message) {
+    var parameter = message.content.slice(10).trim();
+    var timeString = parameter.substr(0,parameter.indexOf(' '));
+    var time = parseInt(timeString);
+    const second = 1000;
+    const minute = 60 * second;
+    const hour = 60 * minute;
+    var timeStatement;
+    var jstime;
+
+    if (message.content.includes("second") || message.content.includes("seconds")) {
+        jstime = time * second;
+        if (time == 1)
+            timeStatement = time + " second";
+        else timeStatement = time + " seconds";
+    }
+    else if (message.content.includes("minute") || message.content.includes("minutes")) {
+        jstimetime = time * minute;
+        if (time == 1)
+            timeStatement = time + " minute";
+        else timeStatement = time + " minutes";
+    }
+    else if (message.content.includes("hour") || message.content.includes("hours")) {
+        jstime = time * hour;
+        if (time == 1)
+            timeStatement = time + " hour";
+        else timeStatement = time + " hours";
+    }
+    else jstime = time * 0;
+
+    let role = message.guild.roles.cache.find(role => role.name === "muted");
+    message.member.roles.add(role).catch(console.error);
+    message.channel.send('Focus Mode has been engaged for ' + timeStatement);
+    
+    setTimeout(() => {
+        message.member.roles.remove(role).catch(console.error);
+        message.channel.send('Focus mode has been disabled');
+    }, jstime);
+}
+
+module.exports = {motivateme, ce, quote, makemelaugh, RateProfessor, viewRatings, focus};
