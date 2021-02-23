@@ -115,6 +115,11 @@ client.on("message", message =>
       Entertainment.ce(message);  
     }
 
+    // else if (message.content === `${prefix}updateBotPerms`)
+    // {
+    //   Server.updateBotPerms(message);
+    // }
+
     //Sends a motivational quote (or meme)
     else if (message.content === `${prefix}motivateme`)
     {

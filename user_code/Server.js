@@ -103,7 +103,7 @@ async function capsProtect(input)
   return true;
 }
 
-module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote};
+module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote, updateBotPerms};
 
 
 
