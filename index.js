@@ -159,6 +159,11 @@ client.on("message", message =>
       Entertainment.viewRatings(message);
     }
 
+    if (message.content.startsWith(`${prefix}focusmode`))
+    {
+      Entertainment.focus(message);
+    }
+
   }
   if(message.content === `${prefix}softkill`) 
   { //softkill functionality
