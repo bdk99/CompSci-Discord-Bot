@@ -39,8 +39,11 @@ var bypassdelete=false;
 client.on("message", message => 
 { // runs whenever a message is sent
 
-  //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
-  if (message.author.bot) return;
+  if(!message.content.startsWith(`${prefix}quote`))
+  {
+      //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
+    if (message.author.bot) return;
+  }
 
   if (message.content.startsWith(`${prefix}tb`))
   {

@@ -126,8 +126,7 @@ async function RateProfessor(message, client)
             var review = arg.substr(arg.indexOf(' ')+1);
 
             var file = ('./user_code/professors/' + profname.toLowerCase() + '.txt').toString().split("\n");
-
-            console.log("Entering Approve Review function");
+            message.channel.send(`Submitting review for mod review!  Thanks for taking the time to submit a review!`);
             approveReview(message, review, client, file, profname);
         }
         else 
@@ -159,8 +158,8 @@ async function approveReview(message, review, client, file, profname)
                     if (reaction.emoji.name === '👍') 
                     {
                         message.channel.send('You have approved the review!');
-                        console.log('Appending review to '+file+review);
-                        fs.appendFile(`${file}`,"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
+                        console.log('Appending review to '+file+'--->'+review); //DO NOT REMOVE THIS CONSOLE LOG!
+                        fs.appendFile(`${file}`,"\n"+"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
                             if (err) throw err;
                         });
                     } 
@@ -183,7 +182,7 @@ async function viewRatings(message)
     fs.readFile('./user_code/professors/professors.txt', function (err, data) 
     {
         if (err) throw err;
-        if(data.includes(viewprofName)){
+        if(data.includes(viewprofName.toLowerCase())){
             var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
             message.channel.send(textByLine);
         }

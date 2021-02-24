@@ -43,7 +43,6 @@ async function quotecatcher(message, client)
 
     const regex = new RegExp('([\"\'].+[\'\"])+( *)(-+)( *)(.+)');
 
-
     if (regex.test(message.content)) {
         approveQuote(message.content, client);
     }
