@@ -1,7 +1,6 @@
-const { Member } = require('discord.io');
 const fs = require('fs');
-const { userInfo } = require('os');
 let jsonData = "";
+const { modrole, approveReviewsChannel}= require('../ids.json');
 
 fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
     if (err) {
@@ -114,10 +113,10 @@ function getRandomInt(max)
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-async function RateProfessor(message)
+async function RateProfessor(message, client)
 {
     var arg = message.content.slice(6).trim();
-    var profname = arg.substr(0,arg.indexOf(' '));
+    var profname = (arg.substr(0,arg.indexOf(' ')).toLowerCase());
 
     fs.readFile('./user_code/professors/professors.txt', function (err, data) 
     {
@@ -128,16 +127,54 @@ async function RateProfessor(message)
 
             var file = ('./user_code/professors/' + profname.toLowerCase() + '.txt').toString().split("\n");
 
-            message.channel.send('Adding' +review+' review to '+profname)
-            fs.appendFile(`${file}`,"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
-                if (err) throw err;
-            });
+            console.log("Entering Approve Review function");
+            approveReview(message, review, client, file, profname);
         }
         else 
         {
             message.channel.send("Sorry, that professor does not exist!");
         }
     });
+}
+
+async function approveReview(message, review, client, file, profname) 
+{
+    client.channels.cache.get(`${approveReviewsChannel}`).send(`Review for ${profname} ---> `+review)
+        .then(function (message) {
+            message.react('👍').then(() => message.react('👎'));
+
+            var modUsers = {}
+            message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
+
+            var modIds = [];
+            modUsers[modrole].forEach(user => modIds.push(user['id']));
+            const filter = (reaction, user) => {
+                return ['👍', '👎'].includes(reaction.emoji.name) && modIds.includes(user.id);
+            };
+
+            message.awaitReactions(filter, { max: 1 })
+                .then(collected => {
+                    const reaction = collected.first();
+
+                    if (reaction.emoji.name === '👍') 
+                    {
+                        message.channel.send('You have approved the review!');
+                        console.log('Appending review to '+file+review);
+                        fs.appendFile(`${file}`,"\n"+JSON.stringify(`${review}`), 'utf8', (err) => {
+                            if (err) throw err;
+                        });
+                    } 
+                    else 
+                    {
+                        message.channel.send('You have disapproved the review.');
+                        file = ('./user_code/professors/trashdump.txt').toString().split("\n");
+                        fs.appendFile(`${file}`,"\n"+`Declined review for ${profname} ---> `+JSON.stringify(`${review}`), 'utf8', (err) => {
+                            if (err) throw err;
+                        });
+                        return;
+                    }
+                })
+        });
 }
 
 async function viewRatings(message) 
@@ -153,6 +190,7 @@ async function viewRatings(message)
         else 
         {
             message.channel.send("Sorry, that professor does not exist!")
+            console.log(`HEY YOU IDIOT OWNER!!!  GET A PROFESSOR LIST HERE DAMMIT!`);
         }
     });
     
@@ -175,7 +213,7 @@ async function focus(message) {
         else timeStatement = time + " seconds";
     }
     else if (message.content.includes("minute") || message.content.includes("minutes")) {
-        jstimetime = time * minute;
+        jstime = time * minute;
         if (time == 1)
             timeStatement = time + " minute";
         else timeStatement = time + " minutes";

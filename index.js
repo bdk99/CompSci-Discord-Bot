@@ -151,7 +151,7 @@ client.on("message", message =>
 
     if(message.content.startsWith(`${prefix}ratep`))
     {
-      Entertainment.RateProfessor(message);
+      Entertainment.RateProfessor(message, client);
     }
 
     if(message.content.startsWith(`${prefix}viewratings`))
