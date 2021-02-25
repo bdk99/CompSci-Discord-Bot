@@ -2,6 +2,7 @@ const Discord = require("discord.js"); // imports the discord library
 const { prefix, token, devstate } = require('./config.json');
 const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
+const cron = require('cron');
 
 const Administrative = require("./user_code/Administrative");
 const Entertainment = require("./user_code/Entertainment");
@@ -35,6 +36,9 @@ client.on('ready', () =>
 var softkill = false; 
 var bypass = false;
 var bypassdelete=false;
+
+  //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday
+  Server.cronjob(client, cron)
 
 client.on("message", message => 
 { // runs whenever a message is sent

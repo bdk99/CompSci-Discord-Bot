@@ -1,6 +1,15 @@
 //Function that shuts down bot on kill command by specific user!
-const { brendanid, ryanid, modrole, approveQuotesChannel}= require('../ids.json');
+const { brendanid, ryanid, modrole, approveQuotesChannel, generalchat}= require('../ids.json');
 const fs = require('fs');
+
+function cronjob(client, cron)
+{
+    let cronjob = new cron.CronJob('00 00 10 * * *', () => {
+        client.channels.cache.get(`${generalchat}`).send('?quote'); //Shoots message into #bot-status channel on CompSci server
+      });
+      
+      cronjob.start()
+}
 
 async function kill(message) 
 {
@@ -102,7 +111,7 @@ async function capsProtect(input)
   return true;
 }
 
-module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote};
+module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote, cronjob};
 
 
 
