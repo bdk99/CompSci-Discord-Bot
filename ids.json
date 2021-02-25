@@ -1,5 +1,5 @@
 {
-    "brendanid":"404717378715385856",
+    "brendanid":"404717378715385856", 
     "andreakaid":"693192159909642273",
     "ryanid":"743957184924352542",
     "mcchat":"801657065676079144",
@@ -12,5 +12,8 @@
     "cleanrole":"clean",
     "approveQuotesChannel": "812908299442847774",
     "approveReviewsChannel":"813991653425020938",
-    "generalchat":"707293854507991172"
+    "generalchat":"707293854507991172",
+    "proftalkchannel":"763174691866148884",
+    "modbotcommands":"784963943726448691",
+    "botcommands":"773327643574796288"
 }

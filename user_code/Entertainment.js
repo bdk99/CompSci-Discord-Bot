@@ -1,6 +1,6 @@
 const fs = require('fs');
 let jsonData = "";
-const { modrole, approveReviewsChannel}= require('../ids.json');
+const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands }= require('../ids.json');
 
 fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
     if (err) {
@@ -10,7 +10,6 @@ fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
         jsonData = JSON.parse(data);
     }
 })
-
 
 //Function that reacts with all unique server emojis 
 async function ce(message) 
@@ -178,21 +177,28 @@ async function approveReview(message, review, client, file, profname)
 
 async function viewRatings(message) 
 {   
-    var viewprofName = message.content.slice(12).trim();
-    fs.readFile('./user_code/professors/professors.txt', function (err, data) 
+    if((message.channel.id === `${proftalkchannel}`) || (message.channel.id === `${botcommands}`)|| (message.channel.id === `${modbotcommands}`))
     {
-        if (err) throw err;
-        if(data.includes(viewprofName.toLowerCase())){
-            var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
-            message.channel.send(textByLine);
-        }
-        else 
+        var viewprofName = message.content.slice(12).trim();
+        fs.readFile('./user_code/professors/professors.txt', function (err, data) 
         {
-            message.channel.send("Sorry, that professor does not exist!")
-            console.log(`HEY YOU IDIOT OWNER!!!  GET A PROFESSOR LIST HERE DAMMIT!`);
-        }
-    });
-    
+            if (err) throw err;
+            if(data.includes(viewprofName.toLowerCase())){
+                var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
+                message.channel.send(textByLine);
+            }
+            else 
+            {
+                message.channel.send("Sorry, that professor does not exist!")
+                console.log(`HEY YOU IDIOT OWNER!!!  GET A PROFESSOR LIST HERE DAMMIT!`);
+            }
+        });
+    }
+    else
+    {
+        console.log(message.author.username+` tried using viewratings in `+message.channel.name);
+        message.channel.send(`Command only allowed in prof-talk-and-suggestions and bot-commands`);
+    }
 }
 
 async function focus(message) {
