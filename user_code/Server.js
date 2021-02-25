@@ -7,7 +7,7 @@ function cronjob(client, cron)
 {
     var date = new Date();
     console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-    let cronjob = new cron.CronJob('0 49 19 * * *', () => {
+    let cronjob = new cron.CronJob('00 00 12 * * *', () => {
         //CRON JOBS ARE IN UTC TIME!  EST TIME + 5 HOURS
         //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
         client.channels.cache.get(`${generalchat}`).send(`${prefix}quote`); 
@@ -56,6 +56,7 @@ async function quotecatcher(message, client)
     });
 
     const regex = new RegExp('([\"\'].+[\'\"])+( *)(-+)( *)(.+)');
+                            //Ignore errors here
 
     if (regex.test(message.content)) {
         approveQuote(message.content, client);

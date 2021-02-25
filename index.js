@@ -41,16 +41,6 @@ var bypassdelete=false;
   Server.cronjob(client, cron)
 
 
-  // client.on('guildMemberAdd', member => {
-
-  //   var welcomeresponses = [
-  //     "A very warm welcome to you! It is lovely to have you among us!",
-  //     "It is an honor to have such a hardworking fellow like you to join us! Welcome!"
-  // ];
-  // client.channels.chache.get('806533839475441686').send(welcomeresponses[Entertainment.getRandomInt(welcomeresponses.length - 1)]);
-  // });
-
-
 client.on("message", message => 
 { // runs whenever a message is sent
 
@@ -181,7 +171,6 @@ client.on("message", message =>
     {
       Entertainment.focus(message);
     }
-
   }
   if(message.content === `${prefix}softkill`) 
   { //softkill functionality
