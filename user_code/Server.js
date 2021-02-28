@@ -7,7 +7,7 @@ function cronjob(client, cron)
 {
     var date = new Date();
     console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-    let cronjob = new cron.CronJob('00 00 12 * * *', () => {
+    let cronjob = new cron.CronJob('00 00 14 * * *', () => {
         //CRON JOBS ARE IN UTC TIME!  EST TIME + 5 HOURS
         //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
         client.channels.cache.get(`${generalchat}`).send(`${prefix}quote`); 
