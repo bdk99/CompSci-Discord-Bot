@@ -44,6 +44,12 @@ var bypassdelete=false;
 client.on("message", message => 
 { // runs whenever a message is sent
 
+  if((message.channel.id != `815773312139526164`) && (! message.content.startsWith(`${prefix}`)))
+  {   //Adds a text logger.... so all messages from all channels will spit out in this channel
+    console.log(`${message.author.username} sent ${message.content} in ${message.channel.name}`);
+    client.channels.cache.get(`815773312139526164`).send(`${message.author.username} sent ${message.content} in ${message.channel.name}`); 
+  }
+
   if(!message.content.startsWith(`${prefix}quote`))
   {
       //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
