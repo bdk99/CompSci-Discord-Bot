@@ -1,6 +1,6 @@
 const fs = require('fs');
 let jsonData = "";
-const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands }= require('../ids.json');
+const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands, focusmoderole }= require('../ids.json');
 
 //Script for reading JSON file
 fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
@@ -236,7 +236,7 @@ async function focus(message) {
     }
     else jstime = time * 0;
 
-    let role = message.guild.roles.cache.find(role => role.name === "muted");
+    let role = message.guild.roles.cache.find(role => role.name === `${focusmoderole}`);
     message.member.roles.add(role).catch(console.error);
     message.channel.send('Focus Mode has been engaged for ' + timeStatement);
     
