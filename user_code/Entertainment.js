@@ -184,6 +184,8 @@ async function viewRatings(message)
     if((message.channel.id === `${proftalkchannel}`) || (message.channel.id === `${botcommands}`)|| (message.channel.id === `${modbotcommands}`))
     {
         var viewprofName = message.content.slice(12).trim();
+        if (viewprofName = "")
+            message.channel.send("I don't know what Professor's ratings to give if you don't specify a Professor's name first, silly goose.");
         fs.readFile('./user_code/professors/professors.txt', function (err, data) 
         {
             if (err) throw err;
