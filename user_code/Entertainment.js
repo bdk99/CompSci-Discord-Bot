@@ -2,6 +2,7 @@ const fs = require('fs');
 let jsonData = "";
 const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands }= require('../ids.json');
 
+//Script for reading JSON file
 fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
     if (err) {
         console.log(err);
@@ -112,6 +113,7 @@ function getRandomInt(max)
     return Math.floor(Math.random() * Math.floor(max));
 }
 
+//Code to add a professor rating 
 async function RateProfessor(message, client)
 {
     var arg = message.content.slice(6).trim();
@@ -135,6 +137,7 @@ async function RateProfessor(message, client)
     });
 }
 
+//Code for approving a new professor review
 async function approveReview(message, review, client, file, profname) 
 {
     client.channels.cache.get(`${approveReviewsChannel}`).send(`Review for ${profname} ---> `+review)
@@ -175,6 +178,7 @@ async function approveReview(message, review, client, file, profname)
         });
 }
 
+//Code to retrieve all written professor ratings from their respective txt file and list them in Discord
 async function viewRatings(message) 
 {   
     if((message.channel.id === `${proftalkchannel}`) || (message.channel.id === `${botcommands}`)|| (message.channel.id === `${modbotcommands}`))
@@ -201,6 +205,7 @@ async function viewRatings(message)
     }
 }
 
+//Code to engage Focus Mode
 async function focus(message) {
     var parameter = message.content.slice(10).trim();
     var timeString = parameter.substr(0,parameter.indexOf(' '));
@@ -211,7 +216,7 @@ async function focus(message) {
     var timeStatement;
     var jstime;
 
-    if (message.content.includes("second") || message.content.includes("seconds")) {
+    if (message.content.includes("second") || message.content.includes("seconds")) { //Cancer conditional
         jstime = time * second;
         if (time == 1)
             timeStatement = time + " second";
