@@ -183,9 +183,12 @@ async function viewRatings(message)
 {   
     if((message.channel.id === `${proftalkchannel}`) || (message.channel.id === `${botcommands}`)|| (message.channel.id === `${modbotcommands}`))
     {
-        var viewprofName = message.content.slice(12).trim();
-        if (viewprofName = "")
+        var viewprofName = message.content.slice(12).trim().toString();
+        if (viewprofName.localeCompare("")==0)
+        {
             message.channel.send("I don't know what Professor's ratings to give if you don't specify a Professor's name first, silly goose.");
+            return;
+        }
         fs.readFile('./user_code/professors/professors.txt', function (err, data) 
         {
             if (err) throw err;
@@ -195,7 +198,6 @@ async function viewRatings(message)
             else 
             {
                 message.channel.send("Sorry, that professor does not exist!")
-                console.log(`HEY YOU IDIOT OWNER!!!  GET A PROFESSOR LIST HERE DAMMIT!`);
             }
         });
     }
