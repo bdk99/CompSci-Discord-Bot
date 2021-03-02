@@ -44,7 +44,6 @@ var bypassdelete=false;
 client.on("message", message => 
 { // runs whenever a message is sent
 
-  Server.chatlogger(message);
 
   if(!message.content.startsWith(`${prefix}quote`))
   {
@@ -59,7 +58,16 @@ client.on("message", message =>
 
   if (!bypass && (message.author.id !== '404717378715385856'))
     {
-      Server.CapsChecker(message);
+      let capsbool = Server.capsProtect(message.content);
+      if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
+      {
+        message.delete({ timeout: 2000 })
+        console.log("Deleting message: "+message.content);
+      }
+      else if(bypassdelete===true)
+      {
+        bypassdelete=false;
+      } 
     } 
 
   if (!softkill)

@@ -1,24 +1,8 @@
 //Function that shuts down bot on kill command by specific user!
 const { brendanid, modrole, approveQuotesChannel, generalchat, chatloggerchannel }= require('../ids.json');
 const { prefix } = require('../config.json')
-const { }
 
 const fs = require('fs');
-
-//The infamous caps filter
-function CapsChecker(message)
-{
-    let capsbool = Server.capsProtect(message.content);
-    if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
-    {
-      message.delete({ timeout: 2000 })
-      console.log("Deleting message: "+message.content);
-    }
-    else if(bypassdelete===true)
-    {
-      bypassdelete=false;
-    } 
-}
 
 function chatlogger(message)
 {
@@ -163,4 +147,4 @@ async function capsProtect(input)
   return true;
 }
 
-module.exports = { kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote, cronjob, chatlogger, tempbypasscommand, CapsChecker };
+module.exports = { kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote, cronjob, chatlogger, tempbypasscommand };
