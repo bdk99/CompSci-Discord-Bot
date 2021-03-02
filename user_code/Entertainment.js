@@ -62,7 +62,8 @@ function getRandomInt(max)
 }
 
 //Code to engage Focus Mode
-async function focus(message) {
+async function focus(message) 
+{
     var parameter = message.content.slice(10).trim();
     var timeString = parameter.substr(0,parameter.indexOf(' '));
     var time = parseInt(timeString);
@@ -72,8 +73,10 @@ async function focus(message) {
     var timeStatement;
     var jstime;
 
-    if (message.content.includes("second") || message.content.includes("seconds")) { //Cancer conditional
-        if (time > 10800) {
+    if (message.content.includes("second") || message.content.includes("seconds")) 
+    { //Cancer conditional
+        if (time > 10800) 
+        {
             message.channel.send('Cannot engage Focus Mode for more than 3 hours');
             return;
         }
@@ -82,8 +85,10 @@ async function focus(message) {
             timeStatement = time + " second";
         else timeStatement = time + " seconds";
     }
-    else if (message.content.includes("minute") || message.content.includes("minutes")) {
-        if (time > 180) {
+    else if (message.content.includes("minute") || message.content.includes("minutes")) 
+    {
+        if (time > 180) 
+        {
             message.channel.send('Cannot engage Focus Mode for more than 3 hours');
             return;
         }
@@ -92,8 +97,10 @@ async function focus(message) {
             timeStatement = time + " minute";
         else timeStatement = time + " minutes";
     }
-    else if (message.content.includes("hour") || message.content.includes("hours")) {
-        if (time > 3) {
+    else if (message.content.includes("hour") || message.content.includes("hours")) 
+    {
+        if (time > 3) 
+        {
             message.channel.send('Cannot engage Focus Mode for more than 3 hours');
             return;
         }
