@@ -4,12 +4,9 @@
     "ryanid":"743957184924352542",
     "mcchat":"801657065676079144",
     "mcconsole":"801657164266471424",
-    "REMOVEME":"806391647294324766",
-    "botdevstatuschannel":"807719819084431371",
+    "botdevstatuschannel":"816183000462262314",
     "FOURSEVENTYTWOchannel":"778637215551062057",
     "csquoteschannel":"808161527373758464",
-    "modrole":"Mod",
-    "cleanrole":"clean",
     "approveQuotesChannel": "812908299442847774",
     "approveReviewsChannel":"813991653425020938",
     "generalchat":"707293854507991172",
@@ -17,5 +14,7 @@
     "modbotcommands":"784963943726448691",
     "botcommands":"773327643574796288",
     "chatloggerchannel":"815773312139526164",
+    "modrole":"Mod",
+    "cleanrole":"clean",
     "focusmoderole":"focusmode"
 }

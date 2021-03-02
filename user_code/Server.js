@@ -72,62 +72,6 @@ async function bypass(message, bypass)
     return !bypass;
 }
 
-//Writes messages from the quotes channel into the quotes-approval channel
-async function quotecatcher(message, client)
-{
-    
-    fs.appendFile('incommingcsquotes.txt', "\n", (err) => {
-        if (err) throw err;
-    });
-
-    fs.appendFile('incommingcsquotes.txt', JSON.stringify(message.content), 'utf8', (err) => {
-        if (err) throw err;
-    });
-
-    const regex = new RegExp('([\"\'].+[\'\"])+( *)(-+)( *)(.+)');
-                            //Ignore errors here
-
-    if (regex.test(message.content)) {
-        approveQuote(message.content, client);
-    }
-}
-
-//Code for approving a new professor quote and writing it into the quotes JSON file
-async function approveQuote(quote, client) 
-{
-    client.channels.cache.get(`${approveQuotesChannel}`).send(quote)
-        .then(function (message) {
-            message.react('👍').then(() => message.react('👎'));
-
-            var modUsers = {}
-            message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
-
-            var modIds = [];
-            modUsers[modrole].forEach(user => modIds.push(user['id']));
-            const filter = (reaction, user) => {
-                return ['👍', '👎'].includes(reaction.emoji.name) && modIds.includes(user.id);
-            };
-
-            message.awaitReactions(filter, { max: 1 })
-                .then(collected => {
-                    const reaction = collected.first();
-
-                    if (reaction.emoji.name === '👍') {
-                        message.channel.send('You have approved the quote!');
-
-                        var name = './logs/quotes.json';
-                        var json = JSON.parse(fs.readFileSync(name).toString());
-                        json['teacherQuotes'].push(message.content)
-
-                        fs.writeFileSync(name, JSON.stringify(json));
-
-                    } else {
-                        message.channel.send('You have disapproved the quote.');
-                    }
-                })
-        });
-}
-
 //Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
 async function capsProtect(input) 
 {

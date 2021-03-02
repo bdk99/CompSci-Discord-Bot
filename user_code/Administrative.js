@@ -134,7 +134,6 @@ async function clean(message, num, client)
     client.channels.cache.get("784093143389700137").send(`${message.author.username} deleted ${num} messages in ${message.channel}`);
     return;
   }
-  
   else 
   {
     message.channel.send(`Access Denied!`).then(msg => {
@@ -145,4 +144,16 @@ async function clean(message, num, client)
   }
 }
 
-module.exports = {kick, ban, help, clean};
+//Creates a text channel with the given name (CURRENTLY DOES NOT WORK)
+// function makeChannel(message,)
+// {
+//   message.guild.channels.create(`${channelname}`, { //Create a channel
+//     type: 'text', //Make sure the channel is a text channel
+//     permissionOverwrites: [{ //Set permission overwrites
+//         id: message.guild.id,
+//         allow: ['VIEW_CHANNEL'],
+//     }]
+//   });
+// }
+
+module.exports = { kick, ban, help, clean }//, makeChannel};
