@@ -188,8 +188,7 @@ async function viewRatings(message)
         {
             if (err) throw err;
             if(data.includes(viewprofName.toLowerCase())){
-                var textByLine = fs.readFileSync('./user_code/professors/' + viewprofName.toLowerCase() + '.txt').toString().split("\n");
-                message.channel.send(textByLine);
+                message.channel.send("Ratings for Professor " + viewprofName, { files: ['./user_code/professors/' + viewprofName.toLowerCase() + '.txt'] });
             }
             else 
             {
