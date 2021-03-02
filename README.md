@@ -23,3 +23,5 @@ In order to setup the bot to test on a local server...
   }
 ```
 Be sure to replace BOTTOKEN with the value of your bots token which you saved from step 2.
+
+9. In order to get the ID values of specific things in discord to help develop the bot, please head over to https://techswift.org/2020/09/17/how-to-enable-developer-mode-in-discord/ to enable developer mode on your local client.  This will help you be independant in the long term.
