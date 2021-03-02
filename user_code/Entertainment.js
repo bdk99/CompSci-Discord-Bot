@@ -115,4 +115,4 @@ async function focus(message) {
     }, jstime);
 }
 
-module.exports = {motivateme, ce, makemelaugh, RateProfessor, viewRatings, focus};
+module.exports = {motivateme, ce, makemelaugh, focus};

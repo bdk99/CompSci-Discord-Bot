@@ -73,7 +73,8 @@ async function bypass(message, bypass)
 }
 
 //Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  Bypassed with tb or bypass commands
-async function capsProtect(input) 
+//DO NOT MAKE THIS FUNCTION ASYNC.... IT MUST MUST MUST BE SYNC
+function capsProtect(input) 
 {
   var capTolerance = .25; //How lenient the protection is for caps
   var capCount = 0;
@@ -86,9 +87,11 @@ async function capsProtect(input)
   }
   if (capCount > capTolerance * input.length && capCount > 8) 
   {
+      console.log(`Returning false for capsProtect function`)
       return false;
   }
+  console.log(`Returning true for capsProtect function`)
   return true;
 }
 
-module.exports = { kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote, cronjob, chatlogger, tempbypasscommand };
+module.exports = { kill, soft_kill, bypass, capsProtect, cronjob, chatlogger, tempbypasscommand };

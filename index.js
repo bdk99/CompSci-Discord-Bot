@@ -62,16 +62,6 @@ client.on("message", message =>
   {
     Server.chatlogger(message);
   }
-  
-  // if(message.content.startsWith(`${prefix}ctc`))
-  // {
-  //   Administrative.makeChannel(message);
-  // }
-
-  if (message.content.startsWith(`${prefix}tb`))
-  {
-    Server.tempbypasscommand(message);
-  }
 
   if (!bypass && (message.author.id !== `${brendanid}`))
     {

@@ -1,5 +1,6 @@
 //Quotescode.js
 const { modrole, approveQuotesChannel }= require('../ids.json');
+const Server = require("./user_code/Server");
 const fs = require('fs');
 let jsonData = "";
 
@@ -33,7 +34,7 @@ async function quote(message)
     }
     
     if (filteredQuotes.length > 0) {
-        var index = getRandomInt(filteredQuotes.length - 1);
+        var index = Server.getRandomInt(filteredQuotes.length - 1);
         message.channel.send(filteredQuotes[index]);
     } else {
         var sarcasticResponses = [
@@ -49,7 +50,7 @@ async function quote(message)
             "You should really let someone who knows what they're doing search for quotes.",
             "Yeah I'm just gonna pretend I didn't see that horrible search you just did right there."
         ];
-        message.reply(sarcasticResponses[getRandomInt(sarcasticResponses.length - 1)]);
+        message.reply(sarcasticResponses[Server.getRandomInt(sarcasticResponses.length - 1)]);
     }
 }
 
