@@ -1,7 +1,48 @@
 //Function that shuts down bot on kill command by specific user!
-const { brendanid, ryanid, modrole, approveQuotesChannel, generalchat}= require('../ids.json');
+const { brendanid, modrole, approveQuotesChannel, generalchat, chatloggerchannel }= require('../ids.json');
 const { prefix } = require('../config.json')
+const { }
+
 const fs = require('fs');
+
+function CapsChecker(message)
+{
+    let capsbool = Server.capsProtect(message.content);
+    if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
+    {
+      message.delete({ timeout: 2000 })
+      console.log("Deleting message: "+message.content);
+    }
+    else if(bypassdelete===true)
+    {
+      bypassdelete=false;
+    } 
+}
+
+function chatlogger(message)
+{
+    if((message.channel.id != `${chatloggerchannel}`) && (! message.content.startsWith(`${prefix}`)))
+    {   //Adds a text logger.... so all messages from all channels will spit out in this channel
+      console.log(`${message.author.username} sent ${message.content} in ${message.channel.name}`);
+      client.channels.cache.get(`${chatloggerchannel}`).send(`${message.author.username} sent ${message.content} in ${message.channel.name}`); 
+    }
+}
+
+function tempbypasscommand(message)
+{
+    if(message.member.roles.cache.find(r => r.name === `${modrole}`))
+    {
+      var args = message.content.slice(3).trim();
+      message.channel.send(`${args} by: ${message.author.username}`);
+    }
+    else 
+    {
+      message.delete({ timeout: 2000 });
+      console.log("Deleting message: "+message.content);
+      return;
+    }
+}
+
 
 function cronjob(client, cron)
 {
@@ -18,7 +59,7 @@ function cronjob(client, cron)
 
 async function kill(message) 
 {
-    if ((message.author.id !== `${brendanid}`)&&(message.author.id !== `${ryanid}`)) return;
+    if (message.author.id !== `${brendanid}`) return;
         message.channel.send('Stopping the bot as per exclusive admin command!').then(() => 
         {
             process.exit(1);
@@ -117,4 +158,4 @@ async function capsProtect(input)
   return true;
 }
 
-module.exports = {kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote, cronjob};
+module.exports = { kill, soft_kill, bypass, quotecatcher, capsProtect, approveQuote, cronjob, chatlogger, tempbypasscommand, CapsChecker };

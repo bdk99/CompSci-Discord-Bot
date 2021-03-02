@@ -44,11 +44,7 @@ var bypassdelete=false;
 client.on("message", message => 
 { // runs whenever a message is sent
 
-  if((message.channel.id != `815773312139526164`) && (! message.content.startsWith(`${prefix}`)))
-  {   //Adds a text logger.... so all messages from all channels will spit out in this channel
-    console.log(`${message.author.username} sent ${message.content} in ${message.channel.name}`);
-    client.channels.cache.get(`815773312139526164`).send(`${message.author.username} sent ${message.content} in ${message.channel.name}`); 
-  }
+  Server.chatlogger(message);
 
   if(!message.content.startsWith(`${prefix}quote`))
   {
@@ -58,31 +54,12 @@ client.on("message", message =>
 
   if (message.content.startsWith(`${prefix}tb`))
   {
-      if(message.member.roles.cache.find(r => r.name === "tempbotbypass")) 
-      {
-        var args = message.content.slice(3).trim();
-        message.channel.send(`${args} by: ${message.author.username}`);
-      }
-      else 
-      {
-        message.delete({ timeout: 2000 });
-        console.log("Deleting message: "+message.content);
-        return;
-      }
+    Server.tempbypasscommand(message);
   }
 
   if (!bypass && (message.author.id !== '404717378715385856'))
     {
-      let capsbool = Server.capsProtect(message.content);
-      if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
-      {
-        message.delete({ timeout: 2000 })
-        console.log("Deleting message: "+message.content);
-      }
-      else if(bypassdelete===true)
-      {
-        bypassdelete=false;
-      } 
+      Server.CapsChecker(message);
     } 
 
   if (!softkill)

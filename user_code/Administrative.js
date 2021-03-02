@@ -1,4 +1,4 @@
-const { brendanid, ryanid, cleanrole }= require('../ids.json');
+const { brendanid, modrole }= require('../ids.json');
 
 //Function called with prefix !ban, used to attempt user ban
 async function ban(message) 
@@ -6,7 +6,7 @@ async function ban(message)
     // Assuming we mention someone in the message, this will return the user
         // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
   
-        if ((message.author.id !== `${brendanid}`)&&(message.author.id !== `${ryanid}`)) 
+        if(message.author.id !== `${brendanid}`)
         {
             message.reply('I was unable to ban the member!  Permission denied!');
             return;
@@ -55,7 +55,7 @@ async function ban(message)
 //function called on prefix !kick, used to attempt to kick member
 async function kick(message) 
 {
-      if ((message.author.id !== `${brendanid}`)&&(message.author.id !== `${ryanid}`)) 
+      if (message.author.id !== `${brendanid}`) 
         {
             message.reply('I was unable to kick the member!  Permission denied!');
             return;
@@ -116,7 +116,7 @@ async function help(message)
 
 async function clean(message, num, client)
 {
-  if(message.member.roles.cache.find(r => r.name === `${cleanrole}`)) 
+  if(message.member.roles.cache.find(r => r.name === `${modrole}`)) 
   { 
     if(num>100 || num<2)
     {
