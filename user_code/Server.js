@@ -5,6 +5,7 @@ const { }
 
 const fs = require('fs');
 
+//The infamous caps filter
 function CapsChecker(message)
 {
     let capsbool = Server.capsProtect(message.content);
@@ -28,6 +29,7 @@ function chatlogger(message)
     }
 }
 
+//Caps filter bypass
 function tempbypasscommand(message)
 {
     if(message.member.roles.cache.find(r => r.name === `${modrole}`))
@@ -43,7 +45,7 @@ function tempbypasscommand(message)
     }
 }
 
-
+//Sends a professor quote in General at 9 AM
 function cronjob(client, cron)
 {
     var date = new Date();
@@ -57,6 +59,7 @@ function cronjob(client, cron)
       cronjob.start()
 }
 
+//The off switch for this entire ensemble
 async function kill(message) 
 {
     if (message.author.id !== `${brendanid}`) return;
@@ -85,6 +88,7 @@ async function bypass(message, bypass)
     return !bypass;
 }
 
+//Writes messages from the quotes channel into the quotes-approval channel
 async function quotecatcher(message, client)
 {
     
@@ -104,6 +108,7 @@ async function quotecatcher(message, client)
     }
 }
 
+//Code for approving a new professor quote and writing it into the quotes JSON file
 async function approveQuote(quote, client) 
 {
     client.channels.cache.get(`${approveQuotesChannel}`).send(quote)

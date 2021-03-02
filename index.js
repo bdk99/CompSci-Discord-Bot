@@ -134,22 +134,26 @@ client.on("message", message =>
       Administrative.help(message);
     }
 
+    //Cleans a specified amount of messages
     if (message.content.startsWith(`${prefix}clean`))
     {
       var num = message.content.slice(6).trim();
       Administrative.clean(message, num, client);
     }
 
+    //Adds a professor rating
     if(message.content.startsWith(`${prefix}ratep`))
     {
       Entertainment.RateProfessor(message, client);
     }
 
+    //Lists all the ratings for a specified professor
     if(message.content.startsWith(`${prefix}viewratings`))
     {
       Entertainment.viewRatings(message);
     }
 
+    //Engages Focus Mode, an anti-procrastination tool
     if (message.content.startsWith(`${prefix}focusmode`))
     {
       Entertainment.focus(message);

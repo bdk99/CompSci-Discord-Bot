@@ -99,6 +99,7 @@ async function kick(message)
     }
 }
 
+//Lists bot commands
 async function help(message) 
 {
     message.channel.send('Available Commands!\n' +
@@ -114,6 +115,7 @@ async function help(message)
                   'ce : Sends a message with every unique server emoji responded to it');
 }
 
+//Code for wiping a specified number of messages from a channel, perhaps from a specified user as well
 async function clean(message, num, client)
 {
   if(message.member.roles.cache.find(r => r.name === `${modrole}`)) 
@@ -142,6 +144,5 @@ async function clean(message, num, client)
     return;
   }
 }
-
 
 module.exports = {kick, ban, help, clean};
