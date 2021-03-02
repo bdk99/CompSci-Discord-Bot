@@ -87,10 +87,8 @@ function capsProtect(input)
   }
   if (capCount > capTolerance * input.length && capCount > 8) 
   {
-      console.log(`Returning false for capsProtect function`)
       return false;
   }
-  console.log(`Returning true for capsProtect function`)
   return true;
 }
 
