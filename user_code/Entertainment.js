@@ -216,24 +216,30 @@ async function focus(message) {
     var jstime;
 
     if (message.content.includes("second") || message.content.includes("seconds")) { //Cancer conditional
-        if (time > 10800)
+        if (time > 10800) {
             message.channel.send('Cannot engage Focus Mode for more than 3 hours');
+            return;
+        }
         jstime = time * second;
         if (time == 1)
             timeStatement = time + " second";
         else timeStatement = time + " seconds";
     }
     else if (message.content.includes("minute") || message.content.includes("minutes")) {
-        if (time > 180)
+        if (time > 180) {
             message.channel.send('Cannot engage Focus Mode for more than 3 hours');
+            return;
+        }
         jstime = time * minute;
         if (time == 1)
             timeStatement = time + " minute";
         else timeStatement = time + " minutes";
     }
     else if (message.content.includes("hour") || message.content.includes("hours")) {
-        if (time > 3)
+        if (time > 3) {
             message.channel.send('Cannot engage Focus Mode for more than 3 hours');
+            return;
+        }
         jstime = time * hour;
         if (time == 1)
             timeStatement = time + " hour";
