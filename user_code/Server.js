@@ -20,17 +20,27 @@ function tempbypasscommand(message)
 }
 
 //Sends a professor quote in General at 9 AM
-function cronjob(client)
+function cronjobs(client)
 {
     var date = new Date();
     console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-    let cronjob = new cron.CronJob('00 00 14 * * *', () => {
+
+    let cronjob2 = new cron.CronJob('59 59 13 * * *', () => {
+        //CRON JOBS ARE IN UTC TIME!  EST TIME + 5 HOURS
+        //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
+        client.channels.cache.get(`${generalchat}`).send(`Here's your quote fuckers!`);
+        console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
+      });
+    
+      let cronjob = new cron.CronJob('00 00 14 * * *', () => {
         //CRON JOBS ARE IN UTC TIME!  EST TIME + 5 HOURS
         //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
         client.channels.cache.get(`${generalchat}`).send(`${prefix}quote`); 
         console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
       });
+
     cronjob.start()
+    cronjob2.start()
 }
 
 //The off switch for this entire ensemble
@@ -93,4 +103,4 @@ function chatlogger(message)
     }
 }
 
-module.exports = { kill, soft_kill, bypass, capsProtect, cronjob, chatlogger, tempbypasscommand };
+module.exports = { kill, soft_kill, bypass, capsProtect, cronjobs, chatlogger, tempbypasscommand };

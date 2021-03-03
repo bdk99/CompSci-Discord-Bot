@@ -42,11 +42,9 @@ client.on('ready', () =>
 
 var softkill = false; 
 var bypass = false;
-var bypassdelete=false;
 
   //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday
-  Server.cronjob(client)
-
+  Server.cronjobs(client)
 
 client.on("message", message => 
 { // runs whenever a message is sent
@@ -71,10 +69,6 @@ client.on("message", message =>
       {
         message.delete({ timeout: 2000 })
         console.log("Deleting message: "+message.content);
-      }
-      else if(bypassdelete===true)
-      {
-        bypassdelete=false;
       } 
     } 
 
@@ -189,8 +183,17 @@ client.on("message", message =>
   {
     fs.createReadStream('data.csv')
       .pipe(csv())
-      .on('data', (row) => {
-        console.log(row);
+      .on('data', (row) => { 
+        var Subj =  `${row["Subj"]}`;
+        var Crse =  `${row["Crse"]}`;
+        var name =  `${row["Instructor"]}`;
+        var instructorarray = name.replace("(P)", "").trim().split(" ");
+        var lastnamepos = (instructorarray.length -1);
+        var channelname = `${Subj}-${Crse}-${instructorarray[lastnamepos]}`
+
+
+        console.log(`${channelname}`);
+        //console.log(str);
       })
       .on('end', () => {
         console.log('CSV file successfully processed');
