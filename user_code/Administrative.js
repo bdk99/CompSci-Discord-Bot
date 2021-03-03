@@ -144,16 +144,4 @@ async function clean(message, num, client)
   }
 }
 
-//Creates a text channel with the given name (CURRENTLY DOES NOT WORK)
-// function makeChannel(message,)
-// {
-//   message.guild.channels.create(`${channelname}`, { //Create a channel
-//     type: 'text', //Make sure the channel is a text channel
-//     permissionOverwrites: [{ //Set permission overwrites
-//         id: message.guild.id,
-//         allow: ['VIEW_CHANNEL'],
-//     }]
-//   });
-// }
-
 module.exports = { kick, ban, help, clean }//, makeChannel};

@@ -2,8 +2,6 @@ const Discord = require("discord.js"); // imports the discord library
 const { prefix, token, devstate } = require('./config.json');
 const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, brendanid, botdevstatuschannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
-const csv = require('csv-parser');
-const fs = require('fs');
 
 //Imports the necessary user code files to the index in order for later use
 const Administrative = require("./user_code/Administrative");
@@ -11,6 +9,7 @@ const Entertainment = require("./user_code/Entertainment");
 const Server = require("./user_code/Server");
 const Quotescode = require("./user_code/Quotescode");
 const ReviewsCode = require("./user_code/Reviewscode");
+const Channelcreator = require("./user_code/Channelcreator");
 
 client.once("ready", () => 
 {
@@ -181,23 +180,12 @@ client.on("message", message =>
 
   if((message.content.startsWith(`${prefix}csvparse`))&&(message.author.id = `${brendanid}`))
   {
-    fs.createReadStream('data.csv')
-      .pipe(csv())
-      .on('data', (row) => { 
-        var Subj =  `${row["Subj"]}`;
-        var Crse =  `${row["Crse"]}`;
-        var name =  `${row["Instructor"]}`;
-        var instructorarray = name.replace("(P)", "").trim().split(" ");
-        var lastnamepos = (instructorarray.length -1);
-        var channelname = `${Subj}-${Crse}-${instructorarray[lastnamepos]}`
-
-
-        console.log(`${channelname}`);
-        //console.log(str);
-      })
-      .on('end', () => {
-        console.log('CSV file successfully processed');
-      });
+    Channelcreator.csvparse(message)
+  }
+  
+  if((message.content.startsWith(`${prefix}cc`))&&(message.author.id = `${brendanid}`))
+  {
+    Channelcreator.createchannel("tester",message)
   }
 }); //End of Message Sent loop
 
