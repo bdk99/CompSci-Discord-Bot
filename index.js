@@ -2,7 +2,8 @@ const Discord = require("discord.js"); // imports the discord library
 const { prefix, token, devstate } = require('./config.json');
 const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, brendanid, botdevstatuschannel }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
-const cron = require('cron');
+const csv = require('csv-parser');
+const fs = require('fs');
 
 //Imports the necessary user code files to the index in order for later use
 const Administrative = require("./user_code/Administrative");
@@ -44,7 +45,7 @@ var bypass = false;
 var bypassdelete=false;
 
   //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday
-  Server.cronjob(client, cron)
+  Server.cronjob(client)
 
 
 client.on("message", message => 
@@ -184,6 +185,17 @@ client.on("message", message =>
     Quotescode.quotecatcher(message, client);
   }
 
+  if((message.content.startsWith(`${prefix}csvparse`))&&(message.author.id = `${brendanid}`))
+  {
+    fs.createReadStream('data.csv')
+      .pipe(csv())
+      .on('data', (row) => {
+        console.log(row);
+      })
+      .on('end', () => {
+        console.log('CSV file successfully processed');
+      });
+  }
 }); //End of Message Sent loop
 
 client.login(token); // starts the bot up
