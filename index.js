@@ -20,7 +20,7 @@ client.once("ready", () =>
     console.info("Starting in Development Mode");
     //Shoots a Ready command into console
     console.info("Ready and stable!");
-    client.channels.cache.get('816183000462262314').send('Dev Mode READY!'); 
+    client.channels.cache.get('816882589116923914').send('Dev Mode READY!'); 
   }
   else
   {
@@ -178,14 +178,17 @@ client.on("message", message =>
     Quotescode.quotecatcher(message, client);
   }
 
-  if((message.content.startsWith(`${prefix}csvparse`))&&(message.author.id = `${brendanid}`))
+  if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
   {
     Channelcreator.csvparse(message)
   }
-  
-  if((message.content.startsWith(`${prefix}cc`))&&(message.author.id = `${brendanid}`))
+  if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
   {
-    Channelcreator.createchannel("tester",message)
+    Channelcreator.createchannel(message)
+  }
+  if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id = `${brendanid}`))
+  {
+    Channelcreator.deletechannel(message);
   }
 }); //End of Message Sent loop
 
