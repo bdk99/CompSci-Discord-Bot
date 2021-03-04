@@ -1,6 +1,7 @@
 const { prefix } = require('../config.json')
 const fs = require('fs');
 const csv = require('csv-parser');
+const { Client, Collection } = require('discord.js');
 
 
 function csvparse(message)
@@ -17,8 +18,9 @@ function csvparse(message)
     var channelname = `${Subj}-${Crse}-${instructorarray[lastnamepos]} at time ${time}`;
     var rolename =  `${Subj} ${Crse}`;
 
-    message.channel.send(`${channelname}`);
     createchannel(channelname, message)
+    message.channel.send(`${channelname}`);
+   
     //message.channel.send(`${rolename}`)
     //console.log(str);
     })
@@ -27,19 +29,19 @@ function csvparse(message)
     });
 }
 
-
 //Currently does not work
-function createchannel (name, message)
+async function createchannel (name, message)
 {
-    message.guild.channels
-    .create(name, {
-        type: 'text',
-    })
-    .then((channel)=>{
-        console.log(channel)
-        // const categoryId = '';
-        // channel.setParent(categoryId);
-    })
+    message.guild.channels.create(name, { reason: 'Needed a cool new channel' })
+  .then(console.log)
+  .catch(console.error);
 }
 
-module.exports = { csvparse, createchannel };
+async function deletechannel (message)
+{
+    message.guild.channels.cache.forEach(channel => {
+        if(channel.id!==('816879956214153227') && channel.id!==('816879739876671529') && channel.id!==('816879565053493285') && channel.id!==('816882589116923914') && channel.id!==('816885593308004362')){
+        channel.delete()}});
+}
+
+module.exports = { csvparse, createchannel, deletechannel};
