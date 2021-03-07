@@ -1,6 +1,6 @@
 const Discord = require("discord.js"); // imports the discord library
 const { prefix, token, devstate } = require('./config.json');
-const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, brendanid, botdevstatuschannel }= require('./ids.json');
+const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, brendanid }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
 //Imports the necessary user code files to the index in order for later use
@@ -61,7 +61,7 @@ client.on("message", message =>
     Server.chatlogger(message);
   }
 
-  if (!bypass && (message.author.id !== `${brendanid}`))
+  if (!bypass && (!message.author.id == `${brendanid}`))
     {
       let capsbool = Server.capsProtect(message.content);
       if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
@@ -178,18 +178,18 @@ client.on("message", message =>
     Quotescode.quotecatcher(message, client);
   }
 
-  if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
-  {
-    Channelcreator.csvparse(message)
-  }
-  if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
-  {
-    Channelcreator.createchannel(message)
-  }
-  if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id = `${brendanid}`))
-  {
-    Channelcreator.deletechannel(message);
-  }
+  // if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
+  // {
+  //   Channelcreator.csvparse(message)
+  // }
+  // if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
+  // {
+  //   Channelcreator.createchannel(message)
+  // }
+  // if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
+  // {
+  //   Channelcreator.deletechannel(message);
+  // }yte
 }); //End of Message Sent loop
 
 client.login(token); // starts the bot up
