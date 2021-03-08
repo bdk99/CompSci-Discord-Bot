@@ -9,7 +9,9 @@ const Entertainment = require("./user_code/Entertainment");
 const Server = require("./user_code/Server");
 const Quotescode = require("./user_code/Quotescode");
 const ReviewsCode = require("./user_code/Reviewscode");
-const Channelcreator = require("./user_code/Channelcreator");
+//const Channelcreator = require("./user_code/Channelcreator");
+var softkill = false; 
+var bypass = false;
 
 client.once("ready", () => 
 {
@@ -20,7 +22,10 @@ client.once("ready", () =>
     console.info("Starting in Development Mode");
     //Shoots a Ready command into console
     console.info("Ready and stable!");
-    client.channels.cache.get('816882589116923914').send('Dev Mode READY!'); 
+    //client.channels.cache.get('816882589116923914').send('Dev Mode READY!'); 
+
+    client.user.setActivity("with JavaScript and learning new features!"); //Sets the discord status activity of the bot
+    client.user.setActivity('new commands from my developers!', { url: 'https://twitch.tv/your/stream/here', type: 'LEARNING' });
   }
   else
   {
@@ -28,22 +33,16 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     client.channels.cache.get('806391647294324766').send('CompSci Bot Online and Ready!'); 
     //Shoots a ready command in #bot-status
+
+    client.user.setActivity("with JavaScript and learning new features!");  //Sets the discord status activity of the bot
   }
 });
 
-client.on('ready', () => 
+if(`${devstate}`=='false')
 {
-  // Set bot status to: "Playing with JavaScript"
-  client.user.setActivity("with JavaScript and learning new features!");
-  //client.users.cache.get("707293854507991172") Any idea where this line of code came from?  Or what the ID is for?
-});
-///////Everything above is basic bot config information.  Do not touch unless you know what you are doing!/////
-
-var softkill = false; 
-var bypass = false;
-
   //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday
   Server.cronjobs(client)
+}
 
 client.on("message", message => 
 { // runs whenever a message is sent
@@ -56,10 +55,13 @@ client.on("message", message =>
   }
 
   //Skips executing chat logger if devmode in config.json is true, otherwise logs chats in console and streamed text channel
-  if(!`${devstate}`=='true')
+  if(`${devstate}`=='false')
   {
     Server.chatlogger(message);
   }
+  if(`${devstate}`=='true')
+    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
+
 
   if (!bypass && (!message.author.id == `${brendanid}`))
     {
@@ -177,8 +179,14 @@ client.on("message", message =>
   {
     Quotescode.quotecatcher(message, client);
   }
-
-
+  
+  if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
+  {
+    if(`${devstate}`=='false')  //ID of Brendan Mention channel on main server
+      client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
+    if(`${devstate}`=='true')  //ID of new channel on BotDev server
+      client.channels.cache.get('818585000853241907').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
+  }
   
 //   if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
 //    {

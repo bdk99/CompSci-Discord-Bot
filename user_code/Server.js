@@ -1,5 +1,5 @@
 //Function that shuts down bot on kill command by specific user!
-const { brendanid, modrole, approveQuotesChannel, generalchat, chatloggerchannel }= require('../ids.json');
+const { brendanid, modrole, generalchat, chatloggerchannel }= require('../ids.json');
 const { prefix } = require('../config.json')
 const cron = require('cron');
 
