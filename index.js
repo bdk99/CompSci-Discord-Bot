@@ -178,18 +178,27 @@ client.on("message", message =>
     Quotescode.quotecatcher(message, client);
   }
 
-  // if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
-  // {
-  //   Channelcreator.csvparse(message)
-  // }
-  // if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
-  // {
-  //   Channelcreator.createchannel(message)
-  // }
-  // if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
-  // {
-  //   Channelcreator.deletechannel(message);
-  // }yte
+
+  
+//   if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
+//    {
+//      Channelcreator.csvparse(message)
+//    }
+//    if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
+//    {
+//      Channelcreator.createchannel(message)
+//    }
+//    if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
+//    {
+//      Channelcreator.categorycreator(message)
+//    }
+//  if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
+//    {
+//      Channelcreator.deletechannel(message);
+//    }
+
+
+
 }); //End of Message Sent loop
 
 client.login(token); // starts the bot up
