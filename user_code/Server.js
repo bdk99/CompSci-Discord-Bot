@@ -94,12 +94,12 @@ function capsProtect(input)
 }
 
 //Logs messages into a general text logger channel
-function chatlogger(message)
+function chatlogger(client, message)
 {
     if((message.channel.id != `${chatloggerchannel}`) && (! message.content.startsWith(`${prefix}`)))
     {   //Adds a text logger.... so all messages from all channels will spit out in this channel
-      console.log(`${message.author.username} sent ${message.content} in ${message.channel.name}`);
-      client.channels.cache.get(`${chatloggerchannel}`).send(`${message.author.username} sent ${message.content} in ${message.channel.name}`); 
+      console.log(`${message.content} ----> By ${message.author.username} in <#${message.channel.id}>`);
+      client.channels.cache.get(`${chatloggerchannel}`).send(`${message.content} ----> By ${message.author.username} in <#${message.channel.id}>`); 
     }
 }
 

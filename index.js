@@ -54,11 +54,9 @@ client.on("message", message =>
       return;
   }
 
-  //Skips executing chat logger if devmode in config.json is true, otherwise logs chats in console and streamed text channel
+  //Skips executing chat logger in text channel if devmode in config.json is true, otherwise logs chats in console ONLY
   if(`${devstate}`=='false')
-  {
-    Server.chatlogger(message);
-  }
+    Server.chatlogger(client, message);
   if(`${devstate}`=='true')
     console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
 
