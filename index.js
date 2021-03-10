@@ -9,7 +9,7 @@ const Entertainment = require("./user_code/Entertainment");
 const Server = require("./user_code/Server");
 const Quotescode = require("./user_code/Quotescode");
 const ReviewsCode = require("./user_code/Reviewscode");
-//const Channelcreator = require("./user_code/Channelcreator");
+const Channelcreator = require("./user_code/Channelcreator");
 var softkill = false; 
 var bypass = false;
 
@@ -54,22 +54,23 @@ client.on("message", message =>
       return;
   }
 
+  if (!bypass)
+    {
+      let capsbool = Server.capsProtect(message.content);
+      if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
+      {
+        message.delete({ timeout: 2000 })
+        console.log("Deleting message: "+message.content);
+      } 
+    }
+
+
   //Skips executing chat logger in text channel if devmode in config.json is true, otherwise logs chats in console ONLY
   if(`${devstate}`=='false')
     Server.chatlogger(client, message);
   if(`${devstate}`=='true')
     console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
 
-
-  if (!bypass && (!message.author.id == `${brendanid}`))
-    {
-      let capsbool = Server.capsProtect(message.content);
-      if ((capsbool===false) && (!message.content.startsWith('Gave +1 Rep to')) && (message.channel.id != `${mcchat}`)&& (message.channel.id != `${mcconsole}`)&& (message.channel.id != `${FOURSEVENTYTWOchannel}`))
-      {
-        message.delete({ timeout: 2000 })
-        console.log("Deleting message: "+message.content);
-      } 
-    } 
 
   if (!softkill)
   {
@@ -185,25 +186,26 @@ client.on("message", message =>
     if(`${devstate}`=='true')  //ID of new channel on BotDev server
       client.channels.cache.get('818585000853241907').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
   }
-  
-//   if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
-//    {
-//      Channelcreator.csvparse(message)
-//    }
-//    if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)&&(message.author.id = '355928972917211147')))
-//    {
-//      Channelcreator.createchannel(message)
-//    }
-//    if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
-//    {
-//      Channelcreator.categorycreator(message)
-//    }
-//  if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
-//    {
-//      Channelcreator.deletechannel(message);
-//    }
 
+  if((message.content.startsWith(`${prefix}prewrit`))&&((message.author.id = `${brendanid}`)))
+  {
+    //message.channel.send(`All the mods are currently unavalible, if you need something urgently please email the instructor at LZhang5@emich.edu.  Have a nice day.`);
+    message.channel.send(`"This so dumb - L. Zhang"`);
+  }
 
+  if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)))
+    Channelcreator.csvparse(message)
+  if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
+    Channelcreator.createchannel(message)
+  if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
+    Channelcreator.categorycreator(message)
+  if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
+    Channelcreator.deletechannel(message);
+  if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci'))
+  {
+  message.delete({ timeout: 1000 });
+  console.log("Deleting message: "+ message.content);
+  }
 
 }); //End of Message Sent loop
 

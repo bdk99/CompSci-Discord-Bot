@@ -96,11 +96,11 @@ function capsProtect(input)
 //Logs messages into a general text logger channel
 function chatlogger(client, message)
 {
-    if((message.channel.id != `${chatloggerchannel}`) && (! message.content.startsWith(`${prefix}`)))
-    {   //Adds a text logger.... so all messages from all channels will spit out in this channel
-      console.log(`${message.content} ----> By ${message.author.username} in <#${message.channel.id}>`);
-      client.channels.cache.get(`${chatloggerchannel}`).send(`${message.content} ----> By ${message.author.username} in <#${message.channel.id}>`); 
-    }
+  if((message.channel.id != `${chatloggerchannel}`) && (! message.content.startsWith(`${prefix}`)))
+  {   //Adds a text logger.... so all messages from all channels will spit out in this channel
+    console.log(`${message.content} ----> By ${message.author.username} in ${message.channel.name}`);
+    client.channels.cache.get(`${chatloggerchannel}`).send(`${message.content} ----> By ${message.author.username} in <#${message.channel.id}>`); 
+  }
 }
 
 module.exports = { kill, soft_kill, bypass, capsProtect, cronjobs, chatlogger, tempbypasscommand };
