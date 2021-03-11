@@ -39,13 +39,15 @@ client.once("ready", () =>
 
 if(`${devstate}`=='false')
 {
-  //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday
+  //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday if devstate is false
   Server.cronjobs(client)
 }
 
 client.on("message", message => 
 { // runs whenever a message is sent
 
+
+      //------------------------------------Message Filtering and Flagging Begins Here-------------------------
   //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
   if(!message.content.startsWith(`${prefix}quote`))
   {
@@ -63,12 +65,23 @@ client.on("message", message =>
       } 
     }
 
+    if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
+    {
+      if(`${devstate}`=='false')  //ID of Brendan Mention channel on main server
+        client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
+    }
+    if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci'))
+    {
+      message.delete({ timeout: 1000 });
+      console.log("Deleting message: "+ message.content);
+    }
 
-  //Skips executing chat logger in text channel if devmode in config.json is true, otherwise logs chats in console ONLY
-  if(`${devstate}`=='false')
-    Server.chatlogger(client, message);
-  if(`${devstate}`=='true')
-    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
+    //Skips executing chat logger in text channel if devmode in config.json is true, otherwise logs chats in console ONLY
+    if(`${devstate}`=='false')
+      Server.chatlogger(client, message);
+    if(`${devstate}`=='true')
+      console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
+    //------------------------------------Message Filtering and Flagging Ends Here-------------------------
 
 
   if (!softkill)
@@ -177,14 +190,6 @@ client.on("message", message =>
   {
     Quotescode.quotecatcher(message, client);
   }
-  
-  if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
-  {
-    if(`${devstate}`=='false')  //ID of Brendan Mention channel on main server
-      client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
-    //if(`${devstate}`=='true')  //ID of new channel on BotDev server
-      //client.channels.cache.get('818585000853241907').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
-  }
 
   if((message.content.startsWith(`${prefix}prewrit`))&&((message.author.id = `${brendanid}`)))
   {
@@ -202,11 +207,6 @@ client.on("message", message =>
     Channelcreator.deletechannel(message);
   if((message.content.startsWith(`${prefix}deletecat`))&&(message.author.id === `${brendanid}`))
     Channelcreator.deletecategory(message);
-  if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci'))
-  {
-    message.delete({ timeout: 1000 });
-    console.log("Deleting message: "+ message.content);
-  }
 
 }); //End of Message Sent loop
 
