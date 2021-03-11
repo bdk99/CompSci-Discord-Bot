@@ -73,4 +73,10 @@ async function deletechannel (message)
         channel.delete()}});
 }
 
-module.exports = { csvparse, createchannel, deletechannel, categorycreator };
+function deletecategory(message)
+{
+    message.guild.channels.cache.forEach(category => {
+        category.delete()});
+}
+
+module.exports = { csvparse, createchannel, deletechannel, categorycreator, deletecategory};

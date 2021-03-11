@@ -24,8 +24,7 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     //client.channels.cache.get('816882589116923914').send('Dev Mode READY!'); 
 
-    client.user.setActivity("with JavaScript and learning new features!"); //Sets the discord status activity of the bot
-    client.user.setActivity('new commands from my developers!', { url: 'https://twitch.tv/your/stream/here', type: 'LEARNING' });
+    //client.user.setActivity("with JavaScript and learning new features!"); //Sets the discord status activity of the bot
   }
   else
   {
@@ -183,8 +182,8 @@ client.on("message", message =>
   {
     if(`${devstate}`=='false')  //ID of Brendan Mention channel on main server
       client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
-    if(`${devstate}`=='true')  //ID of new channel on BotDev server
-      client.channels.cache.get('818585000853241907').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
+    //if(`${devstate}`=='true')  //ID of new channel on BotDev server
+      //client.channels.cache.get('818585000853241907').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
   }
 
   if((message.content.startsWith(`${prefix}prewrit`))&&((message.author.id = `${brendanid}`)))
@@ -201,10 +200,12 @@ client.on("message", message =>
     Channelcreator.categorycreator(message)
   if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
     Channelcreator.deletechannel(message);
+  if((message.content.startsWith(`${prefix}deletecat`))&&(message.author.id === `${brendanid}`))
+    Channelcreator.deletecategory(message);
   if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci'))
   {
-  message.delete({ timeout: 1000 });
-  console.log("Deleting message: "+ message.content);
+    message.delete({ timeout: 1000 });
+    console.log("Deleting message: "+ message.content);
   }
 
 }); //End of Message Sent loop
