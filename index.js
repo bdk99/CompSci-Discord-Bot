@@ -1,6 +1,6 @@
 const Discord = require("discord.js"); // imports the discord library
 const { prefix, token, devstate } = require('./config.json');
-const { csquoteschannel, FOURSEVENTYTWOchannel, mcchat, mcconsole, brendanid }= require('./ids.json');
+const { csquoteschannel, brendanid, moddiscussion }= require('./ids.json');
 const client = new Discord.Client(); // creates a discord client
 
 //Imports the necessary user code files to the index in order for later use
@@ -10,6 +10,7 @@ const Server = require("./user_code/Server");
 const Quotescode = require("./user_code/Quotescode");
 const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
+
 var softkill = false; 
 var bypass = false;
 
@@ -186,15 +187,16 @@ client.on("message", message =>
     softkill = Server.soft_kill(message,softkill);
   }
 
-  if(message.channel.id === `${csquoteschannel}`)
+  if((message.channel.id === `${csquoteschannel}`)||(message.channel.id === `${moddiscussion}`))
   {
     Quotescode.quotecatcher(message, client);
   }
 
-  if((message.content.startsWith(`${prefix}prewrit`))&&((message.author.id = `${brendanid}`)))
+  if((message.content.startsWith(`${prefix}canned`))&&((message.author.id = `${brendanid}`)))
   {
     //message.channel.send(`All the mods are currently unavalible, if you need something urgently please email the instructor at LZhang5@emich.edu.  Have a nice day.`);
-    message.channel.send(`"This so dumb - L. Zhang"`);
+    //message.channel.send(`"This so dumb - L. Zhang"`);
+    message.channel.send(`"Enough is enough... SHUT UP" - Zhang`)
   }
 
   if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)))
@@ -209,5 +211,32 @@ client.on("message", message =>
     Channelcreator.deletecategory(message);
 
 }); //End of Message Sent loop
+
+client.on('messageDelete', async message => {
+	// ignore direct messages
+	if (!message.guild) return;
+	const fetchedLogs = await message.guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MESSAGE_DELETE',
+	});
+	// Since we only have 1 audit log entry in this collection, we can simply grab the first one
+	const deletionLog = fetchedLogs.entries.first();
+
+	// Let's perform a coherence check here and make sure we got *something*
+	if (!deletionLog) return console.log(`A message by ${message.author.tag} was deleted, but no relevant audit logs were found.`);
+
+	// We now grab the user object of the person who deleted the message
+	// Let us also grab the target of this action to double check things
+	const { executor, target } = deletionLog;
+
+
+	// And now we can update our output with a bit more information
+	// We will also run a check to make sure the log we got was for the same author's message
+	if (target.id === message.author.id) {
+		console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}. Message "${message}"`);
+	}	else {
+		console.log(`A message by ${message.author.tag} was deleted, but we don't know by who.`);
+	}
+});
 
 client.login(token); // starts the bot up
