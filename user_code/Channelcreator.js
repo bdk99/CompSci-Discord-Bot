@@ -69,14 +69,15 @@ async function deletechannel (message)
     OR
 
     message.guild.channels.cache.forEach(channel => {
-        if(channel.id!==('816879956214153227') && channel.id!==('816879739876671529') && channel.id!==('816879565053493285') && channel.id!==('816882589116923914') && channel.id!==('816885593308004362')){
+        if(channel.id!==('819417318735609876') && channel.id!==('819417259147264041') && channel.id!==('819417716959215636') && channel.id!==('819684941255671868') && channel.id!==('819417299828211733')){
         channel.delete()}});
 }
 
 function deletecategory(message)
 {
     message.guild.channels.cache.forEach(category => {
-        category.delete()});
+        if(channel.id!==('819417318735609876') && channel.id!==('819417259147264041') && channel.id!==('819417716959215636') && channel.id!==('819684941255671868') && channel.id!==('819417299828211733')){
+        category.delete()}});
 }
 
 module.exports = { csvparse, createchannel, deletechannel, categorycreator, deletecategory};

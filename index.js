@@ -10,6 +10,7 @@ const Server = require("./user_code/Server");
 const Quotescode = require("./user_code/Quotescode");
 const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
+const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 
 var softkill = false; 
 var bypass = false;
@@ -46,7 +47,6 @@ if(`${devstate}`=='false')
 
 client.on("message", message => 
 { // runs whenever a message is sent
-
 
       //------------------------------------Message Filtering and Flagging Begins Here-------------------------
   //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
@@ -201,42 +201,57 @@ client.on("message", message =>
 
   if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)))
     Channelcreator.csvparse(message)
-  if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
-    Channelcreator.createchannel(message)
+  //if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
+  //  Channelcreator.createchannel(message)
   if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
     Channelcreator.categorycreator(message)
   if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
     Channelcreator.deletechannel(message);
   if((message.content.startsWith(`${prefix}deletecat`))&&(message.author.id === `${brendanid}`))
     Channelcreator.deletecategory(message);
+  if(message.content.startsWith(`${prefix}status`))
+  {
+    if(message.content === `${prefix}status help`)
+    {
+ 
+      return;
+    }
+    if (message.member.hasPermission('ADMINISTRATOR')) 
+    {
+      const content = message.content.replace(`${prefix}status `, '')
+      // "!status hello world" -> "hello world"
 
+      if(content.startsWith(`online`))
+      {
+        status='online';
+        var helper = content.replace(`online `, '')
+      }
+      if(content.startsWith(`idle`))
+      {
+        status='idle';
+        var helper = content.replace(`idle `, '')
+      }
+      if(content.startsWith(`dnd`))
+      {
+        status='dnd';
+        var helper = content.replace(`dnd `, '')
+      }
+      if(content.startsWith(`offline`))
+      {
+        status='offline';
+        var helper = content.replace(`offline `, '')
+      }
+
+      client.user.setPresence({ activity: { name: `${helper}`, type: "WATCHING" }, status: `${status}` })
+      .then(console.log)
+    }
+  }
 }); //End of Message Sent loop
 
 client.on('messageDelete', async message => {
-	// ignore direct messages
-	if (!message.guild) return;
-	const fetchedLogs = await message.guild.fetchAuditLogs({
-		limit: 1,
-		type: 'MESSAGE_DELETE',
-	});
-	// Since we only have 1 audit log entry in this collection, we can simply grab the first one
-	const deletionLog = fetchedLogs.entries.first();
-
-	// Let's perform a coherence check here and make sure we got *something*
-	if (!deletionLog) return console.log(`A message by ${message.author.tag} was deleted, but no relevant audit logs were found.`);
-
-	// We now grab the user object of the person who deleted the message
-	// Let us also grab the target of this action to double check things
-	const { executor, target } = deletionLog;
-
-
-	// And now we can update our output with a bit more information
-	// We will also run a check to make sure the log we got was for the same author's message
-	if (target.id === message.author.id) {
-		console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}. Message "${message}"`);
-	}	else {
-		console.log(`A message by ${message.author.tag} was deleted, but we don't know by who.`);
-	}
+    Clientmessagedeletion.main(message);
 });
+
+
 
 client.login(token); // starts the bot up
