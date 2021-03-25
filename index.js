@@ -56,7 +56,7 @@ client.on("message", message =>
       return;
   }
 
-  if (!bypass)
+  if ((!bypass && (message.author.id !== `${brendanid}`)))
     {
       let capsbool = Server.capsProtect(message.content);
       if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
@@ -247,7 +247,7 @@ client.on("message", message =>
         var helper = content.replace(`offline `, '')
       }
 
-      client.user.setPresence({ activity: { name: `${helper}`, type: "WATCHING" }, status: `${status}` })
+      client.user.setPresence({ activity: { name: `${status}`, type: "WATCHING" }, status: `${helper}` })
       .then(console.log)
     }
   }
