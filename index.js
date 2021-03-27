@@ -56,7 +56,7 @@ client.on("message", message =>
       return;
   }
 
-  if ((!bypass && (message.author.id !== `${brendanid}`)))
+  if (!bypass)
     {
       let capsbool = Server.capsProtect(message.content);
       if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
@@ -199,21 +199,16 @@ client.on("message", message =>
     message.channel.send(`"Enough is enough... SHUT UP" - Zhang`)
   }
 
-  // if(message.content.startsWith(`${prefix}csvparse`)&&(message.author.id === `${brendanid}`))
-  //   Channelcreator.csvparse(message)
-  // if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
+  if((message.content.startsWith(`${prefix}csvparse`))&&((message.author.id = `${brendanid}`)))
+    Channelcreator.csvparse(message)
+  //if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
   //  Channelcreator.createchannel(message)
-  // if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
-  //   Channelcreator.categorycreator(message)
-  // if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
-  //   Channelcreator.deletechannel(message);
-  // if((message.content.startsWith(`${prefix}deletecat`))&&(message.author.id === `${brendanid}`))
-  //   Channelcreator.deletecategory(message);
-  // if((message.content.startsWith(`${prefix}swapper`))&&(message.author.id === `${brendanid}`))
-  //   Channelcreator.swapper(message);
-  // if((message.content.startsWith(`${prefix}channelsort`))&&(message.author.id === `${brendanid}`))
-  //   Channelcreator.channelsort(message);
-
+  if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
+    Channelcreator.categorycreator(message)
+  if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
+    Channelcreator.deletechannel(message);
+  if((message.content.startsWith(`${prefix}deletecat`))&&(message.author.id === `${brendanid}`))
+    Channelcreator.deletecategory(message);
   if(message.content.startsWith(`${prefix}status`))
   {
     if(message.content === `${prefix}status help`)
@@ -247,7 +242,7 @@ client.on("message", message =>
         var helper = content.replace(`offline `, '')
       }
 
-      client.user.setPresence({ activity: { name: `${status}`, type: "WATCHING" }, status: `${helper}` })
+      client.user.setPresence({ activity: { name: `${helper}`, type: "WATCHING" }, status: `${status}` })
       .then(console.log)
     }
   }
@@ -256,5 +251,7 @@ client.on("message", message =>
 client.on('messageDelete', async message => {
     Clientmessagedeletion.main(message);
 });
+
+
 
 client.login(token); // starts the bot up
