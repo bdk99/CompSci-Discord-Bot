@@ -32,7 +32,7 @@ function cronjobs(client)
         console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
       });
 
-
+      //Runs at midnight on Sunday EST
       let cronjob2 = new cron.CronJob('0 0 4 * * 0', () => {
         //CRON JOBS ARE IN UTC TIME!  EST TIME + 4 or 5 HOURS
         //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
@@ -45,6 +45,7 @@ function cronjobs(client)
 
       });
 
+      //Runs at 9 am on Monday Morning EST
       let cronjob3 = new cron.CronJob('0 0 13 * * 1', () => {
         //CRON JOBS ARE IN UTC TIME!  EST TIME + 4 or 5 HOURS
         //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
@@ -122,4 +123,4 @@ function chatlogger(client, message)
   }
 }
 
-module.exports = { kill, soft_kill, bypass, capsProtect, cronjobs, chatlogger, tempbypasscommand,  };
+module.exports = { kill, soft_kill, bypass, capsProtect, cronjobs, chatlogger, tempbypasscommand };

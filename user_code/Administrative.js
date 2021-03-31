@@ -103,16 +103,17 @@ async function kick(message)
 async function help(message) 
 {
     message.channel.send('Available Commands!\n' +
-                  // 'kick [required: user]: will attempt to kick the specified user\n' +
-                  //'ban [required: user]: will attempt to ban the specified user\n' +
-                  //'kill : will shut down the bot\n' +
-                  //'softkill : will make the bot unresponsive to commands until the softkill command is used again\n' +
-                  'help : Displays this help command with a list of bot commands!\n' +
-                  'ping : Displays the bots ping!\n' +
-                  'motivateme : Sends a motivational quote or meme\n' +
-                  'quote : Generate a random cs-quote(MOST OF THESE ARE FUNNY ASF)\n' +
-                  'makemelaugh : Generates a random asf quote\n' +
-                  'ce : Sends a message with every unique server emoji responded to it');
+                  '!help : Displays this help command with a list of bot commands!\n' +
+                  '!ratep : name description : Rate a professor!\n' +
+                  '!viewratings name : Get the rating of a teacher!\n' +
+                  '!focusmode duration time(hour(s)/minutes(s)/seconds(s)) : Locks you out of every channel for a certain amount of time!\n' +
+                  '!ping : Displays the bots ping!\n' +
+                  '!motivateme : Sends a motivational quote or meme\n' +
+                  '!quote : Generate a random cs-quote(MOST OF THESE ARE FUNNY ASF)\n' +
+                  `$open : Open a ticket to get help from a mod\n` +
+                  `$close : Close a ticket\n` +
+                  `!quote <Can add name of professor or person, don't need to though> : Generate a random cs-quote(MOST OF THESE ARE FUNNY ASF)\n` +
+                  '!makemelaugh : Generates a random asf quote\n');
 }
 
 //Code for wiping a specified number of messages from a channel, perhaps from a specified user as well

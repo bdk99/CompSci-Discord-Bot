@@ -12,7 +12,7 @@ const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 
-var softkill = false; 
+var softkill = false;
 var bypass = false;
 
 client.once("ready", () => 
@@ -224,7 +224,6 @@ client.on("message", message =>
     if (message.member.hasPermission('ADMINISTRATOR')) 
     {
       const content = message.content.replace(`${prefix}status `, '')
-      // "!status hello world" -> "hello world"
 
       if(content.startsWith(`online`))
       {
