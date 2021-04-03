@@ -192,7 +192,7 @@ client.on("message", message =>
     Quotescode.quotecatcher(message, client);
   }
 
-  if((message.content.startsWith(`${prefix}canned`))&&((message.author.id = `${brendanid}`)))
+  if((message.content.startsWith(`${prefix}canned`))&&((message.author.id === `${brendanid}`)))
   {
     //message.channel.send(`All the mods are currently unavalible, if you need something urgently please email the instructor at LZhang5@emich.edu.  Have a nice day.`);
     //message.channel.send(`"This so dumb - L. Zhang"`);
@@ -216,11 +216,6 @@ client.on("message", message =>
 
   if(message.content.startsWith(`${prefix}status`))
   {
-    if(message.content === `${prefix}status help`)
-    {
- 
-      return;
-    }
     if (message.member.hasPermission('ADMINISTRATOR')) 
     {
       const content = message.content.replace(`${prefix}status `, '')

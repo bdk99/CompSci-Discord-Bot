@@ -49,7 +49,7 @@ async function quote(message)
             "You should really let someone who knows what they're doing search for quotes.",
             "Yeah I'm just gonna pretend I didn't see that horrible search you just did right there."
         ];
-        message.reply(sarcasticResponses[getRandomInt(sarcasticResponses.length - 1)]);
+        message.channel.send(sarcasticResponses[getRandomInt(sarcasticResponses.length - 1)]);
     }
 }
 
