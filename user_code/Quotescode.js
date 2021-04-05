@@ -32,10 +32,12 @@ async function quote(message)
         filteredQuotes = quotes2;
     }
     
-    if (filteredQuotes.length > 0) {
+    if (filteredQuotes.length > 0) 
+    {
         var index = getRandomInt(filteredQuotes.length - 1);
         message.channel.send(filteredQuotes[index]);
-    } else {
+    } 
+    else {
         var sarcasticResponses = [
             "Wow. That was a bad search, try again.",
             "Hot damn you suck at searching for quotes.",
@@ -51,6 +53,14 @@ async function quote(message)
         ];
         message.channel.send(sarcasticResponses[getRandomInt(sarcasticResponses.length - 1)]);
     }
+}
+
+async function quotecounter(message)
+{
+    var quotes2 = jsonData.teacherQuotes;
+    var counter = Object.keys(jsonData.teacherQuotes).length;
+
+    message.channel.send(`There are currently ${counter} quotes in file`);
 }
 
 //Writes messages from the quotes channel into the quotes-approval channel
@@ -112,4 +122,4 @@ function getRandomInt(max)
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-module.exports = { quote, quotecatcher, approveQuote, getRandomInt };
+module.exports = { quote, quotecatcher, approveQuote, getRandomInt, quotecounter };

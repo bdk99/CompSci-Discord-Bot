@@ -92,9 +92,13 @@ client.on("message", message =>
       bypass = Server.bypass(message,bypass);
     } 
 
+
     //Responds with a random quote from the list compiled on 2.7.2021 from cs-quotes channel
     if (message.content.startsWith(`${prefix}quote`)) 
     {
+      if(message.content.startsWith(`${prefix}quote count`))
+        Quotescode.quotecounter(message);
+      else
       Quotescode.quote(message);
     } 
 
