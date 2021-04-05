@@ -67,7 +67,7 @@ client.on("message", message =>
       } 
     }
 
-    if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci'))
+    if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
     {
       message.delete({ timeout: 1000 });
       console.log("Deleting message: "+ message.content);
@@ -252,6 +252,46 @@ client.on("message", message =>
 
 client.on('messageDelete', async message => {
     Clientmessagedeletion.main(message);
+});
+
+client.on('presenceUpdate', (oldPresence, newPresence) => {
+  if(`${devstate}`=='false')
+  {
+    let member = newPresence.member;
+    // User id of the user you're tracking status.
+    if((member.id === '776256478877057035')||(member.id === '404717378715385856'))
+    {
+        if (oldPresence.status !== newPresence.status) {
+            // Your specific channel to send a message in.
+            let channel = member.guild.channels.cache.get('828425906259230750');
+
+            let text = "";
+
+            if (newPresence.status === "online") 
+            {
+              text = "Our special member is online!";
+            } 
+
+            if (newPresence.status === "idle") 
+            {
+              text = "Our special member switched to idle!";
+            } 
+
+            if (newPresence.status === "dnd") 
+            {
+              text = "Our special member is in dnd!";
+            } 
+
+            else if (newPresence.status === "offline") 
+            {
+              text = "Oh no! Our special member is offline.";
+            }
+            // etc...
+
+            channel.send(text);
+        }
+    }
+  }
 });
 
 client.login(token); // starts the bot up

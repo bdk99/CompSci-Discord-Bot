@@ -123,7 +123,7 @@ async function mentionalerts(message, client)
   {
     client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
   }
-  if(message.content.includes('Elizabeth') || message.content.includes('elizabeth')|| message.content.includes('Varton')|| message.content.includes('varton') || message.content.includes('Liz')|| message.content.includes('liz') || (message.author.id === '776256478877057035'))
+  if(message.content.includes('Elizabeth') || message.content.includes('elizabeth')|| message.content.includes('Varton')|| message.content.includes('varton') || (message.author.id === '776256478877057035'))
   {
     client.channels.cache.get('828425906259230750').send(`Elizabeth Flag --> "${message.content}" in <#${message.channel.id}>`); 
   }
