@@ -43,6 +43,7 @@ if(`${devstate}`=='false')
 {
   //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday if devstate is false
   Server.cronjobs(client)
+
 }
 
 client.on("message", message => 
@@ -66,20 +67,18 @@ client.on("message", message =>
       } 
     }
 
-    if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
-    {
-      if(`${devstate}`=='false')  //ID of Brendan Mention channel on main server
-        client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
-    }
     if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci'))
     {
       message.delete({ timeout: 1000 });
       console.log("Deleting message: "+ message.content);
     }
 
-    //Skips executing chat logger in text channel if devmode in config.json is true, otherwise logs chats in console ONLY
+    //Skips executing chat logger in text channel if devmode in config.json is false, if true... logs chats in console ONLY
     if(`${devstate}`=='false')
+    {
       Server.chatlogger(client, message);
+      Administrative.mentionalerts(message, client);
+    }
     if(`${devstate}`=='true')
       console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
     //------------------------------------Message Filtering and Flagging Ends Here-------------------------
@@ -214,37 +213,41 @@ client.on("message", message =>
   // if((message.content.startsWith(`${prefix}channelsort`))&&(message.author.id === `${brendanid}`))
   //   Channelcreator.channelsort(message);
 
-  if(message.content.startsWith(`${prefix}status`))
-  {
-    if (message.member.hasPermission('ADMINISTRATOR')) 
-    {
-      const content = message.content.replace(`${prefix}status `, '')
 
-      if(content.startsWith(`online`))
-      {
-        status='online';
-        var helper = content.replace(`online `, '')
-      }
-      if(content.startsWith(`idle`))
-      {
-        status='idle';
-        var helper = content.replace(`idle `, '')
-      }
-      if(content.startsWith(`dnd`))
-      {
-        status='dnd';
-        var helper = content.replace(`dnd `, '')
-      }
-      if(content.startsWith(`offline`))
-      {
-        status='offline';
-        var helper = content.replace(`offline `, '')
-      }
 
-      client.user.setPresence({ activity: { name: `${status}`, type: "WATCHING" }, status: `${helper}` })
-      .then(console.log)
-    }
-  }
+  // if(message.content.startsWith(`${prefix}status`))
+  // {
+  //   if (message.member.hasPermission('ADMINISTRATOR')) 
+  //   {
+  //     const content = message.content.replace(`${prefix}status `, '')
+
+  //     if(content.startsWith(`online`))
+  //     {
+  //       status='online';
+  //       var helper = content.replace(`online `, '')
+  //     }
+  //     if(content.startsWith(`idle`))
+  //     {
+  //       status='idle';
+  //       var helper = content.replace(`idle `, '')
+  //     }
+  //     if(content.startsWith(`dnd`))
+  //     {
+  //       status='dnd';
+  //       var helper = content.replace(`dnd `, '')
+  //     }
+  //     if(content.startsWith(`offline`))
+  //     {
+  //       status='offline';
+  //       var helper = content.replace(`offline `, '')
+  //     }
+
+  //     client.user.setPresence({ activity: { name: `${status}`, type: "WATCHING" }, status: `${helper}` })
+  //     .then(console.log)
+  //   }
+  // }
+
+
 }); //End of Message Sent loop
 
 client.on('messageDelete', async message => {

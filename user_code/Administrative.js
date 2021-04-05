@@ -116,6 +116,27 @@ async function help(message)
                   '!makemelaugh : Generates a random asf quote\n');
 }
 
+async function mentionalerts(message, client)
+{
+  //Mention alerts for owner and known underage people on the server
+  if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
+  {
+    client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
+  }
+  if(message.content.includes('Elizabeth') || message.content.includes('elizabeth')|| message.content.includes('Varton')|| message.content.includes('varton') || message.content.includes('Liz')|| message.content.includes('liz') || (message.author.id === '776256478877057035'))
+  {
+    client.channels.cache.get('828425906259230750').send(`Elizabeth Flag --> "${message.content}" in <#${message.channel.id}>`); 
+  }
+  if(message.content.includes('Noah') || message.content.includes('noah')|| message.content.includes('Subhail')|| message.content.includes('subhail') || (message.author.id === '443877848168792074'))
+  {
+    client.channels.cache.get('828425906259230750').send(`Noah Flag --> "${message.content}" in <#${message.channel.id}>`); 
+  }
+  if(message.content.includes('Ryan') || message.content.includes('ryan')|| message.content.includes('Kim')|| message.content.includes('kim') || (message.author.id === '743957184924352542'))
+  {
+    client.channels.cache.get('828425906259230750').send(`Ryan Flag --> "${message.content}" in <#${message.channel.id}>`); 
+  }
+}
+
 //Code for wiping a specified number of messages from a channel, perhaps from a specified user as well
 async function clean(message, num, client)
 {
@@ -145,4 +166,4 @@ async function clean(message, num, client)
   }
 }
 
-module.exports = { kick, ban, help, clean }//, makeChannel};
+module.exports = { kick, ban, help, clean, mentionalerts }//, makeChannel};
