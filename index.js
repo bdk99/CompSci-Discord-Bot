@@ -279,7 +279,7 @@ client.on('presenceUpdate', (oldPresence, newPresence) => {
             if (newPresence.status === "idle") 
             {
               text = "Our special member switched to idle!";
-            } 
+            }
 
             if (newPresence.status === "dnd") 
             {
@@ -290,6 +290,8 @@ client.on('presenceUpdate', (oldPresence, newPresence) => {
             {
               text = "Oh no! Our special member is offline.";
             }
+            else
+              text = `INVALID STATUS DETECTED FOR USER ${member.id}`;
             // etc...
 
             channel.send(text);
