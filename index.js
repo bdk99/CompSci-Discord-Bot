@@ -199,7 +199,12 @@ client.on("message", message =>
   {
     //message.channel.send(`All the mods are currently unavalible, if you need something urgently please email the instructor at LZhang5@emich.edu.  Have a nice day.`);
     //message.channel.send(`"This so dumb - L. Zhang"`);
-    message.channel.send(`"Enough is enough... SHUT UP" - Zhang`)
+    message.channel.send(`\"Enough is enough... SHUT UP\" - Zhang`)
+  }
+
+  if(message.content.startsWith(`${prefix}temp`))
+  {
+    message.channel.send("")
   }
 
   // if(message.content.startsWith(`${prefix}csvparse`)&&(message.author.id === `${brendanid}`))
@@ -263,38 +268,18 @@ client.on('presenceUpdate', (oldPresence, newPresence) => {
   {
     let member = newPresence.member;
     // User id of the user you're tracking status.
-    if((member.id === '776256478877057035')||(member.id === '404717378715385856'))
+    if(member.id === '404717378715385856')
     {
-        if (oldPresence.status !== newPresence.status) {
+        if (oldPresence == null) 
+        {
+          let channel = member.guild.channels.cache.get('828425906259230750');
+          channel.send(`Our glorious leader has returned and is now ${newPresence.status}!`);
+        }
+        else if (oldPresence.status !== newPresence.status) {
             // Your specific channel to send a message in.
             let channel = member.guild.channels.cache.get('828425906259230750');
 
-            let text = "";
-
-            if (newPresence.status === "online") 
-            {
-              text = "Our special member is online!";
-            } 
-
-            if (newPresence.status === "idle") 
-            {
-              text = "Our special member switched to idle!";
-            }
-
-            if (newPresence.status === "dnd") 
-            {
-              text = "Our special member is in dnd!";
-            } 
-
-            else if (newPresence.status === "offline") 
-            {
-              text = "Oh no! Our special member is offline.";
-            }
-            else
-              text = `INVALID STATUS DETECTED FOR USER ${member.id}`;
-            // etc...
-
-            channel.send(text);
+            channel.send(`Our special member is now in ${newPresence.status}!`);
         }
     }
   }

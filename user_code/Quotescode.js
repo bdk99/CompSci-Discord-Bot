@@ -103,7 +103,7 @@ async function approveQuote(quote, client)
                     const reaction = collected.first();
 
                     if (reaction.emoji.name === '👍') {
-                        message.channel.send('You have approved the quote!');
+                        message.channel.send(`You have approved the quote.... ${quote}`);
 
                         var name = './logs/quotes.json';
                         var json = JSON.parse(fs.readFileSync(name).toString());
