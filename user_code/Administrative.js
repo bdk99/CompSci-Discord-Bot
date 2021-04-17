@@ -131,10 +131,6 @@ async function mentionalerts(message, client)
   {
     client.channels.cache.get('828425906259230750').send(`Noah Flag --> "${message.content}" in <#${message.channel.id}>`); 
   }
-  if((message.content.includes('Ryan') || message.content.includes('ryan')|| message.content.includes('Kim')|| message.content.includes('kim') || (message.author.id === '743957184924352542')) && ((message.channel.id !== '784979554531540992')&&(message.channel.id !== '828382096246571008')&&(message.channel.id !== '784963943726448691')))
-  {
-    client.channels.cache.get('828425906259230750').send(`Ryan Flag --> "${message.content}" in <#${message.channel.id}>`); 
-  }
 }
 
 //Code for wiping a specified number of messages from a channel, perhaps from a specified user as well

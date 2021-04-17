@@ -207,6 +207,9 @@ client.on("message", message =>
     message.channel.send("")
   }
 
+
+  /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
+
   // if(message.content.startsWith(`${prefix}csvparse`)&&(message.author.id === `${brendanid}`))
   //   Channelcreator.csvparse(message)
   // if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
@@ -222,6 +225,7 @@ client.on("message", message =>
   // if((message.content.startsWith(`${prefix}channelsort`))&&(message.author.id === `${brendanid}`))
   //   Channelcreator.channelsort(message);
 
+  /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
 
   // if(message.content.startsWith(`${prefix}status`))
