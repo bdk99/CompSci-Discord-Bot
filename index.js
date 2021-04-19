@@ -272,7 +272,7 @@ client.on('presenceUpdate', (oldPresence, newPresence) => {
   {
     let member = newPresence.member;
     // User id of the user you're tracking status.
-    if(member.id === '404717378715385856')
+    if(member.id === '776256478877057035')
     {
         if (oldPresence == null) 
         {
@@ -283,7 +283,7 @@ client.on('presenceUpdate', (oldPresence, newPresence) => {
             // Your specific channel to send a message in.
             let channel = member.guild.channels.cache.get('828425906259230750');
 
-            channel.send(`Our special member is now in ${newPresence.status}!`);
+            channel.send(`Our special member is now ${newPresence.status}!`);
         }
     }
   }
