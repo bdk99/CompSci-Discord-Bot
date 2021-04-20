@@ -84,6 +84,11 @@ client.on("message", message =>
     //------------------------------------Message Filtering and Flagging Ends Here-------------------------
 
 
+    if(message.content.startsWith(`${prefix}ffm`))
+    {
+      Entertainment.forcedfocusmode(message, client);
+    }
+
   if (!softkill)
   {
     //Adds the bypass command to toggle bypassing the Caps Filter
@@ -200,11 +205,6 @@ client.on("message", message =>
     //message.channel.send(`All the mods are currently unavalible, if you need something urgently please email the instructor at LZhang5@emich.edu.  Have a nice day.`);
     //message.channel.send(`"This so dumb - L. Zhang"`);
     message.channel.send(`\"Enough is enough... SHUT UP\" - Zhang`)
-  }
-
-  if(message.content.startsWith(`${prefix}temp`))
-  {
-    message.channel.send("")
   }
 
 
