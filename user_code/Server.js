@@ -3,21 +3,21 @@ const { brendanid, modrole, generalchat, chatloggerchannel }= require('../ids.js
 const { prefix } = require('../config.json')
 const cron = require('cron');
 
-//Caps filter bypass
-function tempbypasscommand(message)
-{
-    if(message.member.roles.cache.find(r => r.name === `${modrole}`))
-    {
-      var args = message.content.slice(3).trim();
-      message.channel.send(`${args} by: ${message.author.username}`);
-    }
-    else 
-    {
-      message.delete({ timeout: 2000 });
-      console.log("Deleting message: "+message.content);
-      return;
-    }
-}
+//Caps filter bypass (DISABLED)
+                                // function tempbypasscommand(message)
+                                // {
+                                //     if(message.member.roles.cache.find(r => r.name === `${modrole}`))
+                                //     {
+                                //       var args = message.content.slice(3).trim();
+                                //       message.channel.send(`${args} by: ${message.author.username}`);
+                                //     }
+                                //     else 
+                                //     {
+                                //       message.delete({ timeout: 2000 });
+                                //       console.log("Deleting message: "+message.content);
+                                //       return;
+                                //     }
+                                // }
 
 //Sends a professor quote in General at 9 AM
 function cronjobs(client)
@@ -60,7 +60,6 @@ function cronjobs(client)
     cronjob.start()
     cronjob2.start()
     cronjob3.start()
-
 }
 
 //The off switch for this entire ensemble
@@ -123,4 +122,4 @@ function chatlogger(client, message)
   }
 }
 
-module.exports = { kill, soft_kill, bypass, capsProtect, cronjobs, chatlogger, tempbypasscommand };
+module.exports = { kill, soft_kill, bypass, capsProtect, cronjobs, chatlogger };

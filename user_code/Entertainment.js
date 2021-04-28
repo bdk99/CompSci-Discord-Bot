@@ -1,4 +1,18 @@
 const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands, focusmoderole }= require('../ids.json');
+const fs = require('fs');
+let jsonData = "";
+
+
+//Script for reading JSON file
+fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
+    if (err) {
+        console.log(err);
+        console.log("Unable to read quotes json file");
+    } else {
+        jsonData = JSON.parse(data);
+    }
+})
+
 
 //Function that reacts with all unique server emojis 
 async function ce(message) 
