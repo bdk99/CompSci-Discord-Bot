@@ -3,7 +3,7 @@ const { brendanid, modrole, generalchat, chatloggerchannel }= require('../ids.js
 const { prefix } = require('../config.json')
 const cron = require('cron');
 
-//Caps filter bypass (DISABLED)
+//Temp caps filter bypass (DISABLED)
                                 // function tempbypasscommand(message)
                                 // {
                                 //     if(message.member.roles.cache.find(r => r.name === `${modrole}`))
@@ -73,22 +73,23 @@ async function kill(message)
 }
 
 //Function that makes bot unresponsive to commands until repeat of softkill command!
-async function soft_kill(message, softkill) 
+function soft_kill(message, softkill) 
 {
-    if(message.member.roles.cache.find(r => r.name === `${modrole}`)) 
-    {
-        message.channel.send('SoftKill '+!softkill)
-        return !softkill;
-    }
+  if(message.member.roles.cache.find(r => r.name === `${modrole}`)) 
+  {
+    message.channel.send('SoftKill '+!softkill)
+    return !softkill;
+  }
 }
 
 //Adds function to bypass filter with a bypass toggle command!
-async function bypass(message, bypass) 
+function bypass(message, bypass) 
 {
-    if (message.author.id !== `${brendanid}`) return bypass;
-    
+  if(message.member.roles.cache.find(r => r.name === `${modrole}`)) 
+  {    
     message.channel.send('Caps Bypass: '+!bypass)
     return !bypass;
+  }
 }
 
 //Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  

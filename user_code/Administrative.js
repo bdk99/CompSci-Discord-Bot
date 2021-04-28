@@ -52,7 +52,7 @@ async function ban(message)
         }
 }
 
-//function called on prefix !kick, used to attempt to kick member
+//function called on prefix !kick, used to kick a specific member
 async function kick(message) 
 {
       if (message.author.id !== `${brendanid}`) 
@@ -99,7 +99,7 @@ async function kick(message)
     }
 }
 
-//Lists bot commands
+//Lists bot commands as a help message
 async function help(message) 
 {
     message.channel.send('Available Commands!\n' +
@@ -116,9 +116,9 @@ async function help(message)
                   '!makemelaugh : Generates a random asf quote\n');
 }
 
-async function mentionalerts(message, client)
+//Mention alerts for owner and known underage people on the server
+function mentionalerts(client, message)
 {
-  //Mention alerts for owner and known underage people on the server
   if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
   {
     client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
@@ -133,7 +133,7 @@ async function mentionalerts(message, client)
   }
 }
 
-//Code for wiping a specified number of messages from a channel, perhaps from a specified user as well
+//Code for wiping a specified number of messages from a channel (MOD ONLY)
 async function clean(message, num, client)
 {
   if(message.member.roles.cache.find(r => r.name === `${modrole}`)) 
@@ -162,4 +162,29 @@ async function clean(message, num, client)
   }
 }
 
-module.exports = { kick, ban, help, clean, mentionalerts }//, makeChannel};
+//Function to alert on specific users presenceUpdates
+async function presenceUpdate(oldPresence, newPresence)
+{
+  if(`${devstate}`=='false')
+  {
+    let member = newPresence.member;
+    // User id of the user you're tracking status.
+    if(member.id === '776256478877057035')
+    {
+      if (oldPresence == null) 
+      {
+        let channel = member.guild.channels.cache.get('828425906259230750');
+        channel.send(`Our glorious leader has returned and is now ${newPresence.status}!`);
+      }
+      else if (oldPresence.status !== newPresence.status) {
+          // Your specific channel to send a message in.
+          let channel = member.guild.channels.cache.get('828425906259230750');
+
+          channel.send(`Our special member is now ${newPresence.status}!`);
+      }
+    }
+  }
+}
+
+
+module.exports = { kick, ban, help, clean, mentionalerts, presenceUpdate }
