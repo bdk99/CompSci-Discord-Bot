@@ -1,9 +1,11 @@
-const Discord = require("discord.js"); // imports the discord library
-const { prefix, token, devstate } = require('./config.json');
-const { csquoteschannel, brendanid, moddiscussion }= require('./ids.json');
-const client = new Discord.Client(); // creates a discord client
+const Discord = require('discord.js')// imports the discord library
+const client = new Discord.Client();
 
 //Imports the necessary user code files to the index in order for later use
+const { prefix, token, devstate } = require('./config.json');
+const { csquoteschannel, brendanid, moddiscussion }= require('./ids.json');
+
+const command = require('./command')
 const Administrative = require("./user_code/Administrative");
 const Entertainment = require("./user_code/Entertainment");
 const Server = require("./user_code/Server");
@@ -15,7 +17,7 @@ const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 var softkill = false;
 var bypass = false;
 
-client.once("ready", () => 
+client.once('ready', () => 
 {
   if(`${devstate}`=='true')
   {
@@ -26,7 +28,7 @@ client.once("ready", () =>
     console.info("Ready and stable!");
     //client.channels.cache.get('816882589116923914').send('Dev Mode READY!'); 
 
-    //client.user.setActivity("with JavaScript and learning new features!"); //Sets the discord status activity of the bot
+    client.user.setActivity("with JavaScript and learning new features!"); //Sets the discord status activity of the bot
   }
   else
   {
@@ -37,163 +39,160 @@ client.once("ready", () =>
 
     client.user.setActivity("with JavaScript and learning new features!");  //Sets the discord status activity of the bot
   }
+
+  //Needs fixed ASAP
+  //Needs fixed ASAP
+  //Needs fixed ASAP
+  //Needs fixed ASAP
+  //client.setMaxListeners(30)  //Sets the max listeners to 30 to prevent a memory leak crash!  NEEDS FIXED ASAP
+  //Needs fixed ASAP
+  //Needs fixed ASAP
+  //Needs fixed ASAP
+  //Needs fixed ASAP
+
+  command(client, 'ping', message => {
+    message.channel.send(`🏓 Latency is ${Date.now() - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
+  })
+
+  command(client, 'kill', message => {
+    Server.kill(message);
+  })
+
+  command(client, 'ratep', message => {
+    ReviewsCode.RateProfessor(message, client);
+  })
+
+  command(client, 'focusmode', message => {
+    Entertainment.focus(message);
+  })
+
+  command(client, 'viewratings', message => {
+    ReviewsCode.viewRatings(message);
+  })
+
+  command(client, 'clean', message => {
+    var num = message.content.slice(6).trim();
+    Administrative.clean(message, num, client);
+  })
+
+  command(client, 'help', message => {
+    Administrative.help(message);
+  })
+
+  command(client, 'ffm', message => {
+    Entertainment.forcedfocusmode(message, client);
+  })
+
+  //Adds the bypass command to toggle bypassing the Caps Filter
+  command(client, 'bypass', message => {
+    bypass = Server.bypass(message,bypass);
+  })
+
+  //Responds with a random quote from the quotes file
+  command(client, 'quote', message => {
+    if(message.content.startsWith(`${prefix}quote count`))
+      Quotescode.quotecounter(message);
+    else
+      Quotescode.quote(message);
+  })
+
+  //Responds from a random quote at Saras personal collection of quotes
+  command(client, 'makemelaugh', message => {
+    Entertainment.makemelaugh(message);
+  })
+
+  //Displays the user info of the person who sends
+  command(client, 'user-info', message => {
+    message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
+  })
+
+  //Send Custom emojis message when doing {prefix}ce comamnd
+  command(client, 'ce', message => {
+    Entertainment.ce(message);  
+  })
+
+  //Sends a motivational quote (or meme)
+  command(client, 'motivateme', message => {
+    Entertainment.motivateme(message);
+  })
+
+  //Attempts to kick a user
+  command(client, 'kick', message => {
+    if (!message.guild) 
+      return;
+    Administrative.kick(message);
+  })
+
+  //Attempts to ban a user
+  command(client, 'ban', message => {
+    if (!message.guild) 
+      return;
+    Administrative.ban(message);
+  })
+
+  //Softkill functionality
+  command(client, 'softkill', message => {
+    softkill = Server.soft_kill(message,softkill);
+  })
 });
+
+
 
 if(`${devstate}`=='false')
 {
   //Completes a cronjob task to display the quote of the day in general on main server at 10 AM everyday if devstate is false
   Server.cronjobs(client)
-
 }
+
+
+
 
 client.on("message", message => 
 { // runs whenever a message is sent
 
-      //------------------------------------Message Filtering and Flagging Begins Here-------------------------
   //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
   if(!message.content.startsWith(`${prefix}quote`))
   {
-    if (message.author.bot) 
+    if(message.author.bot) 
       return;
   }
 
+
   if ((!bypass && (message.author.id !== `${brendanid}`)))
-    {
-      let capsbool = Server.capsProtect(message.content);
-      if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
-      {
-        message.delete({ timeout: 2000 })
-        console.log("Deleting message: "+message.content);
-      } 
-    }
-
-    if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
-    {
-      message.delete({ timeout: 1000 });
-      console.log("Deleting message: "+ message.content);
-    }
-
-    //Skips executing chat logger in text channel if devmode in config.json is false, if true... logs chats in console ONLY
-    if(`${devstate}`=='false')
-    {
-      Server.chatlogger(client, message);
-      Administrative.mentionalerts(message, client);
-    }
-    if(`${devstate}`=='true')
-      console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
-    //------------------------------------Message Filtering and Flagging Ends Here-------------------------
-
-
-    if(message.content.startsWith(`${prefix}ffm`))
-    {
-      Entertainment.forcedfocusmode(message, client);
-    }
-
-  if (!softkill)
   {
-    //Adds the bypass command to toggle bypassing the Caps Filter
-    if (message.content === `${prefix}bypass`) 
+    let capsbool = Server.capsProtect(message.content);
+    if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
     {
-      bypass = Server.bypass(message,bypass);
+      message.delete({ timeout: 2000 })
+      console.log("Deleting message: "+message.content);
     } 
-
-
-    //Responds with a random quote from the list compiled on 2.7.2021 from cs-quotes channel
-    if (message.content.startsWith(`${prefix}quote`)) 
-    {
-      if(message.content.startsWith(`${prefix}quote count`))
-        Quotescode.quotecounter(message);
-      else
-      Quotescode.quote(message);
-    } 
-
-    //Responds from a random quote at Saras personal collection of quotes
-    if (message.content === `${prefix}makemelaugh`) 
-    {
-      Entertainment.makemelaugh(message);
-    } 
-
-    //Responds with Pong after send the ping command with prefix
-    else if (message.content === `${prefix}ping`) 
-    {  
-      message.channel.send(`🏓 Latency is ${Date.now() - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
-    } 
-
-    //Kills and stops server with response when a specific user (In this case Brendan#9412) runs the kill command with prefix
-    else if (message.content === `${prefix}kill`)  
-    {
-        Server.kill(message);
-    }
-
-    //Displays the user info of the person who sends
-    else if (message.content === `${prefix}user-info`)
-    {
-      message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
-    }
-
-    //Send Custom emojis message when doing {prefix}ce comamnd
-    else if (message.content === `${prefix}ce`)
-    {
-      Entertainment.ce(message);  
-    }
-
-    //Sends a motivational quote (or meme)
-    else if (message.content === `${prefix}motivateme`)
-    {
-      Entertainment.motivateme(message);
-    }
-
-    //Attempts to kick user
-    else if (message.content.startsWith(`${prefix}kick`)) 
-    {
-      if (!message.guild) return;
-
-      Administrative.kick(message);
-    }
-
-    //Attempts to ban user
-    else if (message.content.startsWith(`${prefix}ban`)) 
-    {
-      if (!message.guild) return;
-
-      Administrative.ban(message);
-    }
-
-    //Prints help message
-    else if (message.content.startsWith(`${prefix}help`)) 
-    {
-      Administrative.help(message);
-    }
-
-    //Cleans a specified amount of messages
-    if (message.content.startsWith(`${prefix}clean`))
-    {
-      var num = message.content.slice(6).trim();
-      Administrative.clean(message, num, client);
-    }
-
-    //Adds a professor rating
-    if(message.content.startsWith(`${prefix}ratep`))
-    {
-      ReviewsCode.RateProfessor(message, client);
-    }
-
-    //Lists all the ratings for a specified professor
-    if(message.content.startsWith(`${prefix}viewratings`))
-    {
-      ReviewsCode.viewRatings(message);
-    }
-
-    //Engages Focus Mode, an anti-procrastination tool
-    if (message.content.startsWith(`${prefix}focusmode`))
-    {
-      Entertainment.focus(message);
-    }
   }
-  if(message.content === `${prefix}softkill`) 
-  { //softkill functionality
-    softkill = Server.soft_kill(message,softkill);
+
+  if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
+  {
+    message.delete({ timeout: 1000 });
+    console.log("Deleting message: "+ message.content);
   }
+
+  //Skips executing chat logger in text channel if devmode in config.json is false, if true... logs chats in console ONLY
+  if(`${devstate}`=='false')
+  {
+    Server.chatlogger(client, message);
+    Administrative.mentionalerts(message, client);
+  }
+  if(`${devstate}`=='true')
+    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
+  //------------------------------------Message Filtering and Flagging Ends Here-------------------------
+
+  
+  if(message.content.startsWith(`$open`))
+  {
+    message.channel.send(`**Support Ticket Downtime**  
+    The ticket system is disabled until after exams in order to allow mods to focus on exams.  If you need help reach out to the tutoring center or go to your professors office hours!  Most mods (if not all) will not be responding to tickets or DMs messages at this time.  More information about the tutoring center can be found here:
+    -->https://www.emich.edu/computer-science/student-resources/index.php
+    -->https://www.emich.edu/academic-support-programs/hsc/academic-support/tutoring/students.php`);
+  }
+
 
   if((message.channel.id === `${csquoteschannel}`)||(message.channel.id === `${moddiscussion}`))
   {
@@ -206,7 +205,6 @@ client.on("message", message =>
     //message.channel.send(`"This so dumb - L. Zhang"`);
     message.channel.send(`\"Enough is enough... SHUT UP\" - Zhang`)
   }
-
 
   /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
@@ -227,47 +225,19 @@ client.on("message", message =>
 
   /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
-
-  // if(message.content.startsWith(`${prefix}status`))
-  // {
-  //   if (message.member.hasPermission('ADMINISTRATOR')) 
-  //   {
-  //     const content = message.content.replace(`${prefix}status `, '')
-
-  //     if(content.startsWith(`online`))
-  //     {
-  //       status='online';
-  //       var helper = content.replace(`online `, '')
-  //     }
-  //     if(content.startsWith(`idle`))
-  //     {
-  //       status='idle';
-  //       var helper = content.replace(`idle `, '')
-  //     }
-  //     if(content.startsWith(`dnd`))
-  //     {
-  //       status='dnd';
-  //       var helper = content.replace(`dnd `, '')
-  //     }
-  //     if(content.startsWith(`offline`))
-  //     {
-  //       status='offline';
-  //       var helper = content.replace(`offline `, '')
-  //     }
-
-  //     client.user.setPresence({ activity: { name: `${status}`, type: "WATCHING" }, status: `${helper}` })
-  //     .then(console.log)
-  //   }
-  // }
-
-
 }); //End of Message Sent loop
 
-client.on('messageDelete', async message => {
-    Clientmessagedeletion.main(message);
+
+client.on('messageDelete', async message => 
+{  //Fires when a message is deleted
+
+  Clientmessagedeletion.main(message);
 });
 
-client.on('presenceUpdate', (oldPresence, newPresence) => {
+
+client.on('presenceUpdate', (oldPresence, newPresence) => 
+{ //Fires when users updates their user status presence
+
   if(`${devstate}`=='false')
   {
     let member = newPresence.member;
@@ -289,4 +259,7 @@ client.on('presenceUpdate', (oldPresence, newPresence) => {
   }
 });
 
-client.login(token); // starts the bot up
+client.login(token)
+
+// <<----====----- Update Notes: -----======----->>
+//This version of the bot completely disabled the softkill and bypass commands

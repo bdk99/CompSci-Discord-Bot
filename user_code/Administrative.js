@@ -119,7 +119,7 @@ async function help(message)
 async function mentionalerts(message, client)
 {
   //Mention alerts for owner and known underage people on the server
-  if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein') || message.content.includes('bdk') || message.content.includes('BDK'))
+  if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
   {
     client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
   }
