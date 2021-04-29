@@ -23,12 +23,11 @@ In order to setup the bot to test on a local server...
   }
 ```
 Be sure to replace BOTTOKEN with the value of your bots token which you saved from step 2.
-
-
 *Please be sure that your prefix is unique to your bot only.  This way when we have multiple people testing with their bots at once they dont collide and infinitely respond to eachother.*
-
 The current prefixes are already in use ! ? ^ ~ |
-
+9. In order to not get an error when you try to run the index.js file, you will need to add cron to the node modules folder.  In order to do this, go to the root of the project (where the index.js) file is located in command prompt or terminal. Type the command "npm install cron".
+10. After you do this and let the corresponding files automatically install, do "node index.js" to run the bot code.
+11. If you have any other questions please reach out to Brendan directly, or post an issue on the Github!  Thanks :D
 
 
 ```
