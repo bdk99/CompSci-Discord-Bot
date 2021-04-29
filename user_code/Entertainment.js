@@ -212,4 +212,17 @@ function forcedfocusmode(message)
     }    
 }
 
-module.exports = {motivateme, ce, makemelaugh, focus, forcedfocusmode};
+function embed(Discord, message, title, author, colorcode, page, field1)
+{
+    const embed = new Discord.MessageEmbed()
+    .setTitle(title)
+    .setColor(`#${colorcode}`)
+    .addFields({
+        name: `${page}`,
+        value: `${field1}`,
+        inline: true
+    })
+    message.channel.send(embed);
+}
+
+module.exports = {motivateme, ce, makemelaugh, focus, forcedfocusmode, embed};
