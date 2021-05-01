@@ -1,5 +1,5 @@
 //Quotescode.js
-const { modrole, approveQuotesChannel }= require('../ids.json');
+const { modrole, contentapprovalchannel }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
 
@@ -57,7 +57,6 @@ async function quote(message)
 
 async function quotecounter(message)
 {
-    var quotes2 = jsonData.teacherQuotes;
     var counter = Object.keys(jsonData.teacherQuotes).length;
 
     message.channel.send(`There are currently ${counter} quotes in file`);
@@ -85,7 +84,7 @@ async function quotecatcher(message, client)
 //Code for approving a new professor quote and writing it into the quotes JSON file
 async function approveQuote(quote, client) 
 {
-    client.channels.cache.get(`${approveQuotesChannel}`).send(quote)
+    client.channels.cache.get(`${contentapprovalchannel}`).send(quote)
         .then(function (message) {
             message.react('👍').then(() => message.react('👎'));
 

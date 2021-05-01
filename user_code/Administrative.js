@@ -1,4 +1,6 @@
+//Administrative.js
 const { brendanid, modrole }= require('../ids.json');
+const { devstate } = require('../config.json');
 
 //Function called with prefix !ban, used to attempt user ban
 async function ban(message) 

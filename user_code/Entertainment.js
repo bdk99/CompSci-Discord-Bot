@@ -1,4 +1,5 @@
-const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands, focusmoderole }= require('../ids.json');
+//Entertainment.js
+const { focusmoderole }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
 

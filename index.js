@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 //Imports the necessary user code files to the index in order for later use
 const { prefix, token, devstate } = require('./config.json');
-const { csquoteschannel, brendanid, moddiscussion }= require('./ids.json');
+const { brendanid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel } = require('./ids.json');
 
 const command = require('./command')
 const Administrative = require("./user_code/Administrative");
@@ -24,13 +24,14 @@ client.once('ready', () =>
     console.info(`Logged in as ${client.user.tag}!`);  
     console.info("Starting in Development Mode");
     console.info("Ready and stable!");   //Displays Ready and stable in console on run to verify the bot actually starts and doesnt crash
+    client.channels.cache.get(`${devbotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on dev server
     client.user.setActivity("with JavaScript and learning new features!"); //Sets the discord status activity of the bot to a specific string
   }
   else //Fires if dev mode is set to false
   {
     console.info(`Logged in as ${client.user.tag}!`);
     console.info("Ready and stable!");
-    client.channels.cache.get('806391647294324766').send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on main server
+    client.channels.cache.get(`${mainbotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on main server
 
     client.user.setActivity("with JavaScript and learning new features!");  //Sets the discord status activity of the bot
   }
@@ -145,13 +146,6 @@ client.on("message", message =>
       message.delete({ timeout: 1000 });
       console.log("Deleting message: "+ message.content);
     }
-    
-    //Automatic responsce to use when we close the ticket system during exams so mods can take a break
-    if(message.content.startsWith(`$open`))
-    {
-      message.channel.send(`**Support Ticket Downtime**  
-      The ticket system is disabled until after exams in order to allow mods to focus on exams.`);
-    }
 
     //Adds the bypass command to toggle bypassing the Caps Filter
     if (message.content === `${prefix}bypass`) 
@@ -164,6 +158,21 @@ client.on("message", message =>
   if(message.content === `${prefix}softkill`) 
   { //softkill functionality
     softkill = Server.soft_kill(message,softkill);
+  }
+
+  if(`${devstate}`=='false')
+  {
+    if((message.channel.id === `${maincsquoteschannel}`)||(message.channel.id === `${moddiscussion}`))
+    {
+      Quotescode.quotecatcher(message, client);
+    }
+  }
+  else if(`${devstate}`=='true')
+  {
+    if((message.channel.id === `${devcsquoteschannel}`))
+    {
+      Quotescode.quotecatcher(message, client);
+    }
   }
 
   //The Holy CapsProtect function call

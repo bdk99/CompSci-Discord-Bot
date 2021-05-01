@@ -1,5 +1,5 @@
 //Reviewscode.js
-const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands }= require('../ids.json');
+const { modrole, contentapprovalchannel, proftalkchannel, modbotcommands, botcommands }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
 
@@ -30,7 +30,7 @@ async function RateProfessor(message, client)
 //Code for approving a new professor review
 async function approveReview(message, review, client, file, profname) 
 {
-    client.channels.cache.get(`${approveReviewsChannel}`).send(`Review for ${profname} ---> `+review)
+    client.channels.cache.get(`${contentapprovalchannel}`).send(`Review for ${profname} ---> `+review)
         .then(function (message) {
             message.react('👍').then(() => message.react('👎'));
 
