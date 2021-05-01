@@ -10,8 +10,8 @@ async function ban(message)
   
         if(message.author.id !== `${brendanid}`)
         {
-            message.reply('I was unable to ban the member!  Permission denied!');
-            return;
+          message.reply('I was unable to ban the member!  Permission denied!');
+          return;
         }
   
         const user = message.mentions.users.first();
@@ -59,8 +59,8 @@ async function kick(message)
 {
       if (message.author.id !== `${brendanid}`) 
         {
-            message.reply('I was unable to kick the member!  Permission denied!');
-            return;
+          message.reply('I was unable to kick the member!  Permission denied!');
+          return;
         }
         
     // Assuming we mention someone in the message, this will return the user
