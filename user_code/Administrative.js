@@ -188,5 +188,30 @@ async function presenceUpdate(oldPresence, newPresence)
   }
 }
 
+async function mno(message) {
+  var time = new Date();
+  if (message.member.hasPermission('MOD')) {
+    let role = message.guild.roles.cache.find(role => role.name === `${ModsNightOff}`);
+    message.member.roles.add(role).catch(console.error);
+    message.channel.send('Looks like ' + message.author.username + ' is taking the night off!')
+    if (time.getHours() == 0)
+      message.member.roles.remove(role).catch(console.error);
+  }
+}
 
-module.exports = { kick, ban, help, clean, mentionalerts, presenceUpdate }
+async function lockChannel(message) {
+  var parameter = message.content.slice(10).trim();
+  var timeString = parameter.substr(0,parameter.indexOf(' '));
+  var time = parseInt(timeString) * 3600000;
+  if (message.member.hasPermission('ADMINISTRATOR')) {
+    message.channel.updateOverwrite(message.channel.guild.roles.everyone, { SEND_MESSAGES: false });
+    if (timeString > 1) message.channel.send('Lockdown set for ' + timeString + ' hours. Good luck on your exam!');
+    else message.channel.send('Lockdown set for ' + timeString + ' hour. Good luck on your exam!');
+    setTimeout(() => {
+      message.channel.updateOverwrite(message.channel.guild.roles.everyone, { SEND_MESSAGES: true });
+      message.channel.send('Lockdown lifted')
+  }, time); 
+  }
+}
+
+module.exports = { kick, ban, help, clean, mentionalerts, presenceUpdate, mno, lockChannel }
