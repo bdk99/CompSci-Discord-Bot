@@ -140,6 +140,15 @@ client.on("message", message =>
       Administrative.ban(message);
     })
 
+    // Gives a mod the night off
+    command(message, 'modsnightoff', RETURN => {
+      Administrative.mno(message);  
+    })
+
+    command(message, 'lockdown', RETURN => {
+      Administrative.lockChannel(message);  
+    })
+
     //Message Filter for words roomer, gocci, and Brendy
     if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
     {
