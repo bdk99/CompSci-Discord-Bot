@@ -1,4 +1,5 @@
-const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands, focusmoderole }= require('../ids.json');
+//Entertainment.js
+const { focusmoderole }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
 
@@ -128,11 +129,11 @@ async function focus(message)
     let role = message.guild.roles.cache.find(role => role.name === `${focusmoderole}`);
     message.member.roles.add(role).catch(console.error);
     console.log(`[FOCUSMODE] ${message.author.username} Entered Focus Mode for ${timeStatement}`);
-    message.channel.send('Focus Mode has been engaged for ' + timeStatement);
+    message.channel.send('Focus Mode has been engaged for ' + timeStatement + ' for ' + message.author.username);
     
     setTimeout(() => {
         message.member.roles.remove(role).catch(console.error);
-        message.channel.send('Focus mode has been disabled');
+        message.channel.send('Focus mode has been disabled for ' + message.author.username);
     }, jstime);
 }
 
@@ -146,7 +147,6 @@ function forcedfocusmode(message)
         var parameter = message.content.slice(4).trim();
         var timeString = parameter//.substr(0,parameter.indexOf(' '));
         var time = parseInt(timeString);
-        var timeStringlength = (parameter.substr(0,parameter.indexOf(' '))).length;
         
         const second = 1000;
         const minute = 60 * second;
@@ -199,7 +199,7 @@ function forcedfocusmode(message)
         member.roles.add(role).catch(console.error);
 
         console.log(`[FORCED-FOCUSMODE] ${memberout} was put into focusmode for ${timeStatement}`);
-        message.channel.send(`Focus Mode has been engaged for duration ${timeStatement} for ${memberout}`);
+        message.channel.send(`Focus Mode has been engaged for ${timeStatement} for ${memberout}`);
         
         setTimeout(() => {
             member.roles.remove(role).catch(console.error);
@@ -212,17 +212,4 @@ function forcedfocusmode(message)
     }    
 }
 
-function embed(Discord, message, title, author, colorcode, page, field1)
-{
-    const embed = new Discord.MessageEmbed()
-    .setTitle(title)
-    .setColor(`#${colorcode}`)
-    .addFields({
-        name: `${page}`,
-        value: `${field1}`,
-        inline: true
-    })
-    message.channel.send(embed);
-}
-
-module.exports = {motivateme, ce, makemelaugh, focus, forcedfocusmode, embed};
+module.exports = {motivateme, ce, makemelaugh, focus, forcedfocusmode};

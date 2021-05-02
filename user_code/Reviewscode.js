@@ -1,6 +1,5 @@
 //Reviewscode.js
-const { modrole, approveReviewsChannel, proftalkchannel, modbotcommands, botcommands }= require('../ids.json');
-const Entertainment = require("./Entertainment");
+const { modrole, contentapprovalchannel, proftalkchannel, modbotcommands, botcommands }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
 
@@ -31,7 +30,7 @@ async function RateProfessor(message, client)
 //Code for approving a new professor review
 async function approveReview(message, review, client, file, profname) 
 {
-    client.channels.cache.get(`${approveReviewsChannel}`).send(`Review for ${profname} ---> `+review)
+    client.channels.cache.get(`${contentapprovalchannel}`).send(`Review for ${profname} ---> `+review)
         .then(function (message) {
             message.react('👍').then(() => message.react('👎'));
 
@@ -70,7 +69,7 @@ async function approveReview(message, review, client, file, profname)
 }
 
 //Code to retrieve all written professor ratings from their respective txt file and list them in Discord
-function viewRatings(message, Discord) 
+async function viewRatings(message) 
 {   
     if((message.channel.id === `${proftalkchannel}`) || (message.channel.id === `${botcommands}`)|| (message.channel.id === `${modbotcommands}`))
     {
@@ -82,27 +81,9 @@ function viewRatings(message, Discord)
         }
         fs.readFile('./logs/professors/professors.txt', function (err, data) 
         {
-            console.log(viewprofName)
             if (err) throw err;
             if(data.includes(viewprofName.toLowerCase())){
-                fs.readFile('./logs/professors/' + viewprofName.toLowerCase() + '.txt', 'utf8', function(err, data) {
-                    if (err) throw err;
-
-                    var arr = data.split("\n");
-                    var out = "";
-                    var char_count = out.length;
-                    var titleout = "Ratings for Professor " + viewprofName;
-                    
-                    for (i = 2; i < arr.length && char_count < 500; i++) 
-                    {
-                        if (arr[i]) 
-                        {
-                            out = out + "\n" + arr[i];
-                            char_count = out.length;
-                        }
-                    }
-                    Entertainment.embed(Discord, message, titleout, 'Almighty CompSci', '34EB5E', 'Page 1', out);
-                });
+                message.channel.send("Ratings for Professor " + viewprofName, { files: ['./logs/professors/' + viewprofName.toLowerCase() + '.txt'] });
             }
             else 
             {
@@ -116,5 +97,6 @@ function viewRatings(message, Discord)
         message.channel.send(`Command only allowed in prof-talk-and-suggestions and bot-commands`);
     }
 }
+
 
 module.exports = { RateProfessor, approveReview, viewRatings };

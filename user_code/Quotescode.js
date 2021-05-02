@@ -1,34 +1,27 @@
 //Quotescode.js
-const { modrole, approveQuotesChannel }= require('../ids.json');
+const { modrole, contentapprovalchannel }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
-
-
-//Script for reading JSON file
-fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
-    if (err) {
-        console.log(err);
-        console.log("Unable to read quotes json file");
-    } else {
-        jsonData = JSON.parse(data);
-    }
-})
-
 //Function for Teacher quotes command!  DO NOT REMOVE
 async function quote(message) 
 {
     var quotes2 = jsonData.teacherQuotes;
     var filteredQuotes = []
     console.log(message.content);
-    if (message.content.length > 6) {
+    if (message.content.length > 6) 
+    {
         var search = message.content.replace("!quote ", "");
 
-        quotes2.forEach(function(quote) {
-            if (quote.toLowerCase().includes(search.toLowerCase() )) {
+        quotes2.forEach(function(quote) 
+        {
+            if (quote.toLowerCase().includes(search.toLowerCase() )) 
+            {
                 filteredQuotes.push(quote);
             }
         });  
-    } else {
+    } 
+    else 
+    {
         filteredQuotes = quotes2;
     }
     
@@ -37,7 +30,8 @@ async function quote(message)
         var index = getRandomInt(filteredQuotes.length - 1);
         message.channel.send(filteredQuotes[index]);
     } 
-    else {
+    else 
+    {
         var sarcasticResponses = [
             "Wow. That was a bad search, try again.",
             "Hot damn you suck at searching for quotes.",
@@ -57,7 +51,6 @@ async function quote(message)
 
 async function quotecounter(message)
 {
-    var quotes2 = jsonData.teacherQuotes;
     var counter = Object.keys(jsonData.teacherQuotes).length;
 
     message.channel.send(`There are currently ${counter} quotes in file`);
@@ -66,10 +59,12 @@ async function quotecounter(message)
 //Writes messages from the quotes channel into the quotes-approval channel
 async function quotecatcher(message, client)
 {
+    //Adds a new line to the incommingcsquotes CATCH ALL file
     fs.appendFile('incommingcsquotes.txt', "\n", (err) => {
         if (err) throw err;
     });
 
+    //Adds the incomming, unapproved "CS QUOTE" to the CATCH ALL
     fs.appendFile('incommingcsquotes.txt', JSON.stringify(message.content), 'utf8', (err) => {
         if (err) throw err;
     });
@@ -85,7 +80,7 @@ async function quotecatcher(message, client)
 //Code for approving a new professor quote and writing it into the quotes JSON file
 async function approveQuote(quote, client) 
 {
-    client.channels.cache.get(`${approveQuotesChannel}`).send(quote)
+    client.channels.cache.get(`${contentapprovalchannel}`).send(quote)
         .then(function (message) {
             message.react('👍').then(() => message.react('👎'));
 
