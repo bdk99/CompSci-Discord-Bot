@@ -2,3 +2,5 @@ config.json
 app.yaml
 package.json
 /user_code/quotes.json
+package-lock.json
+node_modules
