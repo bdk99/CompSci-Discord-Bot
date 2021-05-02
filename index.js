@@ -79,7 +79,7 @@ client.on("message", message =>
 
     //Lists all the ratings for a specified professor that have already been approved by a mod
     command(message, 'viewratings', RETURN => {
-      ReviewsCode.viewRatings(message, Discord);
+      ReviewsCode.viewRatings(message);
     })
 
     //Deletes a specified amount of messages from the channel
@@ -139,11 +139,6 @@ client.on("message", message =>
         return;
       Administrative.ban(message);
     })
-
-//    //Adds embeds to the bot
-//    command(message, 'embed', RETURN => {
-//      Entertainment.embedcreator(message, "Testing Professor Review Embed")
-//    })
 
     //Message Filter for words roomer, gocci, and Brendy
     if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
