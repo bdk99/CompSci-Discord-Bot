@@ -169,15 +169,18 @@ client.on("message", message =>
     softkill = Server.soft_kill(message,softkill);
   }
 
-  if(`${devstate}`=='false')
+  if(`${devstate}`=='false') //If false, log chats in console AND logs in #message-feed channel, and records quotes from cs-quotes and mod discussion
   {
+    Administrative.mentionalerts(client, message);
+    Server.chatlogger(client, message);
     if((message.channel.id === `${maincsquoteschannel}`)||(message.channel.id === `${moddiscussion}`))
     {
       Quotescode.quotecatcher(message, client);
     }
   }
-  else if(`${devstate}`=='true')
+  else if(`${devstate}`=='true') //If devmode is true, logs chats in console ONLY and run the quote catcher on the dev quotes
   {
+    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
     if((message.channel.id === `${devcsquoteschannel}`))
     {
       Quotescode.quotecatcher(message, client);
@@ -195,7 +198,7 @@ client.on("message", message =>
     }
   }
 
-  /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
+/////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
   // if(message.content.startsWith(`${prefix}csvparse`)&&(message.author.id === `${brendanid}`))
   //   Channelcreator.csvparse(message)
@@ -213,15 +216,6 @@ client.on("message", message =>
   //   Channelcreator.channelsort(message);
 
   /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
-
-  //If devmode is false, log chats in console AND logs in #message-feed channel
-  if(`${devstate}`=='false')
-  {
-    Administrative.mentionalerts(client, message);
-    Server.chatlogger(client, message);
-  }
-  if(`${devstate}`=='true') //If devmode is true, logs chats in console ONLY
-    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
 
 }); //End of message sent loop
 
