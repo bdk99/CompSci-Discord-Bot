@@ -210,8 +210,8 @@ client.on("message", message =>
    }
   // if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
   //   Channelcreator.categorycreator(message)
-   if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
-     Channelcreator.deletechannel(message);
+  // if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
+  //   Channelcreator.deletechannel(message);
   // if((message.content.startsWith(`${prefix}deletecat`))&&(message.author.id === `${brendanid}`))
   //   Channelcreator.deletecategory(message);
   // if((message.content.startsWith(`${prefix}swapper`))&&(message.author.id === `${brendanid}`))
