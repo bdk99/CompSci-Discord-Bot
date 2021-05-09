@@ -5,6 +5,7 @@ const readline = require('readline');
 
 function csvparse(message)
 {
+    categorycreator(message);
     fs.createReadStream('data.csv')
     .pipe(csv())
     .on('data', (row) => { 
@@ -17,18 +18,25 @@ function csvparse(message)
     var channelname = `${Subj}-${Crse}-${instructorarray[lastnamepos]}`;
     var rolename =  `${Subj} ${Crse}`;
 
-
+    
     createchannel(channelname,message)
     console.log(`Created Channel: ${channelname}`);
+    categorymatcher(message,rolename)
     })
 
     .on('end', () => {
     console.log('CSV file successfully processed');
     });
 }
-
+function categorymatcher(message,rolename){//create categories first, then as channels are created match them
+    message.guild.channels.cache.forEach(channel => { 
+        if(channel.type==='category'&&`${channel}`.includes(rolename)){
+            console.log("match")
+        };
+    });
+}
 function categorycreator(message)
-{
+{  
     const readInterface = readline.createInterface({
         input: fs.createReadStream('./categories.txt'),
         output: process.stdout,
@@ -38,7 +46,7 @@ function categorycreator(message)
     readInterface.on('line', function(line) 
     {
         var semester = ('Summer 2021')
-        message.guild.channels.create(`${line} ${semester}`, { type: 'category' });
+        message.guild.channels.create(`${line} ${semester}`, { type: 'category' })
     });    
 }
 
@@ -56,7 +64,9 @@ function createchannel(name, message)
 async function deletechannel(message)
 {
     message.guild.channels.cache.forEach(channel => {
-        if((channel.id!==('823034099925123092') && channel.id!==('823034119167672340') && channel.id!==('823034112155189268') && channel.id!==('823034145868349470'))){
+        //ignores:references, github, devwork, classic-quotes,bot-status, & voice
+
+        if((channel.id!==('823034099925123092') && channel.id!==('823034119167672340') && channel.id!==('823034112155189268') && channel.id!==('823034145868349470')&& channel.id!==('838150077834854411')&& channel.id!==('838149486353842198')&& channel.id!==('838195992624103475'))){
         channel.delete()}});
 }
 
