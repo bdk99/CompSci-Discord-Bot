@@ -202,8 +202,12 @@ client.on("message", message =>
 
   // if(message.content.startsWith(`${prefix}csvparse`)&&(message.author.id === `${brendanid}`))
   //   Channelcreator.csvparse(message)
-  // if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
-  //  Channelcreator.createchannel(message)
+    if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`))){
+    var name= message.content.substring(4,message.content.length)
+    if(name=="")
+      name="new-unnamed-channel"
+    Channelcreator.createchannel(name,message)
+   }
   // if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
   //   Channelcreator.categorycreator(message)
   // if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
