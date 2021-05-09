@@ -92,7 +92,7 @@ function collectRatings(char_count, num, arr) {
 }
 
 //Code to retrieve all written professor ratings from their respective txt file and list them in Discord
-async function viewRatings(message, Discord) 
+async function viewRatings(message, Discord)
 {   
     if((message.channel.id === `${proftalkchannel}`) || (message.channel.id === `${botcommands}`)|| (message.channel.id === `${modbotcommands}`))
     {
@@ -104,7 +104,6 @@ async function viewRatings(message, Discord)
         }
         fs.readFile('./logs/professors/professors.txt', function (err, data) 
         {
-            console.log(viewprofName)
             if (err) throw err;
             if(data.includes(viewprofName.toLowerCase())){
                 fs.readFile('./logs/professors/' + viewprofName.toLowerCase() + '.txt', 'utf8', function(err, data) {
@@ -149,6 +148,11 @@ async function viewRatings(message, Discord)
                     });
                 });
                 //message.channel.send("Ratings for Professor " + viewprofName, { files: ['./logs/professors/' + viewprofName.toLowerCase() + '.txt'] });
+                message.channel.send("Ratings for Professor " + viewprofName, { files: ['./logs/professors/' + viewprofName.toLowerCase() + '.txt'] });
+            }
+            else 
+            {
+                message.channel.send("Sorry, that professor does not exist!")
             }
         });
     }

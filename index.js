@@ -13,6 +13,7 @@ const Quotescode = require("./user_code/Quotescode");
 const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
+const AutoCodeBlock = require("./user_code/AutoCodeBlock");
 
 var softkill = false;
 var bypass = false;
@@ -79,7 +80,7 @@ client.on("message", message =>
 
     //Lists all the ratings for a specified professor that have already been approved by a mod
     command(message, 'viewratings', RETURN => {
-      ReviewsCode.viewRatings(message, Discord);
+      ReviewsCode.viewRatings(message);
     })
 
     //Deletes a specified amount of messages from the channel
@@ -149,6 +150,7 @@ client.on("message", message =>
       Administrative.lockChannel(message);  
     })
 
+    AutoCodeBlock.autoCodeBlock(message);
     //Message Filter for words roomer, gocci, and Brendy
     if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
     {
@@ -169,15 +171,18 @@ client.on("message", message =>
     softkill = Server.soft_kill(message,softkill);
   }
 
-  if(`${devstate}`=='false')
+  if(`${devstate}`=='false') //If false, log chats in console AND logs in #message-feed channel, and records quotes from cs-quotes and mod discussion
   {
+    Administrative.mentionalerts(client, message);
+    Server.chatlogger(client, message);
     if((message.channel.id === `${maincsquoteschannel}`)||(message.channel.id === `${moddiscussion}`))
     {
       Quotescode.quotecatcher(message, client);
     }
   }
-  else if(`${devstate}`=='true')
+  else if(`${devstate}`=='true') //If devmode is true, logs chats in console ONLY and run the quote catcher on the dev quotes
   {
+    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
     if((message.channel.id === `${devcsquoteschannel}`))
     {
       Quotescode.quotecatcher(message, client);
@@ -195,12 +200,16 @@ client.on("message", message =>
     }
   }
 
-  /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
+/////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
   // if(message.content.startsWith(`${prefix}csvparse`)&&(message.author.id === `${brendanid}`))
   //   Channelcreator.csvparse(message)
-  // if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`)))
-  //  Channelcreator.createchannel(message)
+    if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`))){
+    var name= message.content.substring(4,message.content.length)
+    if(name=="")
+      name="new-unnamed-channel"
+    Channelcreator.createchannel(name,message)
+   }
   // if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
   //   Channelcreator.categorycreator(message)
   // if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
@@ -213,15 +222,6 @@ client.on("message", message =>
   //   Channelcreator.channelsort(message);
 
   /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
-
-  //If devmode is false, log chats in console AND logs in #message-feed channel
-  if(`${devstate}`=='false')
-  {
-    Administrative.mentionalerts(client, message);
-    Server.chatlogger(client, message);
-  }
-  if(`${devstate}`=='true') //If devmode is true, logs chats in console ONLY
-    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
 
 }); //End of message sent loop
 

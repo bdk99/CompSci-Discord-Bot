@@ -199,7 +199,9 @@ async function mno(message) {
   }
 }
 
-async function lockChannel(message) {
+
+async function lockChannel(message) 
+{
   var parameter = message.content.slice(10).trim();
   var timeString = parameter.substr(0,parameter.indexOf(' '));
   var time = parseInt(timeString) * 3600000;

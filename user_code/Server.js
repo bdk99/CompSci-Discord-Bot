@@ -57,6 +57,45 @@ function cronjobs(client)
         member.roles.remove(memberRole);
       });
 
+      //A cronjob to say Happy Birthday every hour on the hour whenever the cronjob is run
+      let cronjob4 = new cron.CronJob('0 0 * 5 5 *', () => {
+        //CRON JOBS ARE IN UTC TIME!  EST TIME + 4 or 5 HOURS
+        //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
+        var time = new Date();
+        var hour = time.getHours();
+        console.log(`Cronjob4 executing at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
+
+        var values = [
+          "Happy Birthday!",
+          "Happy Getting Older Day!",
+          "Joy to you on the anniversary of your coming into this world!",
+          "Happy anni-birth-sary!",
+          "A toast to you on your birthday, and many more to come!",
+          "Happ Birth!",
+          "HBD!",
+          "Alles Gute zum Geburtstag!",
+          "Happy Cake Day!",
+          "Congratulations, you’re another year closer to death!",
+          "Happy Birthday! No, I didn't need Facebook to know that!",
+          "It's your birthday, get drunk.",
+          "Merry Christmas! Wait, no that's not right...",
+          "Happy 22nd revolution around the sun!",
+          "Happy 1 year closer to getting a senior citizen discount!",
+          "Happy eviction from your mother's belly day!",
+          "Level up! 21-->22",
+          "I commend you and your ability to evade death!",
+          "If you were Jesus, today would be Christmas.",
+          "Happy Womb Independence Day!",
+          "Your birthday is one of the two days in your life that do not span 24 hours, the other being your death. Happy Birthday!",
+          "\"Happy Birthday!\" -Frosty The Snowman",
+          "Exactly one year from now, you will not be as old as you are today. Woah.",
+          "!yadhtirB yppaH"
+      ];
+
+        var bdaymessage = values[hour];
+        client.channels.cache.get(`826556735707676682`).send(`${bdaymessage}`); 
+      });
+
     cronjob.start()
     cronjob2.start()
     cronjob3.start()
