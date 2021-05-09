@@ -2,13 +2,25 @@
 const { modrole, contentapprovalchannel }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
+
+//Script for reading JSON file
+fs.readFile('./logs/quotes.json', 'utf8', (err, data) => {
+    if (err) {
+        console.log(err);
+        console.log("Unable to read quotes json file");
+    } else {
+        jsonData = JSON.parse(data);
+    }
+})
+
 //Function for Teacher quotes command!  DO NOT REMOVE
 async function quote(message) 
 {
     var quotes2 = jsonData.teacherQuotes;
     var filteredQuotes = []
     console.log(message.content);
-    if (message.content.length > 6) 
+
+    if(message.content.length > 6) //Runs if seaching for a specific keyword ONLY
     {
         var search = message.content.replace("!quote ", "");
 
@@ -24,7 +36,6 @@ async function quote(message)
     {
         filteredQuotes = quotes2;
     }
-    
     if (filteredQuotes.length > 0) 
     {
         var index = getRandomInt(filteredQuotes.length - 1);
