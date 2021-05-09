@@ -79,7 +79,7 @@ client.on("message", message =>
 
     //Lists all the ratings for a specified professor that have already been approved by a mod
     command(message, 'viewratings', RETURN => {
-      ReviewsCode.viewRatings(message);
+      ReviewsCode.viewRatings(message, Discord);
     })
 
     //Deletes a specified amount of messages from the channel
