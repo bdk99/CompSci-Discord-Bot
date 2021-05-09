@@ -13,6 +13,7 @@ const Quotescode = require("./user_code/Quotescode");
 const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
+const AutoCodeBlock = require("./user_code/AutoCodeBlock");
 
 var softkill = false;
 var bypass = false;
@@ -149,6 +150,7 @@ client.on("message", message =>
       Administrative.lockChannel(message);  
     })
 
+    AutoCodeBlock.autoCodeBlock(message);
     //Message Filter for words roomer, gocci, and Brendy
     if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
     {
