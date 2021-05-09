@@ -182,7 +182,7 @@ client.on("message", message =>
   }
   else if(`${devstate}`=='true') //If devmode is true, logs chats in console ONLY and run the quote catcher on the dev quotes
   {
-    // console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
+    console.log(`${message.content} ----> By ${message.author.username} in #${message.channel.name}`);
     if((message.channel.id === `${devcsquoteschannel}`))
     {
       Quotescode.quotecatcher(message, client);
