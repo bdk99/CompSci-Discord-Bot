@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 //Imports the necessary user code files to the index in order for later use
 const { prefix, token, devstate } = require('./config.json');
-const { brendanid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel, modrole } = require('./ids.json');
+const { brendanid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel, studentrole } = require('./ids.json');
 
 const command = require('./command')
 const Administrative = require("./user_code/Administrative");
@@ -228,7 +228,7 @@ client.on("message", message =>
 
   /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
-  //Sorting hat stuff
+//Sorting hat stuff
 async function SortingHat(message)
 {
     //For when the person answers a question
@@ -249,45 +249,96 @@ async function SortingHat(message)
     
     //Question 1
     message.channel.send("Q1: Pick a color that you feel represents you \n1: Red\n2: Blue\n3: Yellow \n4: Green\n5: Black")
-    .then(function(messagenew)
-    {
-      messagenew.react('1️⃣').then(() => messagenew.react('2️⃣')).then(() => messagenew.react('3️⃣')).then(() => messagenew.react('4️⃣')).then(() => messagenew.react('5️⃣'));
-    })
-    var modUsers = {}
-    message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
+    .then(function (message) {
+      message.react('1️⃣').then(() => message.react('2️⃣')).then(() => message.react('3️⃣')).then(() => message.react('4️⃣')).then(() => message.react('5️⃣'));
 
-    var modIds = [];
-    modUsers[modrole].forEach(user => modIds.push(user['id']));
-    const filter = (reaction, user) => {
-      return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);;
-    };
+     var modUsers = {}
+      message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
 
-    message.awaitReactions(filter, { max: 1 })
-    .then(collected => {
-        const reaction = collected.first();
+      var modIds = [];
+      modUsers[studentrole].forEach(user => modIds.push(user['id']));
+      
+      
+      const filter = (reaction, user) => {
+      return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);
+      };
+
+      message.awaitReactions(filter, { max: 1 })
+          .then(collected => {
+              const reaction = collected.first();
 
         if(reaction.emoji.name === '1️⃣')
         {
-            message.channel.send('You clicked 1');
+			a++;
         }
-        else if(reaction.emoji.name === '2️⃣') 
+        if(reaction.emoji.name === '2️⃣') 
         {
-            message.channel.send('You clicked 2');
+          b++;
         }
-        else if(reaction.emoji.name === '3️⃣') 
+        if(reaction.emoji.name === '3️⃣') 
         {
-            message.channel.send('You clicked 3');
+          c++;
         }
-        else if(reaction.emoji.name === '4️⃣') 
+        if(reaction.emoji.name === '4️⃣') 
         {
-            message.channel.send('You clicked 4');
+         d++;
         }
-        else if(reaction.emoji.name === '5️⃣') 
+        if(reaction.emoji.name === '5️⃣') 
         {
-            message.channel.send('You clicked 5');
+         d++;
+          return;
         }
-    })
-};
+          })
+   });
+   
+    //Question 2
+    message.channel.send("Q2: How often do you comment your code? \n1: Why should I comment my code? \n2: Rarely, but sometimes. \n3: Only when I am told to. \n4: A decent amount. \n5: A lot.")
+    .then(function (message) {
+      message.react('1️⃣').then(() => message.react('2️⃣')).then(() => message.react('3️⃣')).then(() => message.react('4️⃣')).then(() => message.react('5️⃣'));
+
+      var modUsers = {}
+      message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
+
+      var modIds = [];
+      modUsers[studentrole].forEach(user => modIds.push(user['id']));
+      
+      
+      const filter = (reaction, user) => {
+      return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);
+      };
+
+      message.awaitReactions(filter, { max: 1 })
+          .then(collected => {
+              const reaction = collected.first();
+
+        if(reaction.emoji.name === '1️⃣')
+        {
+			e++;
+        }
+        if(reaction.emoji.name === '2️⃣') 
+        {
+          a++;
+        }
+        if(reaction.emoji.name === '3️⃣') 
+        {
+          d++;
+        }
+        if(reaction.emoji.name === '4️⃣') 
+        {
+         b++;
+        }
+        if(reaction.emoji.name === '5️⃣') 
+        {
+         c++;
+          return;
+        }
+          })
+   });
+   
+   if(a === 1){
+	   message.channel.send("A")
+   }
+}
 
 }); //End of message sent loop
 
