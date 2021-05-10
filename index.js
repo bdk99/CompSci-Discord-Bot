@@ -107,6 +107,11 @@ client.on("message", message =>
         Quotescode.quote(message);
     })
 
+    //Lists quotes matching search
+    command(message, 'quotelist', RETURN => {
+        Quotescode.quoteList(message);
+    })
+
     //Responds from a random quote at Saras personal collection of quotes
     command(message, 'makemelaugh', RETURN => {
       Entertainment.makemelaugh(message);
