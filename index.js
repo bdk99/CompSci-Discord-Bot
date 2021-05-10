@@ -244,5 +244,31 @@ client.on('presenceUpdate', (oldPresence, newPresence) =>
   Administrative.presenceUpdate(oldPresence, newPresence);
 });
 
+//Sorting hat stuff
+async function SortingHat(message)
+{
+    //For when the person answers a question
+    var a = 0;
+    var b = 0;
+    var c = 0;
+    var d = 0;
+    var e = 0;
+    
+    //Houses
+    houseA = "//No space";
+    houseB = "// Space";
+    houseC = "/* Paragraph */";
+    houseD = "<!--- Arrows ---!>";
+    houseE = "Comments are for the weak";
+    
+    //Questions
+    
+    //Question 1
+    message.channel.send("Q1: Pick a color that you feel represents you \nA: Red\nB: Blue\nC: Yellow \nD: Green\nE: Black")
+    .then(function(message)
+    {
+    message.react('1️⃣').then(() => message.react('2️⃣'));
+    })
+};
 
 client.login(token)
