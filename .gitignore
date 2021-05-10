@@ -1,8 +1,8 @@
 config.json
 app.yaml
 package.json
-tempQuotesList.txt
 package-lock.json
+tempQuotesList.txt
 logs
 node_modules
 incommingcsquotes.txt
