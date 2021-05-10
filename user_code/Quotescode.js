@@ -1,4 +1,6 @@
 //Quotescode.js
+function nocache(module) {require("fs").watchFile(require("path").resolve(module), () => {delete require.cache[require.resolve(module)]})}
+nocache("./logs/quotes.json");
 const { modrole, contentapprovalchannel }= require('../ids.json');
 const fs = require('fs');
 let jsonData = "";
