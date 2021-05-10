@@ -2,7 +2,9 @@ config.json
 app.yaml
 package.json
 package-lock.json
-/user_code/quotes.json
+tempQuotesList.txt
+logs
 node_modules
 incommingcsquotes.txt
 Summer 2021 Class Schedule.csv
+/user_code/quotes.json
