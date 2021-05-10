@@ -3,13 +3,7 @@ app.yaml
 package.json
 tempQuotesList.txt
 package-lock.json
-/logs/
-/logs
-logs/
+logs
 node_modules
-node_modules/
-node_modules\
-/node_modules/
-/node_modules
 incommingcsquotes.txt
 Summer 2021 Class Schedule.csv
