@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 //Imports the necessary user code files to the index in order for later use
 const { prefix, token, devstate } = require('./config.json');
-const { brendanid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel } = require('./ids.json');
+const { brendanid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel, modrole } = require('./ids.json');
 
 const command = require('./command')
 const Administrative = require("./user_code/Administrative");
@@ -53,7 +53,7 @@ client.on("message", message =>
     if(message.author.bot) 
       return;
   }
-
+  SortingHat(message);
   if (!softkill)
   {
     //Basic ping command to check the status and delay time of the bot
@@ -228,23 +228,7 @@ client.on("message", message =>
 
   /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
-}); //End of message sent loop
-
-
-//Fires when a message is deleted
-client.on('messageDelete', async message => 
-{  
-  Clientmessagedeletion.main(message);
-});
-
-
-//Fires when users updates their user status presence and logs that status in a specific text channel
-client.on('presenceUpdate', (oldPresence, newPresence) => 
-{
-  Administrative.presenceUpdate(oldPresence, newPresence);
-});
-
-//Sorting hat stuff
+  //Sorting hat stuff
 async function SortingHat(message)
 {
     //For when the person answers a question
@@ -264,11 +248,61 @@ async function SortingHat(message)
     //Questions
     
     //Question 1
-    message.channel.send("Q1: Pick a color that you feel represents you \nA: Red\nB: Blue\nC: Yellow \nD: Green\nE: Black")
-    .then(function(message)
+    message.channel.send("Q1: Pick a color that you feel represents you \n1: Red\n2: Blue\n3: Yellow \n4: Green\n5: Black")
+    .then(function(messagenew)
     {
-    message.react('1️⃣').then(() => message.react('2️⃣'));
+      messagenew.react('1️⃣').then(() => messagenew.react('2️⃣')).then(() => messagenew.react('3️⃣')).then(() => messagenew.react('4️⃣')).then(() => messagenew.react('5️⃣'));
+    })
+    var modUsers = {}
+    message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
+
+    var modIds = [];
+    modUsers[modrole].forEach(user => modIds.push(user['id']));
+    const filter = (reaction, user) => {
+      return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);;
+    };
+
+    message.awaitReactions(filter, { max: 1 })
+    .then(collected => {
+        const reaction = collected.first();
+
+        if(reaction.emoji.name === '1️⃣')
+        {
+            message.channel.send('You clicked 1');
+        }
+        else if(reaction.emoji.name === '2️⃣') 
+        {
+            message.channel.send('You clicked 2');
+        }
+        else if(reaction.emoji.name === '3️⃣') 
+        {
+            message.channel.send('You clicked 3');
+        }
+        else if(reaction.emoji.name === '4️⃣') 
+        {
+            message.channel.send('You clicked 4');
+        }
+        else if(reaction.emoji.name === '5️⃣') 
+        {
+            message.channel.send('You clicked 5');
+        }
     })
 };
+
+}); //End of message sent loop
+
+
+//Fires when a message is deleted
+client.on('messageDelete', async message => 
+{  
+  Clientmessagedeletion.main(message);
+});
+
+
+//Fires when users updates their user status presence and logs that status in a specific text channel
+client.on('presenceUpdate', (oldPresence, newPresence) => 
+{
+  Administrative.presenceUpdate(oldPresence, newPresence);
+});
 
 client.login(token)
