@@ -288,187 +288,56 @@ async function SortingHat(message)
          d++;
           return;
         }
-		
-				//Question 2
-		message.channel.send("Q2: How often do you comment your code? \n1: Why should I comment my code? \n2: Rarely, but sometimes. \n3: Only when I am told to. \n4: A decent amount. \n5: A lot.")
-		.then(function (message) {
-		  message.react('1️⃣').then(() => message.react('2️⃣')).then(() => message.react('3️⃣')).then(() => message.react('4️⃣')).then(() => message.react('5️⃣'));
-
-		  var modUsers = {}
-		  message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
-
-		  var modIds = [];
-		  modUsers[studentrole].forEach(user => modIds.push(user['id']));
-		  
-		  
-		  const filter = (reaction, user) => {
-		  return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);
-		  };
-
-		  message.awaitReactions(filter, { max: 1 })
-			  .then(collected => {
-				  const reaction = collected.first();
-
-			if(reaction.emoji.name === '1️⃣')
-			{
-				e++;
-			}
-			if(reaction.emoji.name === '2️⃣') 
-			{
-			  a++;
-			}
-			if(reaction.emoji.name === '3️⃣') 
-			{
-			  d++;
-			}
-			if(reaction.emoji.name === '4️⃣') 
-			{
-			 b++;
-			}
-			if(reaction.emoji.name === '5️⃣') 
-			{
-			 c++;
-			  return;
-			}
-				
-					//Question 3
-			message.channel.send("Q3: What is your favorite language? \n1: Java \n2: C \n3: Python \n4: HTML/CSS \n5: No comment")
-			.then(function (message) {
-			  message.react('1️⃣').then(() => message.react('2️⃣')).then(() => message.react('3️⃣')).then(() => message.react('4️⃣')).then(() => message.react('5️⃣'));
-
-			 var modUsers = {}
-			  message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
-
-			  var modIds = [];
-			  modUsers[studentrole].forEach(user => modIds.push(user['id']));
-			  
-			  
-			  const filter = (reaction, user) => {
-			  return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);
-			  };
-
-			  message.awaitReactions(filter, { max: 1 })
-				  .then(collected => {
-					  const reaction = collected.first();
-
-				if(reaction.emoji.name === '1️⃣')
-				{
-					b++;
-				}
-				if(reaction.emoji.name === '2️⃣') 
-				{
-				  c++;
-				}
-				if(reaction.emoji.name === '3️⃣') 
-				{
-				  a++;
-				}
-				if(reaction.emoji.name === '4️⃣') 
-				{
-				 d++;
-				}
-				if(reaction.emoji.name === '5️⃣') 
-				{
-				 d++;
-				  return;
-				}
-				
-						//Question 4
-				message.channel.send("Q4: What is your favorite way to figure out a coding problem? \n1: Ask a friend. \n2: Ask a teacher. \n3: Keep messing with the code till I get it. \n4: Google. \n5: Go to sleep and look at it later.")
-				.then(function (message) {
-				  message.react('1️⃣').then(() => message.react('2️⃣')).then(() => message.react('3️⃣')).then(() => message.react('4️⃣')).then(() => message.react('5️⃣'));
-
-				  var modUsers = {}
-				  message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
-
-				  var modIds = [];
-				  modUsers[studentrole].forEach(user => modIds.push(user['id']));
-				  
-				  
-				  const filter = (reaction, user) => {
-				  return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);
-				  };
-
-				  message.awaitReactions(filter, { max: 1 })
-					  .then(collected => {
-						  const reaction = collected.first();
-
-					if(reaction.emoji.name === '1️⃣')
-					{
-						a++;
-					}
-					if(reaction.emoji.name === '2️⃣') 
-					{
-					  d++;
-					}
-					if(reaction.emoji.name === '3️⃣') 
-					{
-					  e++;
-					}
-					if(reaction.emoji.name === '4️⃣') 
-					{
-					 c++;
-					}
-					if(reaction.emoji.name === '5️⃣') 
-					{
-					 b++;
-					  return;
-					}
-							//Question 5
-					message.channel.send("Q5: What do you listen to when you code? \n1: Lectures \n2: Podcast \n3: Music \n4: Random YouTube Videos \n5: I require silence")
-					.then(function (message) {
-					  message.react('1️⃣').then(() => message.react('2️⃣')).then(() => message.react('3️⃣')).then(() => message.react('4️⃣')).then(() => message.react('5️⃣'));
-
-					  var modUsers = {}
-					  message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
-
-					  var modIds = [];
-					  modUsers[studentrole].forEach(user => modIds.push(user['id']));
-					  
-					  
-					  const filter = (reaction, user) => {
-					  return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);
-					  };
-
-					  message.awaitReactions(filter, { max: 1 })
-						  .then(collected => {
-							  const reaction = collected.first();
-
-						if(reaction.emoji.name === '1️⃣')
-						{
-							c++;
-						}
-						if(reaction.emoji.name === '2️⃣') 
-						{
-						  a++;
-						}
-						if(reaction.emoji.name === '3️⃣') 
-						{
-						  d++;
-						}
-						if(reaction.emoji.name === '4️⃣') 
-						{
-						 b++;
-						}
-						if(reaction.emoji.name === '5️⃣') 
-						{
-						 e++;
-						  return;
-						}
-						
-						message.channel.send(a);
-						
-						})
-				   });
-					})
-			   });
-				  })
-		   });
-			})
-	   });
           })
    });
    
+    //Question 2
+    message.channel.send("Q2: How often do you comment your code? \n1: Why should I comment my code? \n2: Rarely, but sometimes. \n3: Only when I am told to. \n4: A decent amount. \n5: A lot.")
+    .then(function (message) {
+      message.react('1️⃣').then(() => message.react('2️⃣')).then(() => message.react('3️⃣')).then(() => message.react('4️⃣')).then(() => message.react('5️⃣'));
+
+      var modUsers = {}
+      message.guild.roles.cache.forEach(role => modUsers[role.name] = role.members);
+
+      var modIds = [];
+      modUsers[studentrole].forEach(user => modIds.push(user['id']));
+      
+      
+      const filter = (reaction, user) => {
+      return ['1️⃣', '2️⃣','3️⃣','4️⃣','5️⃣'].includes(reaction.emoji.name) && modIds.includes(user.id);
+      };
+
+      message.awaitReactions(filter, { max: 1 })
+          .then(collected => {
+              const reaction = collected.first();
+
+        if(reaction.emoji.name === '1️⃣')
+        {
+			e++;
+        }
+        if(reaction.emoji.name === '2️⃣') 
+        {
+          a++;
+        }
+        if(reaction.emoji.name === '3️⃣') 
+        {
+          d++;
+        }
+        if(reaction.emoji.name === '4️⃣') 
+        {
+         b++;
+        }
+        if(reaction.emoji.name === '5️⃣') 
+        {
+         c++;
+          return;
+        }
+          })
+   });
+   
+   if(a === 1){
+	   message.channel.send("A")
+   }
 }
 
 }); //End of message sent loop
