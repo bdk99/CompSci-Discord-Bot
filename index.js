@@ -3,7 +3,8 @@ const client = new Discord.Client();
 
 //Imports the necessary user code files to the index in order for later use
 const { prefix, token, devstate } = require('./config.json');
-const { brendanid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel } = require('./ids.json');
+const {devid, brendanid, chiaraid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel } = require('./ids.json');
+//Put developerID in ids.json in devid when working on testbots to override locked commands
 
 const command = require('./command')
 const Administrative = require("./user_code/Administrative");
@@ -207,23 +208,24 @@ client.on("message", message =>
 
 /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
-  // if(message.content.startsWith(`${prefix}csvparse`)&&(message.author.id === `${brendanid}`))
+  // if(message.content.startsWith(`${prefix}csvparse`)&&((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`)))
   //   Channelcreator.csvparse(message)
-    if((message.content.startsWith(`${prefix}cc`))&&((message.author.id = `${brendanid}`))){
-    var name= message.content.substring(4,message.content.length)
-    if(name=="")
-      name="new-unnamed-channel"
-    Channelcreator.createchannel(name,message)
-   }
-  // if((message.content.startsWith(`${prefix}catc`))&&((message.author.id = `${brendanid}`)))
+  //  if((message.content.startsWith(`${prefix}cc`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`)))
+  // {
+  //  var name= message.content.substring(4,message.content.length)
+  //  if(name=="")
+  //    name="new-unnamed-channel"
+  //  Channelcreator.createchannel(name,message)
+  // }
+  // if((message.content.startsWith(`${prefix}catc`))&&(((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`))))
   //   Channelcreator.categorycreator(message)
-  // if((message.content.startsWith(`${prefix}deleteALL`))&&(message.author.id === `${brendanid}`))
-  //   Channelcreator.deletechannel(message);
-  // if((message.content.startsWith(`${prefix}deletecat`))&&(message.author.id === `${brendanid}`))
+  // if((message.content.startsWith(`${prefix}deleteALL`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${chiaraid}`)))
+  //  Channelcreator.deletechannel(message);
+  // if((message.content.startsWith(`${prefix}deletecat`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`)))
   //   Channelcreator.deletecategory(message);
-  // if((message.content.startsWith(`${prefix}swapper`))&&(message.author.id === `${brendanid}`))
+  // if((message.content.startsWith(`${prefix}swapper`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`)))
   //   Channelcreator.swapper(message);
-  // if((message.content.startsWith(`${prefix}channelsort`))&&(message.author.id === `${brendanid}`))
+  // if((message.content.startsWith(`${prefix}channelsort`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`)))
   //   Channelcreator.channelsort(message);
 
   /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
