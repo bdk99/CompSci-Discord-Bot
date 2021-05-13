@@ -18,7 +18,6 @@ async function quote(message)
 
     if(message.content.length > 6) //Runs if seaching for a specific keyword ONLY
     {
-        var search = message.content.replace(prefix + "quote ", "");
 
         quotes2.forEach(function(quote) 
         {
@@ -65,7 +64,7 @@ async function quoteList(message)
 
     if(message.content.length > 10) //Runs if seaching for a specific keyword ONLY
     {
-        var search = message.content.replace(prefix + "quotelist ", "");
+        var search = message.content.replace("!quotelist ", "");
 
         quotes2.forEach(function(quote) 
         {
