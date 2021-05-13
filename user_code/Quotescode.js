@@ -18,6 +18,7 @@ async function quote(message)
 
     if(message.content.length > 6) //Runs if seaching for a specific keyword ONLY
     {
+        var search = message.content.replace("!quote ", "");
 
         quotes2.forEach(function(quote) 
         {
