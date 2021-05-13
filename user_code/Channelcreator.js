@@ -64,9 +64,9 @@ function createchannel(name, message)
 async function deletechannel(message)
 {
     message.guild.channels.cache.forEach(channel => {
-        //ignores:references, github, devwork, classic-quotes,bot-status, & voice
+        //ignores:references, github, devwork, classic-quotes,bot-status, voice, devtalk, content approval, and general
 
-        if((channel.id!==('823034099925123092') && channel.id!==('823034119167672340') && channel.id!==('823034112155189268') && channel.id!==('823034145868349470')&& channel.id!==('838150077834854411')&& channel.id!==('838149486353842198')&& channel.id!==('838195992624103475'))){
+        if((channel.id!==('823034099925123092') && channel.id!==('823034119167672340') && channel.id!==('823034112155189268') && channel.id!==('823034145868349470')&& channel.id!==('838150077834854411')&& channel.id!==('838149486353842198')&& channel.id!==('838195992624103475')&& channel.id!==('841873032011055114')&& channel.id!==('841424759128588369')&& channel.id!==('823034099925123092'))){
         channel.delete()}});
 }
 
