@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 //Imports the necessary user code files to the index in order for later use
 const { prefix, token, devstate } = require('./config.json');
-const {devid, brendanid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel } = require('./ids.json');
+const {devid, brendanid, chiaraid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel } = require('./ids.json');
 //Put developerID in ids.json in devid when working on testbots to override locked commands
 
 const command = require('./command')
@@ -219,7 +219,7 @@ client.on("message", message =>
   // }
   // if((message.content.startsWith(`${prefix}catc`))&&(((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`))))
   //   Channelcreator.categorycreator(message)
-  // if((message.content.startsWith(`${prefix}deleteALL`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`)))
+  // if((message.content.startsWith(`${prefix}deleteALL`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${chiaraid}`)))
   //  Channelcreator.deletechannel(message);
   // if((message.content.startsWith(`${prefix}deletecat`))&&((message.author.id === `${brendanid}`)||(message.author.id === `${devid}`)))
   //   Channelcreator.deletecategory(message);
