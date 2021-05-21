@@ -1,4 +1,5 @@
 const Discord = require('discord.js')// imports the discord js library
+require('discord-reply');
 const client = new Discord.Client();
 
 //Imports the necessary user code files to the index in order for later use
@@ -15,6 +16,7 @@ const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 const AutoCodeBlock = require("./user_code/AutoCodeBlock");
+const Remind = require("./user_code/Remind");
 
 var softkill = false;
 var bypass = false;
@@ -93,6 +95,11 @@ client.on("message", message =>
     //Prints help message
     command(message, 'help', RETURN => {
       Administrative.help(message);
+    })
+
+    //Prints help message
+    command(message, 'remindme', RETURN => {
+      Remind.remindme(message);
     })
 
     //FORCED FOCUS MODE--Gives a moderator the ability to bypass the 3 hour focusmode limit, both for themselves and other people
@@ -246,5 +253,6 @@ client.on('presenceUpdate', (oldPresence, newPresence) =>
   Administrative.presenceUpdate(oldPresence, newPresence);
 });
 
+setInterval(function () {Remind.checkReminders(client)}, 1000);
 
 client.login(token)
