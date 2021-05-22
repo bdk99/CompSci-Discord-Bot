@@ -16,6 +16,12 @@ const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 const AutoCodeBlock = require("./user_code/AutoCodeBlock");
 
+if(`${devstate}`=='false')
+{
+  require('discord-reply');
+  const Remind = require("./user_code/Remind");
+}
+
 var softkill = false;
 var bypass = false;
 
@@ -94,6 +100,14 @@ client.on("message", message =>
     command(message, 'help', RETURN => {
       Administrative.help(message);
     })
+    
+     if(`${devstate}`=='false')
+     {
+        //Reminds a user the amount of time they specify later
+        command(message, 'remindme', RETURN => {
+          Remind.remindme(message);
+        })
+     }
 
     //FORCED FOCUS MODE--Gives a moderator the ability to bypass the 3 hour focusmode limit, both for themselves and other people
     command(message, 'ffm', RETURN => {
@@ -245,6 +259,10 @@ client.on('presenceUpdate', (oldPresence, newPresence) =>
 {
   Administrative.presenceUpdate(oldPresence, newPresence);
 });
+
+if (!devstate) {
+  setInterval(function () {Remind.checkReminders(client)}, 1000);
+}
 
 
 client.login(token)
