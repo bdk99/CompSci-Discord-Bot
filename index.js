@@ -253,6 +253,9 @@ client.on('presenceUpdate', (oldPresence, newPresence) =>
   Administrative.presenceUpdate(oldPresence, newPresence);
 });
 
-setInterval(function () {Remind.checkReminders(client)}, 1000);
+if (!devstate) {
+  setInterval(function () {Remind.checkReminders(client)}, 1000);
+}
+
 
 client.login(token)

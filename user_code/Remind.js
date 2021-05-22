@@ -1,8 +1,12 @@
 var mysql = require('mysql');
 var dateparser = require('dateparser');
-const { mysqlurl } = require('../config.json');
+
+const { devstate, mysqlurl } = require('../config.json');
 
 async function remindme(message) {
+    if (devstate) {
+        return;
+    }
     var time = message.content.replace("!remindme ", "");
     var result = dateparser.parse(time);
 
@@ -29,6 +33,9 @@ async function remindme(message) {
 }
 
 async function checkReminders(client) {
+    if (devstate) {
+        return;
+    }
     var connection = mysql.createConnection(mysqlurl);
 
     connection.query('SELECT * FROM reminders WHERE remind_time <= NOW()', async function (error, results, fields) {
