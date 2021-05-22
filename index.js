@@ -97,7 +97,7 @@ client.on("message", message =>
       Administrative.help(message);
     })
 
-    //Prints help message
+    //Reminds a user the amount of time they specify later
     command(message, 'remindme', RETURN => {
       Remind.remindme(message);
     })
