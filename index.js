@@ -16,6 +16,7 @@ const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 const AutoCodeBlock = require("./user_code/AutoCodeBlock");
 const Remind = require("./user_code/Remind");
+const Private = require("./user_code/Private");
 require('discord-reply');
 
 
@@ -191,8 +192,8 @@ client.on("message", message =>
 
   if(`${devstate}`=='false') //If false, log chats in console AND logs in #message-feed channel, and records quotes from cs-quotes and mod discussion
   {
-    Administrative.mentionalerts(client, message);
-    Server.chatlogger(client, message);
+    Private.mentionalerts(client, message);
+    Private.chatlogger(client, message);
     if((message.channel.id === `${maincsquoteschannel}`)||(message.channel.id === `${moddiscussion}`))
     {
       Quotescode.quotecatcher(message, client);
@@ -210,7 +211,7 @@ client.on("message", message =>
   //The Holy CapsProtect function call
   if (!bypass && (message.author.id !== `${brendanid}`))
   {
-    let capsbool = Server.capsProtect(message.content);
+    let capsbool = Private.capsProtect(message.content);
     if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
     {
       message.delete({ timeout: 2000 })
@@ -255,7 +256,7 @@ client.on('messageDelete', async message =>
 //Fires when users updates their user status presence and logs that status in a specific text channel
 client.on('presenceUpdate', (oldPresence, newPresence) => 
 {
-  Administrative.presenceUpdate(oldPresence, newPresence);
+  Private.presenceUpdate(oldPresence, newPresence);
 });
 
 client.login(token)

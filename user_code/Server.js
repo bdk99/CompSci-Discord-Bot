@@ -1,23 +1,7 @@
 //Function that shuts down bot on kill command by specific user!
-const { brendanid, modrole, generalchat, chatloggerchannel }= require('../ids.json');
+const { brendanid, modrole, generalchat }= require('../ids.json');
 const { prefix } = require('../config.json')
 const cron = require('cron');
-
-//Temp caps filter bypass (DISABLED)
-                                // function tempbypasscommand(message)
-                                // {
-                                //     if(message.member.roles.cache.find(r => r.name === `${modrole}`))
-                                //     {
-                                //       var args = message.content.slice(3).trim();
-                                //       message.channel.send(`${args} by: ${message.author.username}`);
-                                //     }
-                                //     else 
-                                //     {
-                                //       message.delete({ timeout: 2000 });
-                                //       console.log("Deleting message: "+message.content);
-                                //       return;
-                                //     }
-                                // }
 
 
 function cronjobs(client)
@@ -105,35 +89,4 @@ function bypass(message, bypass)
   }
 }
 
-//Function to protect our chats from caps :D.  Full credit to Ryan Kim on this one!  
-//Bypassed with tb or bypass commands
-//DO NOT MAKE THIS FUNCTION ASYNC.... IT MUST MUST MUST BE SYNC
-function capsProtect(input) 
-{
-  var capTolerance = .25; //How lenient the protection is for caps
-  var capCount = 0;
-  for (var i = 0 ; i < input.length; i++) 
-  {
-      if (/[A-Z]/.test(input[i])) 
-      {
-          capCount++;
-      }
-  }
-  if (capCount > capTolerance * input.length && capCount > 8) 
-  {
-      return false;
-  }
-  return true;
-}
-
-//Logs messages into a general text logger channel
-function chatlogger(client, message)
-{
-  if((message.channel.id != `${chatloggerchannel}`) && (! message.content.startsWith(`${prefix}`)))
-  {   //Adds a text logger.... so all messages from all channels will spit out in this channel
-    console.log(`${message.content} ----> By ${message.author.username} in ${message.channel.name}`);
-    client.channels.cache.get(`${chatloggerchannel}`).send(`${message.content} ----> By ${message.author.username} in <#${message.channel.id}>`); 
-  }
-}
-
-module.exports = { kill, soft_kill, bypass, capsProtect, cronjobs, chatlogger };
+module.exports = { kill, soft_kill, bypass, cronjobs };
