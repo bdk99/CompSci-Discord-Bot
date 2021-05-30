@@ -15,12 +15,9 @@ const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 const AutoCodeBlock = require("./user_code/AutoCodeBlock");
+const Remind = require("./user_code/Remind");
+require('discord-reply');
 
-if(`${devstate}`=='false')
-{
-  require('discord-reply');
-  const Remind = require("./user_code/Remind");
-}
 
 var softkill = false;
 var bypass = false;
@@ -47,8 +44,9 @@ client.once('ready', () =>
 
 //Completes a cronjob task to display the quote of the day in general on main server at 9 AM everyday if devstate is false
 if(`${devstate}`=='false')
-{
+{  
   Server.cronjobs(client)
+  setInterval(function () {Remind.checkReminders(client)}, 1000);
 }
 
 client.on("message", message => 
@@ -259,10 +257,5 @@ client.on('presenceUpdate', (oldPresence, newPresence) =>
 {
   Administrative.presenceUpdate(oldPresence, newPresence);
 });
-
-if (!devstate) {
-  setInterval(function () {Remind.checkReminders(client)}, 1000);
-}
-
 
 client.login(token)

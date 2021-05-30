@@ -1,7 +1,10 @@
-var mysql = require('mysql');
-var dateparser = require('dateparser');
-
 const { devstate, mysqlurl } = require('../config.json');
+
+if(`${devstate}`=='false')
+{
+    var mysql = require('mysql');
+    var dateparser = require('dateparser');
+}
 
 async function remindme(message) {
     if (devstate) {
