@@ -19,42 +19,18 @@ const cron = require('cron');
                                 //     }
                                 // }
 
-//Sends a professor quote in General at 9 AM
+
 function cronjobs(client)
 {
+  //Sends a professor quote in General at 9 AM
     var date = new Date();
     console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
     
-      let cronjob = new cron.CronJob('00 00 13 * * *', () => {
+      let cronjob = new cron.CronJob('00 00 13 * * 1-5', () => {
         //CRON JOBS ARE IN UTC TIME!  EST TIME + 4 or 5 HOURS
         //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
         client.channels.cache.get(`${generalchat}`).send(`${prefix}quote`); 
         console.log(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`);
-      });
-
-      //Runs at midnight on Sunday EST
-      let cronjob2 = new cron.CronJob('0 0 4 * * 0', () => {
-        //CRON JOBS ARE IN UTC TIME!  EST TIME + 4 or 5 HOURS
-        //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
-        console.log(`Cronjob2 executing at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-        let server = client.guilds.cache.get('707293853958275125')
-        var memberRole= server.roles.cache.find(role => role.name === "focusmode")
-        let member = server.members.cache.get('446768827448033290')
-        
-        member.roles.add(memberRole)
-
-      });
-
-      //Runs at 9 am on Monday Morning EST
-      let cronjob3 = new cron.CronJob('0 0 13 * * 1', () => {
-        //CRON JOBS ARE IN UTC TIME!  EST TIME + 4 or 5 HOURS
-        //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
-        console.log(`Cronjob3 executing at ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-        let server = client.guilds.cache.get('707293853958275125')
-        var memberRole= server.roles.cache.find(role => role.name === "focusmode")
-        let member = server.members.cache.get('446768827448033290')
-      
-        member.roles.remove(memberRole);
       });
 
       //A cronjob to say Happy Birthday every hour on the hour whenever the cronjob is run
@@ -97,8 +73,6 @@ function cronjobs(client)
       });
 
     cronjob.start()
-    cronjob2.start()
-    cronjob3.start()
 }
 
 //The off switch for this entire ensemble
