@@ -39,7 +39,7 @@ client.once('ready', () =>
     console.info("Ready and stable!");
     client.channels.cache.get(`${mainbotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on main server
 
-    client.user.setActivity("with JavaScript and learning new features!");  //Sets the discord status activity of the bot
+    client.user.setActivity("with code!");  //Sets the discord status activity of the bot
   }
 });
 
@@ -170,8 +170,8 @@ client.on("message", message =>
     })
 
     AutoCodeBlock.autoCodeBlock(message);
-    //Message Filter for words roomer, gocci, and Brendy
-    if(message.content.includes('roomer') || message.content.includes('Roomer')|| message.content.includes('gocci')|| message.content.includes('Gocci')|| message.content.includes('brendy') || message.content.includes('Brendy'))
+
+    if(message.content.toLowerCase().includes('brendy'))
     {
       message.delete({ timeout: 1000 });
       console.log("Deleting message: "+ message.content);
@@ -208,16 +208,16 @@ client.on("message", message =>
     }
   }
 
-  //The Holy CapsProtect function call
-  if (!bypass && (message.author.id !== `${brendanid}`))
-  {
-    let capsbool = Private.capsProtect(message.content);
-    if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
-    {
-      message.delete({ timeout: 2000 })
-      console.log("Deleting message: "+message.content);
-    }
-  }
+  // //The Holy CapsProtect function call
+  // if (!bypass && (message.author.id !== `${brendanid}`))
+  // {
+  //   let capsbool = Private.capsProtect(message.content);
+  //   if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
+  //   {
+  //     message.delete({ timeout: 2000 })
+  //     console.log("Deleting message: "+message.content);
+  //   }
+  // }
 
 /////////////////////////////CHANNEL CREATION BLOCK (DO NOT REMOVE!  COMMENTED OUT FOR SECURITY REASONS!)/////////////////////////////
 
