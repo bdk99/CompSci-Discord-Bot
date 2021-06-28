@@ -1,6 +1,5 @@
 //Administrative.js
 const { brendanid, modrole }= require('../ids.json');
-const { devstate } = require('../config.json');
 
 //Function called with prefix !ban, used to attempt user ban
 async function ban(message) 
@@ -118,23 +117,6 @@ async function help(message)
                   '!makemelaugh : Generates a random asf quote\n');
 }
 
-//Mention alerts for owner and known underage people on the server
-function mentionalerts(client, message)
-{
-  if(message.content.includes('Brendan') || message.content.includes('Klein')|| message.content.includes('brendan')|| message.content.includes('klein'))
-  {
-    client.channels.cache.get('818584141846151219').send(`${message.author.username} mentioned you in a message! --> ${message.content}`); 
-  }
-  if(message.content.includes('Elizabeth') || message.content.includes('elizabeth')|| message.content.includes('Varton')|| message.content.includes('varton') || (message.author.id === '776256478877057035'))
-  {
-    client.channels.cache.get('828425906259230750').send(`Elizabeth Flag --> "${message.content}" in <#${message.channel.id}>`); 
-  }
-  if(message.content.includes('Noah') || message.content.includes('noah')|| message.content.includes('Subhail')|| message.content.includes('subhail') || (message.author.id === '443877848168792074'))
-  {
-    client.channels.cache.get('828425906259230750').send(`Noah Flag --> "${message.content}" in <#${message.channel.id}>`); 
-  }
-}
-
 //Code for wiping a specified number of messages from a channel (MOD ONLY)
 async function clean(message, num, client)
 {
@@ -161,30 +143,6 @@ async function clean(message, num, client)
     });
     message.delete({ timeout: 2000 });
     return;
-  }
-}
-
-//Function to alert on specific users presenceUpdates
-async function presenceUpdate(oldPresence, newPresence)
-{
-  if(`${devstate}`=='false')
-  {
-    let member = newPresence.member;
-    // User id of the user you're tracking status.
-    if(member.id === '776256478877057035')
-    {
-      if (oldPresence == null) 
-      {
-        let channel = member.guild.channels.cache.get('828425906259230750');
-        channel.send(`Our glorious leader has returned and is now ${newPresence.status}!`);
-      }
-      else if (oldPresence.status !== newPresence.status) {
-          // Your specific channel to send a message in.
-          let channel = member.guild.channels.cache.get('828425906259230750');
-
-          channel.send(`Our special member is now ${newPresence.status}!`);
-      }
-    }
   }
 }
 
@@ -215,4 +173,4 @@ async function lockChannel(message)
   }
 }
 
-module.exports = { kick, ban, help, clean, mentionalerts, presenceUpdate, mno, lockChannel }
+module.exports = { kick, ban, help, clean, mno, lockChannel }
