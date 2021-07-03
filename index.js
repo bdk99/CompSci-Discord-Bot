@@ -15,9 +15,7 @@ const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 const AutoCodeBlock = require("./user_code/AutoCodeBlock");
-const Remind = require("./user_code/Remind");
 const Private = require("./user_code/Private");
-require('discord-reply');
 
 
 var softkill = false;
@@ -37,7 +35,7 @@ client.once('ready', () =>
   {
     console.info(`Logged in as ${client.user.tag}!`);
     console.info("Ready and stable!");
-    client.channels.cache.get(`${mainbotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on main server
+    //client.channels.cache.get(`${mainbotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on main server
 
     client.user.setActivity("with code!");  //Sets the discord status activity of the bot
   }
@@ -47,7 +45,6 @@ client.once('ready', () =>
 if(`${devstate}`=='false')
 {  
   Server.cronjobs(client)
-  setInterval(function () {Remind.checkReminders(client)}, 1000);
 }
 
 client.on("message", message => 
@@ -100,13 +97,6 @@ client.on("message", message =>
       Administrative.help(message);
     })
     
-     if(`${devstate}`=='false')
-     {
-        //Reminds a user the amount of time they specify later
-        command(message, 'remindme', RETURN => {
-          Remind.remindme(message);
-        })
-     }
 
     //FORCED FOCUS MODE--Gives a moderator the ability to bypass the 3 hour focusmode limit, both for themselves and other people
     command(message, 'ffm', RETURN => {
@@ -252,11 +242,10 @@ client.on('messageDelete', async message =>
   Clientmessagedeletion.main(message);
 });
 
-
 //Fires when users updates their user status presence and logs that status in a specific text channel
-client.on('presenceUpdate', (oldPresence, newPresence) => 
+client.on('presenceUpdate', async (oldPresence, newPresence) => 
 {
-  Private.presenceUpdate(oldPresence, newPresence);
+  Private.presence(oldPresence, newPresence);
 });
 
 client.login(token)
