@@ -3,14 +3,14 @@ const fs = require('fs');
 const csv = require('csv-parser');
 const readline = require('readline');
 const { SSL_OP_TLS_BLOCK_PADDING_BUG } = require('constants');
-
-function csvparse(message)
+const semester = ('Summer 2021')//change to new semester
+function csvparse(message,table)
 {   
-    //If CSV is parsing undefined, make sure first line is the fields for CSV,
+    // If CSV is parsing undefined, make sure first line is the fields for CSV,
     // not ---ComputerScience---, or it wont run
-    //also ONLY do CS class list not all of EMU
+    // also ONLY do CS class list not all of EMU (or is will get messy really quick)
     var rolename
-    fs.createReadStream('compscidata.csv')
+    fs.createReadStream('Summer 2021 Class Schedule.csv')
     .pipe(csv())
     .on('data', (row) => { 
     
@@ -22,29 +22,38 @@ function csvparse(message)
     var lastnamepos = (instructorarray.length -1);
     var channelname = `${Subj}-${Crse}-${instructorarray[lastnamepos]}`;
     rolename =  `${Subj} ${Crse}`;
-
-    
-    createchannel(channelname,message)
+    createchannel(channelname,message,table)
     })
     .on('end', () => {
     console.log('CSV file successfully processed');
         
     });
 }
-function categorymatcher(message,rolename){//create categories first, then as channels are created match them
+function driver(message){
+    var promise=new Promise(function(){
+      categorycreator(message);
+    }).then((table)=>{
+        console.log(`test: ${Object.entries(table)}`)
+        //why is this not printing 
+        csvparse(message,table);
+        
+    }).catch(console.error)
+}
+//create categories first, then as channels are created match them
+function categorymatcher(message,rolename){
     message.guild.channels.cache.forEach(channel => { 
         console.log(`${channel.name}`)
         if(channel.type==='category'&& `${channel.name}`.includes(`${rolename}`)){
             console.log(`matched ${channel.name} and ${rolename}`)
         }
-        //channel.name.includes(`${rolename}`)
-        // if(channel.type==='category'&&`${channel}`.includes(`${rolename}`)){
-        //     console.log(`match ${channel} with ${rolename}`)
-        // };
     });
 }
+//   creates basic CompSci Class Categories
+//   Not for individual category creation
+//   change semester name (hardcoded)
 function categorycreator(message)
-{  
+{   
+    var catTable=new Object();
     const readInterface = readline.createInterface(
     {
         input: fs.createReadStream('./categories.txt'),
@@ -54,25 +63,30 @@ function categorycreator(message)
 
     readInterface.on('line', function(line) 
     {
-        var semester = ('Summer 2021')
-        message.guild.channels.create(`${line} ${semester}`, { type: 'category' })
-    });    
+        var channel = message.guild.channels.create(`${line} ${semester}`, { type: 'category' })
+        .then(channel => {
+            catTable[`${line}`]=channel.id
+        }) 
+    })
 }
+
 
 function createchannel(name, message)
 {
     message.guild.channels.create(name, { reason: 'Needed a cool new channel' })
         .then(channel => {
-            console.log(channel.name)
-            
-            message.guild.channels.cache.forEach(category => { 
-
-                if(category.type==='category'&& `${channel.name.toUpperCase().substring(0,8)}`.includes(`${category.name.substring(0,8)}`)){
-                //channel.setParent(category.id);
-                console.log(`${channel.name} matches ${category.name}`)
+            var catTable=null
+            //console.log(channel.name)
+            if(catTable!=null){
+                
+            // message.guild.channels.cache.forEach(category => { 
+            //     if(category.type==='category'&& `${channel.name.toUpperCase().substring(0,8)}`.includes(`${category.name.substring(0,8)}`)){
+            //     //channel.setParent(category.id);
+            //     console.log(`${channel.name} matches ${category.name}`)
                 //freezing here, too much to cycle through is my guess.Maybe creat an array of categories+id's?
-            }})
-        }).catch(console.error);
+            }else{
+
+            } }).catch(console.error);
 }
 
 async function deletechannel(message)
@@ -104,9 +118,8 @@ async function swapper(name, message)
 
 async function channelsort(message)
 {
-    var textchannels = {} = message.guild.channels.cache.forEach(c => c.type == "text");
-
+    var textchannels = {} = message.guild.channels.cache.forEach(c => c.type == "text")
 }
 
-
-module.exports = { csvparse, createchannel, deletechannel, categorycreator,categorymatcher, deletecategory, swapper, channelsort};
+//delete unused ones at somepoint
+module.exports = { csvparse, createchannel, deletechannel, categorycreator,driver,categorymatcher, deletecategory, swapper, channelsort};
