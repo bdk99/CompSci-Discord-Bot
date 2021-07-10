@@ -2,14 +2,15 @@ const { prefix } = require('../config.json')
 const fs = require('fs');
 const csv = require('csv-parser');
 const readline = require('readline');
+const { SSL_OP_TLS_BLOCK_PADDING_BUG } = require('constants');
 
 function csvparse(message)
 {
-    categorycreator(message);
     fs.createReadStream('data.csv')
     .pipe(csv())
     .on('data', (row) => { 
     var Subj =  `${row["Subj"]}`;
+    console.log(`Subject:${Subj}`)
     var Crse =  `${row["Crse"]}`;
     var time =  `${row["Time"]}`;
     var name =  `${row["Instructor"]}`;
@@ -21,7 +22,7 @@ function csvparse(message)
     
     createchannel(channelname,message)
     console.log(`Created Channel: ${channelname}`);
-    categorymatcher(message,rolename)
+    //categorymatcher(message,rolename)
     })
 
     .on('end', () => {
@@ -37,7 +38,8 @@ function categorymatcher(message,rolename){//create categories first, then as ch
 }
 function categorycreator(message)
 {  
-    const readInterface = readline.createInterface({
+    const readInterface = readline.createInterface(
+    {
         input: fs.createReadStream('./categories.txt'),
         output: process.stdout,
         console: false
@@ -53,12 +55,11 @@ function categorycreator(message)
 function createchannel(name, message)
 {
     message.guild.channels.create(name, { reason: 'Needed a cool new channel' })
-    .then(channel => {
-        let category = message.guild.channels.cache.find(c => c.name == "Summer 2021" && c.type == "category");
-    
-        if (!category) throw new Error("Category channel does not exist");
-        channel.setParent(category.id);
-      }).catch(console.error);
+        //.then(channel => {
+        //    let category = message.guild.channels.cache.find(c => c.name == "Summer 2021" && c.type == "category");
+        //    if (!category) continue;
+        //    channel.setParent(category.id);
+        //}).catch(console.error);
 }
 
 async function deletechannel(message)
