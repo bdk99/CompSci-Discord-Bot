@@ -5,35 +5,42 @@ const readline = require('readline');
 const { SSL_OP_TLS_BLOCK_PADDING_BUG } = require('constants');
 
 function csvparse(message)
-{
-    fs.createReadStream('data.csv')
+{   
+    //If CSV is parsing undefined, make sure first line is the fields for CSV,
+    // not ---ComputerScience---, or it wont run
+    //also ONLY do CS class list not all of EMU
+    var rolename
+    fs.createReadStream('compscidata.csv')
     .pipe(csv())
     .on('data', (row) => { 
+    
     var Subj =  `${row["Subj"]}`;
-    console.log(`Subject:${Subj}`)
     var Crse =  `${row["Crse"]}`;
     var time =  `${row["Time"]}`;
     var name =  `${row["Instructor"]}`;
     var instructorarray = name.replace("(P)", "").trim().split(" ");
     var lastnamepos = (instructorarray.length -1);
     var channelname = `${Subj}-${Crse}-${instructorarray[lastnamepos]}`;
-    var rolename =  `${Subj} ${Crse}`;
+    rolename =  `${Subj} ${Crse}`;
 
     
     createchannel(channelname,message)
-    console.log(`Created Channel: ${channelname}`);
-    //categorymatcher(message,rolename)
     })
-
     .on('end', () => {
     console.log('CSV file successfully processed');
+        
     });
 }
 function categorymatcher(message,rolename){//create categories first, then as channels are created match them
     message.guild.channels.cache.forEach(channel => { 
-        if(channel.type==='category'&&`${channel}`.includes(rolename)){
-            console.log("match")
-        };
+        console.log(`${channel.name}`)
+        if(channel.type==='category'&& `${channel.name}`.includes(`${rolename}`)){
+            console.log(`matched ${channel.name} and ${rolename}`)
+        }
+        //channel.name.includes(`${rolename}`)
+        // if(channel.type==='category'&&`${channel}`.includes(`${rolename}`)){
+        //     console.log(`match ${channel} with ${rolename}`)
+        // };
     });
 }
 function categorycreator(message)
@@ -55,11 +62,17 @@ function categorycreator(message)
 function createchannel(name, message)
 {
     message.guild.channels.create(name, { reason: 'Needed a cool new channel' })
-        //.then(channel => {
-        //    let category = message.guild.channels.cache.find(c => c.name == "Summer 2021" && c.type == "category");
-        //    if (!category) continue;
-        //    channel.setParent(category.id);
-        //}).catch(console.error);
+        .then(channel => {
+            console.log(channel.name)
+            
+            message.guild.channels.cache.forEach(category => { 
+
+                if(category.type==='category'&& `${channel.name.toUpperCase().substring(0,8)}`.includes(`${category.name.substring(0,8)}`)){
+                //channel.setParent(category.id);
+                console.log(`${channel.name} matches ${category.name}`)
+                //freezing here, too much to cycle through is my guess.Maybe creat an array of categories+id's?
+            }})
+        }).catch(console.error);
 }
 
 async function deletechannel(message)
@@ -96,4 +109,4 @@ async function channelsort(message)
 }
 
 
-module.exports = { csvparse, createchannel, deletechannel, categorycreator, deletecategory, swapper, channelsort};
+module.exports = { csvparse, createchannel, deletechannel, categorycreator,categorymatcher, deletecategory, swapper, channelsort};
