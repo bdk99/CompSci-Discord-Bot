@@ -103,7 +103,7 @@ async function focus(message)
 //Code for an Administrator to put someone in forced focus mode
 function forcedfocusmode(message) 
 {
-    if (message.member.hasPermission('ADMINISTRATOR')) 
+    if(message.member.hasPermission('ADMINISTRATOR') || (message.author.id == '404717378715385856'))
     {
         var parameter = message.content.slice(4).trim();
         var timeString = parameter//.substr(0,parameter.indexOf(' '));

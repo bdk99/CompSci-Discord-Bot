@@ -3,7 +3,6 @@ const { brendanid, modrole, generalchat }= require('../ids.json');
 const { prefix } = require('../config.json')
 const cron = require('cron');
 
-
 function cronjobs(client)
 {
   //Sends a professor quote in General at 9 AM
@@ -18,7 +17,7 @@ function cronjobs(client)
       });
 
       //A cronjob to say Happy Birthday every hour on the hour whenever the cronjob is run
-      let cronjob4 = new cron.CronJob('0 0 * 5 5 *', () => {
+      let cronjob2 = new cron.CronJob('0 0 * 5 5 *', () => {
         //CRON JOBS ARE IN UTC TIME!  EST TIME + 4 or 5 HOURS
         //DO NOT CHANGE ANYTHING IN THIS FUNCTION UNLESS YOU KNOW WHAT YOU ARE DOING! 
         var time = new Date();

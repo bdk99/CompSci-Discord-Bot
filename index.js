@@ -1,7 +1,8 @@
+//=======================================================================================================
+//Imports the necessary user code files to the index in order for later use
+//=======================================================================================================
 const Discord = require('discord.js')// imports the discord js library
 const client = new Discord.Client();
-
-//Imports the necessary user code files to the index in order for later use
 const { prefix, token, devstate } = require('./config.json');
 const {devid, brendanid, chiaraid, maincsquoteschannel, devcsquoteschannel, moddiscussion, devbotstatuschannel, mainbotstatuschannel } = require('./ids.json');
 //Put developerID in ids.json in devid when working on testbots to override locked commands
@@ -15,12 +16,18 @@ const ReviewsCode = require("./user_code/Reviewscode");
 const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 const AutoCodeBlock = require("./user_code/AutoCodeBlock");
-const Private = require("./user_code/Private");
 
+//THIS CONST PRIVATE LINE MUST BE COMMENTED OUT IF IN DEVELOPMENT MODE.  IT WILL WORK PROPERLY WITH JUST THIS LINE COMMENTED OUT WHEN DEVELOPING.
+const Private = require("./user_code/Private");
 
 var softkill = false;
 var bypass = false;
 
+
+//=======================================================================================================
+//The Client.once belowRuns one time when the bot first starts up... We use it to confirm that the bot 
+//                                     does not crash on startup.
+//=======================================================================================================
 client.once('ready', () => 
 {
   if(`${devstate}`=='true')
@@ -41,14 +48,27 @@ client.once('ready', () =>
   }
 });
 
-//Completes a cronjob task to display the quote of the day in general on main server at 9 AM everyday if devstate is false
+
+//=======================================================================================================
+//The cronjob code below Completes a cronjob task to display the quote of the day in general on main 
+// server at 9 AM everyday if devstate is false (which means it is not being run in a testing enviorment)
+//=======================================================================================================
 if(`${devstate}`=='false')
 {  
   Server.cronjobs(client)
 }
 
+
+//=======================================================================================================
+// The client.on section below activates when anybody on the server sends a message on any server the bot
+// is apart of.  This may include the EMU CompSci server, the EMU hangout, Bot Dev, or any other server 
+// depending on the situation.
+//=======================================================================================================
+
 client.on("message", message => 
 { // runs whenever a message is sent
+
+  let server = message.guild.id;
 
   //Ignores bots from deleting their own messages with spam filter, and deleting other bots messages
   if(!message.content.startsWith(`${prefix}quote`))
@@ -57,8 +77,82 @@ client.on("message", message =>
       return;
   }
 
-  if (!softkill)
+  //ID for CompSci server only
+  if(server === `707293853958275125`)
   {
+    //Adds a professor rating to file after mod review
+    command(message, 'ratep', RETURN => {
+      ReviewsCode.RateProfessor(message, client);
+    })
+
+    //Lists all the ratings for a specified professor that have already been approved by a mod
+    command(message, 'viewratings', RETURN => {
+      ReviewsCode.viewRatings(message);
+    }) 
+
+    //Prints help message
+    command(message, 'help', RETURN => {
+      Administrative.help(message);
+    })
+
+    //Lists quotes matching search
+    command(message, 'quotelist', RETURN => {
+      Quotescode.quoteList(message);
+    })
+
+    // Gives a mod the night off
+    command(message, 'modsnightoff', RETURN => {
+      Administrative.mno(message);  
+    })
+
+    command(message, 'lockdown', RETURN => {
+      Administrative.lockChannel(message);  
+    })
+
+    //Sends a motivational quote (or meme)
+    command(message, 'motivateme', RETURN => {
+      Entertainment.motivateme(message);
+    })
+
+    //Responds from a random quote at Saras personal collection of quotes
+    command(message, 'makemelaugh', RETURN => {
+      Entertainment.makemelaugh(message);
+    })
+
+    //The famous quote command used on the CompSci server!  
+    //This will allow people on EMU hangout to generate quotes ONLY... This does not include saving them
+    command(message, 'quote', RETURN => {
+      if(message.content.startsWith(`${prefix}quote count`))
+        Quotescode.quotecounter(message);
+      else
+        Quotescode.quote(message);
+    })
+
+    if(message.content.toLowerCase().includes('brendy'))
+    {
+      message.delete({ timeout: 1000 });
+      console.log("Deleting message: "+ message.content);
+    }
+
+    AutoCodeBlock.autoCodeBlock(message);
+
+    //Adds the bypass command to toggle bypassing the Caps Filter
+    if (message.content === `${prefix}bypass`) 
+    {
+      bypass = Server.bypass(message,bypass);
+    }
+  }
+
+  //ID for EMU Hangout only
+  if(server === `731575925262778450`)
+  {
+
+  }
+
+//==========================================================================================================
+  //Anything below this point  will work on ANY and ALL servers the bot is currently apart of
+//==========================================================================================================
+
     //Basic ping command to check the status and delay time of the bot
     command(message /*Message going into command function */, 
             'ping' /*Command headed into command function */,
@@ -66,24 +160,9 @@ client.on("message", message =>
       message.channel.send(`🏓 Latency is ${Date.now() - message.createdTimestamp}ms. API Latency is ${Math.round(client.ws.ping)}ms`);
     })
 
-    //Kills and stops server with response
+    //Kills and stops server with response (Activated by Brendan only!)
     command(message, 'kill', RETURN => {
       Server.kill(message);
-    })
-
-    //Adds a professor rating to file after mod review
-    command(message, 'ratep', RETURN => {
-      ReviewsCode.RateProfessor(message, client);
-    })
-
-    //Engages Focus Mode, an anti-procrastination tool
-    command(message, 'focusmode', RETURN => {
-      Entertainment.focus(message);
-    })
-
-    //Lists all the ratings for a specified professor that have already been approved by a mod
-    command(message, 'viewratings', RETURN => {
-      ReviewsCode.viewRatings(message);
     })
 
     //Deletes a specified amount of messages from the channel
@@ -92,48 +171,19 @@ client.on("message", message =>
       Administrative.clean(message, num, client);
     })
 
-    //Prints help message
-    command(message, 'help', RETURN => {
-      Administrative.help(message);
+    //Engages Focus Mode, an anti-procrastination tool
+    command(message, 'focusmode', RETURN => {
+      Entertainment.focus(message);
     })
     
-
     //FORCED FOCUS MODE--Gives a moderator the ability to bypass the 3 hour focusmode limit, both for themselves and other people
     command(message, 'ffm', RETURN => {
       Entertainment.forcedfocusmode(message, client);
     })
 
-    //The famous quote command!
-    command(message, 'quote', RETURN => {
-      if(message.content.startsWith(`${prefix}quote count`))
-        Quotescode.quotecounter(message);
-      else
-        Quotescode.quote(message);
-    })
-
-    //Lists quotes matching search
-    command(message, 'quotelist', RETURN => {
-        Quotescode.quoteList(message);
-    })
-
-    //Responds from a random quote at Saras personal collection of quotes
-    command(message, 'makemelaugh', RETURN => {
-      Entertainment.makemelaugh(message);
-    })
-
     //Displays the user info of the person who sends it
     command(message, 'user-info', RETURN => {
       message.channel.send(`Your username: ${message.author.username}\nYour ID: ${message.author.id}`);
-    })
-
-    //Send Custom emojis message when doing {prefix}ce comamnd
-    command(message, 'ce', RETURN => {
-      Entertainment.ce(message);  
-    })
-
-    //Sends a motivational quote (or meme)
-    command(message, 'motivateme', RETURN => {
-      Entertainment.motivateme(message);
     })
 
     //Attempts to kick a user
@@ -150,35 +200,17 @@ client.on("message", message =>
       Administrative.ban(message);
     })
 
-    // Gives a mod the night off
-    command(message, 'modsnightoff', RETURN => {
-      Administrative.mno(message);  
-    })
-
-    command(message, 'lockdown', RETURN => {
-      Administrative.lockChannel(message);  
-    })
-
-    AutoCodeBlock.autoCodeBlock(message);
-
-    if(message.content.toLowerCase().includes('brendy'))
-    {
-      message.delete({ timeout: 1000 });
-      console.log("Deleting message: "+ message.content);
-    }
-
-    //Adds the bypass command to toggle bypassing the Caps Filter
-    if (message.content === `${prefix}bypass`) 
-    {
-      bypass = Server.bypass(message,bypass);
-    } 
-  }
-
   //Softkill function command call (Calls the reverse of the status of softkill)
-  if(message.content === `${prefix}softkill`) 
-  { //softkill functionality
-    softkill = Server.soft_kill(message,softkill);
-  }
+  // if(message.content === `${prefix}softkill`) 
+  // { //softkill functionality
+  //   softkill = Server.soft_kill(message,softkill);
+  // }
+
+
+//=======================================================================================================
+// 
+//=======================================================================================================
+
 
   if(`${devstate}`=='false') //If false, log chats in console AND logs in #message-feed channel, and records quotes from cs-quotes and mod discussion
   {
@@ -198,6 +230,8 @@ client.on("message", message =>
     }
   }
 
+
+  //DO NOT ENABLE THIS WITHOUT TALKING TO EMU HANGOUT SERVER OWNER AS WELL ABOUT IT
   // //The Holy CapsProtect function call
   // if (!bypass && (message.author.id !== `${brendanid}`))
   // {
@@ -242,10 +276,13 @@ client.on('messageDelete', async message =>
   Clientmessagedeletion.main(message);
 });
 
-//Fires when users updates their user status presence and logs that status in a specific text channel
-client.on('presenceUpdate', async (oldPresence, newPresence) => 
+if(`${devstate}`=='false')
 {
-  Private.presence(oldPresence, newPresence);
-});
+  //Fires when users updates their user status presence and logs that status in a specific text channel
+  client.on('presenceUpdate', async (oldPresence, newPresence) => 
+  {
+    Private.presence(oldPresence, newPresence);
+  });
+}
 
 client.login(token)
