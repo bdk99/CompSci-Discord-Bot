@@ -6,8 +6,9 @@ async function ban(message)
 {
     // Assuming we mention someone in the message, this will return the user
         // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
-  
-        if(message.author.id !== `${brendanid}`)
+        var server = message.guild.id;
+        
+        if(((message.author.id !== `${brendanid}`) && server === '707293853958275125') || (((message.author.id !== '622181883396096002') || (message.author.id !== '344506661601280000')) && server === '731575925262778450'))
         {
           message.reply('I was unable to ban the member!  Permission denied!');
           return;
@@ -56,12 +57,15 @@ async function ban(message)
 //function called on prefix !kick, used to kick a specific member
 async function kick(message) 
 {
-      if (message.author.id !== `${brendanid}`) 
-        {
-          message.reply('I was unable to kick the member!  Permission denied!');
-          return;
-        }
-        
+  var server = message.guild.id;
+
+  //if((message.author.id !== `${brendanid}`) || (message.author.id === '622181883396096002') || (message.author.id === '344506661601280000') || (message.author.id === '102578756194955264') || (message.author.id === '180820200776531968'))
+  if(((message.author.id !== `${brendanid}`) && server === '707293853958275125') || ((message.author.id !== '622181883396096002') || (message.author.id !== '344506661601280000') && server === '731575925262778450'))
+  {
+      message.reply('I was unable to kick the member!  Permission denied!');
+      return;
+    }
+    
     // Assuming we mention someone in the message, this will return the user
     // Read more about mentions over at https://discord.js.org/#/docs/main/master/class/MessageMentions
     const user = message.mentions.users.first();
@@ -104,17 +108,17 @@ async function kick(message)
 async function help(message) 
 {
     message.channel.send('Available Commands!\n' +
-                  '!help : Displays this help command with a list of bot commands!\n' +
-                  '!ratep : name description : Rate a professor!\n' +
-                  '!viewratings name : Get the rating of a teacher!\n' +
-                  '!focusmode duration time(hour(s)/minutes(s)/seconds(s)) : Locks you out of every channel for a certain amount of time!\n' +
-                  '!ping : Displays the bots ping!\n' +
-                  '!motivateme : Sends a motivational quote or meme\n' +
-                  '!quote : Generate a random cs-quote(MOST OF THESE ARE FUNNY ASF)\n' +
-                  `$open : Open a ticket to get help from a mod\n` +
-                  `$close : Close a ticket\n` +
-                  `!quote <Can add name of professor or person, don't need to though> : Generate a random cs-quote(MOST OF THESE ARE FUNNY ASF)\n` +
-                  '!makemelaugh : Generates a random asf quote\n');
+                  '[ALL]!help : Displays this help command with a list of bot commands!\n' +
+                  '[ALL] !focusmode duration time(hour(s)/minutes(s)/seconds(s)) : Locks you out of every channel for a certain amount of time!\n' +
+                  '[ALL] !ping : Displays the bots ping!\n' +
+                  '[ALL] !quote : Generate a random cs-quote(MOST OF THESE ARE FUNNY ASF)\n' +
+                  
+                  '[CompSci ONLY] !ratep : name description : Rate a professor!\n' +
+                  '[CompSci ONLY] !viewratings name : Get the rating of a teacher!\n' +
+                  '[CompSci ONLY] !motivateme : Sends a motivational quote or meme\n' +
+                  `[CompSci ONLY] $open : Open a ticket to get help from a mod\n` +
+                  `[CompSci ONLY] $close : Close a ticket\n` +
+                  '[CompSci ONLY] !makemelaugh : Generates a random asf quote\n');
 }
 
 //Code for wiping a specified number of messages from a channel (MOD ONLY)
@@ -133,8 +137,15 @@ async function clean(message, num, client)
       })
     });
 
-    client.channels.cache.get("784093143389700137").send(`${message.author.username} deleted ${num} messages in ${message.channel}`);
-    return;
+    let server = message.guild.id;
+    if(server === `707293853958275125`) 
+    {   //CompSci Server ID
+      client.channels.cache.get("784093143389700137").send(`${message.author.username} deleted ${num} messages in ${message.channel}`);
+    }
+    else if(server === `731575925262778450`) 
+    {   //EMU Hangout Server ID
+      client.channels.cache.get("769636044064030741").send(`${message.author.username} deleted ${num} messages in ${message.channel}`);
+    }
   }
   else 
   {
