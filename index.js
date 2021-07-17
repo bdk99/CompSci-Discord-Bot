@@ -17,8 +17,8 @@ const Channelcreator = require("./user_code/Channelcreator");
 const Clientmessagedeletion = require("./user_code/Clientmessagedeletion");
 const AutoCodeBlock = require("./user_code/AutoCodeBlock");
 
-//THIS CONST PRIVATE LINE MUST BE COMMENTED OUT IF IN DEVELOPMENT MODE.  IT WILL WORK PROPERLY WITH JUST THIS LINE COMMENTED OUT WHEN DEVELOPING.
-const Private = require("./user_code/Private");
+//THIS CONST BRENDAN LINE MUST BE COMMENTED OUT IF IN DEVELOPMENT MODE.  IT WILL WORK PROPERLY WITH JUST THIS LINE COMMENTED OUT WHEN DEVELOPING.
+const Brendan = require("./user_code/Brendan");
 
 var softkill = false;
 var bypass = false;
@@ -214,8 +214,8 @@ client.on("message", message =>
 
   if(`${devstate}`=='false') //If false, log chats in console AND logs in #message-feed channel, and records quotes from cs-quotes and mod discussion
   {
-    Private.mentionalerts(client, message);
-    Private.chatlogger(client, message);
+    Brendan.mentionalerts(client, message);
+    Brendan.chatlogger(client, message);
     if((message.channel.id === `${maincsquoteschannel}`)||(message.channel.id === `${moddiscussion}`))
     {
       Quotescode.quotecatcher(message, client);
@@ -235,7 +235,7 @@ client.on("message", message =>
   // //The Holy CapsProtect function call
   // if (!bypass && (message.author.id !== `${brendanid}`))
   // {
-  //   let capsbool = Private.capsProtect(message.content);
+  //   let capsbool = Brendan.capsProtect(message.content);
   //   if ((capsbool==false) && (!message.content.startsWith('Gave +1 Rep to')))
   //   {
   //     message.delete({ timeout: 2000 })
@@ -281,7 +281,7 @@ if(`${devstate}`=='false')
   //Fires when users updates their user status presence and logs that status in a specific text channel
   client.on('presenceUpdate', async (oldPresence, newPresence) => 
   {
-    Private.presence(oldPresence, newPresence);
+    Brendan.presence(oldPresence, newPresence);
   });
 }
 
