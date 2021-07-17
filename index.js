@@ -42,7 +42,7 @@ client.once('ready', () =>
   {
     console.info(`Logged in as ${client.user.tag}!`);
     console.info("Ready and stable!");
-    //client.channels.cache.get(`${mainbotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on main server
+    client.channels.cache.get(`${mainbotstatuschannel}`).send('CompSci Bot Online and Ready!'); //Shoots a ready command in #bot-status on main server
 
     client.user.setActivity("with code!");  //Sets the discord status activity of the bot
   }
@@ -79,12 +79,12 @@ client.on("message", message =>
 
   //ID for CompSci server only
   if(server === `707293853958275125`)
-  {
+  {     
     //Adds a professor rating to file after mod review
     command(message, 'ratep', RETURN => {
       ReviewsCode.RateProfessor(message, client);
     })
-
+    
     //Lists all the ratings for a specified professor that have already been approved by a mod
     command(message, 'viewratings', RETURN => {
       ReviewsCode.viewRatings(message);
